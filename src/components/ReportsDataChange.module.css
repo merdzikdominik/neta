@@ -1,0 +1,43 @@
+.reports-data-change__form {
+    display: flex;
+    flex-direction: column;
+}
+
+.reports-data-change__second-position {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.reports-data-change__third-position {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+  
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 1em 0;
+}
+
+input {
+    margin: 0 0.5em;
+}
+
+button {
+    margin: 0;
+    padding: 0;
+    max-width: 500px;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    flex-direction: column;
+}

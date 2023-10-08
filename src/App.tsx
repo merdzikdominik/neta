@@ -1,24 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import Test from './components/Test';
+// import { Routes, Route } from 'react-router-dom'
+// import MainPage from './components/MainPage'
+// import AdminModule from './components/AdminModule'
+// import EmployeeFile from './components/EmployeeFile'
+// import Reports from './components/Reports'
+// import Holiday from './components/Holiday'
+// import Login from './components/Login'
+// import Register from './components/Register'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Test/>
     </div>
   );
 }
