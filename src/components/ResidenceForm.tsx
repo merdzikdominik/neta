@@ -15,11 +15,11 @@ interface IUserResidenceData {
 }
 
 interface IUserResidenceFunction {
-    userResidence: () => void
+    onChange: (data: IUserResidenceData) => void
 }
 
-const ResidenceForm: React.FC = ({ userResidence }) => {
-    const [storeData, setStoreData] = useState<IUserResidenceData>({
+const ResidenceForm: React.FC<IUserResidenceFunction> = ({ onChange }) => {
+    const [userData, setUserData] = useState<IUserResidenceData>({
         city: '',
         postalCode: '',
         post: '',
@@ -33,19 +33,20 @@ const ResidenceForm: React.FC = ({ userResidence }) => {
     })
 
     const handleStoreUserData = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // setStoreData(prev => ({
-        //     ...prev,
-        //     [event.target.name]: event?.target.value
-        // }))
-        const userObject = {
-            [event.target.name]: event?.target.value
-        }
+        setUserData(prev => ({
+            ...prev,
+            [event.target.name]: event?.target.value,
+        }))
 
-        userResidence(userObject)
+        onChange({
+            ...userData,
+            [event.target.name]: event?.target.value,
+        })
 
     }
 
     return (
+
         <div className={classes['reports-data-change__second-position']}>
             <div className={classes['grid']}>
                 <div className={classes['input-wrapper']}>
