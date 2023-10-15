@@ -1,0 +1,41 @@
+.main {
+    display: flex;
+    flex-direction: row;
+}
+
+.categories-dropdown {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    list-style-type: none;
+}
+
+/* CHYBA DO WYJEBANIA */
+.categories-dropdown__list-element {
+    display: flex;
+    flex-direction: row;
+}
+
+.reports-dropdown {
+    display: none;
+}
+
+.dropdown:hover .reports-dropdown {
+    display: block;
+}
+
+.reports-dropdown__employee {
+    display: none;
+}
+
+.dropdown__employee:hover .reports-dropdown__employee {
+    display: block;
+}
+
+.reports-dropdown__holiday {
+    display: none;
+}
+
+.dropdown__holiday-plans:hover .reports-dropdown__holiday {
+    display: block;
+}

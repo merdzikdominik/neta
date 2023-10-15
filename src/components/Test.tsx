@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import ResidenceForm from './ResidenceForm'
 import classes from './ReportsDataChange.module.css'
 
@@ -35,53 +35,32 @@ interface IFormFill extends IUserData {
     userResidenceData: IUserResidenceGroup
 }
 
+const userInitial: IUserResidenceData = {
+    city: '',
+    postalCode: '',
+    post: '',
+    municipalCommune: '',
+    voivodeship: '',
+    county: '',
+    street: '',
+    houseNumber: '',
+    flatNumber: '',
+    mobileNumber: ''
+}
+
 const Test: React.FC = () => {
     const [isCheckedFirstResidence, setIsCheckedFirstResidence] = useState<boolean>(false)
     const [isCheckedSecondResidence, setIsCheckedSecondResidence] = useState<boolean>(false)
     const [isCheckedCorrespondenceAddressAnother, setIsCheckedCorrespondenceAddressAnother] = useState<boolean>(false)
+    
+    const [permanentResidenceData, setPermanentResidenceData] = useState<IUserResidenceData>(userInitial)
+    const [secondResidenceData, setSecondResidenceData] = useState<IUserResidenceData>(userInitial)
+    const [correspondenceAddress, setCorrespondenceAddress] = useState<IUserResidenceData>(userInitial)
 
     const checkboxRadioCorrespondenceRef = useRef<HTMLInputElement | null>(null)
     const checkboxRadioAnnualRef = useRef<HTMLInputElement | null>(null)
     // const timeoutRef = useRef(null)
-    
-    const [permanentResidenceData, setPermanentResidenceData] = useState<IUserResidenceData>({
-        city: '',
-        postalCode: '',
-        post: '',
-        municipalCommune: '',
-        voivodeship: '',
-        county: '',
-        street: '',
-        houseNumber: '',
-        flatNumber: '',
-        mobileNumber: ''
-    })
-    
-    const [secondResidenceData, setSecondResidenceData] = useState<IUserResidenceData>({
-        city: '',
-        postalCode: '',
-        post: '',
-        municipalCommune: '',
-        voivodeship: '',
-        county: '',
-        street: '',
-        houseNumber: '',
-        flatNumber: '',
-        mobileNumber: ''
-    })
-    
-    const [correspondenceAddress, setCorrespondenceAddress] = useState<IUserResidenceData>({
-        city: '',
-        postalCode: '',
-        post: '',
-        municipalCommune: '',
-        voivodeship: '',
-        county: '',
-        street: '',
-        houseNumber: '',
-        flatNumber: '',
-        mobileNumber: ''
-    })
+
     
     const [formData, setFormData] = useState<IFormFill>({
         surname: '',
@@ -98,12 +77,6 @@ const Test: React.FC = () => {
         date: ''
     })
 
-    const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
-        event.preventDefault()
-
-        console.log(formData)
-    }
-
     const handleOverallForm = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormData(prev => {
             return {
@@ -119,28 +92,16 @@ const Test: React.FC = () => {
         })
     }
 
-    const handleResidenceDataTemplate = (event: React.ChangeEvent<HTMLInputElement>, setData: React.Dispatch<React.SetStateAction<IUserResidenceData>>) => {
-        setData(prev => ({
-            ...prev,
-            [event.target.name]: event?.target.value
-        }))
-
+    const handlePermanentUserResidence = (userData: IUserResidenceData) => {
+        setPermanentResidenceData(userData)
     }
 
-    const handleCatchUserResidence = (object: IUserResidenceData) => {
-        console.log(object)
+    const handleSecondUserResidence = (userData: IUserResidenceData) => {
+        setSecondResidenceData(userData)
     }
 
-    const handleResidenceInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (isCheckedFirstResidence) {
-            handleResidenceDataTemplate(event, setPermanentResidenceData)
-        } 
-        if (isCheckedSecondResidence) {
-            handleResidenceDataTemplate(event, setSecondResidenceData)
-        }
-        if (isCheckedCorrespondenceAddressAnother) {
-            handleResidenceDataTemplate(event, setCorrespondenceAddress)
-        }
+    const handleCorrespondenceUser = (userData: IUserResidenceData) => {
+        setCorrespondenceAddress(userData)
     }
 
     const handleCheckboxFirstResidenceChange = () => {
@@ -178,6 +139,16 @@ const Test: React.FC = () => {
         handleCheckboxRadioChange(event, checkboxRadioAnnualRef)
     }
 
+    const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
+        event.preventDefault()
+
+        console.log(formData)
+
+        setPermanentResidenceData(userInitial)
+        setSecondResidenceData(userInitial)
+        setCorrespondenceAddress(userInitial)
+    }
+
 
     // const handleSaveDataToJsonFile = (data: Object) => {
     //     try {
@@ -192,37 +163,6 @@ const Test: React.FC = () => {
     //         console.error('Wystąpił błąd podczas zapisywania danych do pliku JSON:', error)
     //     }
     // }
-
-    useEffect(() => {
-        try {
-            // if (permanentResidenceData['city'].length === 0 || 
-            //     secondResidenceData['city'].length === 0 || 
-            //     correspondenceAddress['city'].length === 0) {
-
-            //         console.log('nie wypelniono pol')
-            //         return
-            // }
-
-            const userDataStorage = [
-                permanentResidenceData,
-                secondResidenceData,
-                correspondenceAddress
-            ]
-
-            // for (let i=0; i<userDataStorage.length; i++) {
-            //     if (userDataStorage[i]['city'].length > 0) {
-            //         console.log(userDataStorage)
-            //     }
-            // }
-            console.log(userDataStorage)
-
-            // console.log(formData)
-
-            // console.log('ZAPISANO DANE DO FORMATU JSON':)
-        } catch (error) {
-            console.error('USE EFFECT SIE WYJEBAL')
-        }
-    }, [permanentResidenceData, secondResidenceData, correspondenceAddress, formData])
 
     return (
         <div>
@@ -246,11 +186,11 @@ const Test: React.FC = () => {
                 2. Miejsce stałego zameldowania <input type="checkbox" checked={isCheckedFirstResidence} name="firstResidenceChecked" 
                 onChange={handleCheckboxFirstResidenceChange} />
                 
-                { isCheckedFirstResidence ? <ResidenceForm userResidence={handleCatchUserResidence} /> : null }
+                { isCheckedFirstResidence ? <ResidenceForm onChange={handlePermanentUserResidence} /> : null }
 
                 3. Adres zamieszkania (jeśli jest iny niż adres stałego zameldowania) <input type="checkbox" checked={isCheckedSecondResidence} name="secondResidenceChecked" onChange={handleCheckboxSecondResidenceChange} />
 
-                { isCheckedSecondResidence ? <ResidenceForm userResidence={handleCatchUserResidence} /> : null }
+                { isCheckedSecondResidence ? <ResidenceForm onChange={handleSecondUserResidence} /> : null }
 
                 4. Adres do korespondencji
 
@@ -281,7 +221,7 @@ const Test: React.FC = () => {
                         /> 
                         <label>inny (kliknij, aby wypełnić)</label>
                     </div>
-                    { isCheckedCorrespondenceAddressAnother ? <ResidenceForm userResidence={handleCatchUserResidence} /> : null }
+                    { isCheckedCorrespondenceAddressAnother ? <ResidenceForm onChange={handleCorrespondenceUser} /> : null }
 
                 </div>
                 
@@ -340,12 +280,13 @@ const Test: React.FC = () => {
                     <div className={classes['input-wrapper']}>
                         <label>
                             w dniu
-                            <input type="date" name="date" required/>
+                            <input type="date" name="date" required onChange={handleOverallForm} />
                         </label>
                     </div>
                 </div>
                 <button type="submit">Zatwierdź zmiany</button>
             </form>
+            asdasdas
         </div>
     )
 }
