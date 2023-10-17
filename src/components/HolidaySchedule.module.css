@@ -1,0 +1,23 @@
+.scheduler-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.scheduler-date-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    max-height: 300px;
+    padding: 10px 0;
+}
+
+.scheduler-button-container {
+    display: flex;
+    justify-content: end;
+    max-width: 500px;
+    max-height: 300px;
+}
+
+input {
+    max-width: 150px;
+}

@@ -7,6 +7,8 @@ import Reports from './components/Reports'
 import Holiday from './components/Holiday'
 import Login from './components/Login'
 import Register from './components/Register'
+import HolidaySchedule from './components/HolidaySchedule'
+import HolidayReport from './components/HolidayReport'
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path='urlopy' element={<Holiday/>} />
         <Route path='logowanie' element={<Login />} />
         <Route path='rejestracja' element={<Register />} />
+        <Route path='raportowanie/data-urlopu' element={<HolidaySchedule />} />
+        <Route path='raportowanie/data-urlopu/raport-urlopowy' element={<HolidayReport />} />
       </Routes>
     </div>
   );

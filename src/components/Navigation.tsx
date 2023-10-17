@@ -28,7 +28,9 @@ const Navigation: React.FC = () => {
                 ReactDOM.render(<App />, rootDiv)
             }
         }
-      }
+    }
+
+
 
     const employeeFileDropdown = (
         <ul>
@@ -61,7 +63,9 @@ const Navigation: React.FC = () => {
             <li className={classes['dropdown']}>Raporty
                 <ul className={classes['reports-dropdown']}>
                     <li style={{cursor: 'pointer'}} onClick={handleOpenNewWindow.bind(null, Test)}>Nazwa Firmy - zmiana danych</li>
-                    <li>Plany Urlopowe</li>
+                    <li style={{cursor: 'pointer'}}>
+                        <Link to='/raportowanie/data-urlopu'>Plany Urlopowe</Link>
+                    </li>
                     <li className={classes['dropdown__employee']}>Dane pracownika
                         <ul className={classes['reports-dropdown__employee']}>
                             <li>Pracownik - wyświetl informacje</li>
