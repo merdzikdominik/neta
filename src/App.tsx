@@ -9,6 +9,8 @@ import Login from './components/Login'
 import Register from './components/Register'
 import HolidaySchedule from './components/HolidaySchedule'
 import HolidayReport from './components/HolidayReport'
+import EmployeePersonalData from './components/EmployeePersonalData'
+import Employee from './components/Employee'
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path='rejestracja' element={<Register />} />
         <Route path='raportowanie/data-urlopu' element={<HolidaySchedule />} />
         <Route path='raportowanie/data-urlopu/raport-urlopowy' element={<HolidayReport />} />
+        <Route path='raportowanie/dane-pracownika' element={<EmployeePersonalData />} />
+        <Route path='raportowanie/dane-pracownika/pracownik' element={<Employee />} />
       </Routes>
     </div>
   );

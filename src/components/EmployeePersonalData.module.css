@@ -1,0 +1,8 @@
+.employee-data-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.employee-data-message {
+    padding: 10px 20px 
+}

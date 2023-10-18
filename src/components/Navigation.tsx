@@ -68,7 +68,9 @@ const Navigation: React.FC = () => {
                     </li>
                     <li className={classes['dropdown__employee']}>Dane pracownika
                         <ul className={classes['reports-dropdown__employee']}>
-                            <li>Pracownik - wyświetl informacje</li>
+                            <li>
+                                <Link to='/raportowanie/dane-pracownika'>Pracownik - wyświetl informacje</Link>
+                            </li>
                             <li>Urlop macierzyński</li>
                             <li>Urlop ojcowski</li>
                         </ul>
