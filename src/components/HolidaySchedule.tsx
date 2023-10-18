@@ -25,7 +25,7 @@ const HolidaySchedule: React.FC = () => {
     const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
-        navigate('/raportowanie/data-urlopu/raport-urlopowy')
+        navigate('/raportowanie/data-urlopu/raport-urlopowy', { state: { prop: date } })
     }
 
     return (
