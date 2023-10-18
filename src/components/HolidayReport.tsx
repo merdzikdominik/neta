@@ -9,7 +9,12 @@ const HolidayReport: React.FC = () => {
         console.log(prop)
     }, [prop])
 
-    return <>Holiday Report prop: {prop['dateFrom']} {prop['dateTo']}</>
+    return (
+        <>
+            Holiday Report prop: {prop['dateFrom']} {prop['dateTo']}
+            PYTHON PART HERE TO GENERATE THE CALENDAR WITH IMPORT CALENDAR
+        </>
+    )
 }
 
 export default HolidayReport
