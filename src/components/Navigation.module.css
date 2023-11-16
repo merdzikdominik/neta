@@ -20,6 +20,11 @@
     display: none;
 }
 
+a {
+    background-color: transparent;
+    padding: inherit;
+}
+
 .dropdown:hover .reports-dropdown {
     display: block;
 }
