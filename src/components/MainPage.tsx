@@ -18,7 +18,7 @@ const MainPage: React.FC = () => {
             <Link to='/urlopy'>
                 Urlopy
             </Link>
-        <InteractiveBackground />
+            <InteractiveBackground />
         </main>
     )
 }
