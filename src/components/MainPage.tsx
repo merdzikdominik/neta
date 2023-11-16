@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import InteractiveBackground from './Utils/InteractiveBackground'
 import classes from './MainPage.module.css'
 
 const MainPage: React.FC = () => {
@@ -17,6 +18,7 @@ const MainPage: React.FC = () => {
             <Link to='/urlopy'>
                 Urlopy
             </Link>
+        <InteractiveBackground />
         </main>
     )
 }
