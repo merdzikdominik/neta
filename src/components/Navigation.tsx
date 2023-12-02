@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import ReactDOM from 'react-dom'
 import { Link, useLocation } from 'react-router-dom'
 import classes from './Navigation.module.css'
-import Test from "./Reports/UserDataChange"
+import UserDataChange from "./Reports/UserDataChange"
 
 interface Element {
     id: string,
@@ -48,7 +48,7 @@ const Navigation: React.FC = () => {
         <ul>
             <li className={classes['dropdown']}>Raporty
                 <ul className={classes['reports-dropdown']}>
-                    <li style={{cursor: 'pointer'}} onClick={handleOpenNewWindow.bind(null, Test)}>Nazwa Firmy - zmiana danych</li>
+                    <li style={{cursor: 'pointer'}} onClick={handleOpenNewWindow.bind(null, UserDataChange)}>Nazwa Firmy - zmiana danych</li>
                     <li style={{cursor: 'pointer'}}>
                         <Link to='/raportowanie/data-urlopu'>Plany Urlopowe</Link>
                     </li>

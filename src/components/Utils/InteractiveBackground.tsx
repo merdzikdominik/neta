@@ -1,12 +1,59 @@
 import React from 'react'
-import classes from './InteractiveBackground.module.css'
+import classes from './InteractiveBackground.module.scss'
 
 const InteractiveBackground: React.FC = () => {
     return (
-        <section>
-            <div className={classes['wave']}></div>
-            <div className={classes['wave']}></div>
-            <div className={classes['wave']}></div>
+        <section className={classes['stars']}>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
+            <div className={classes['star']}></div>
         </section>
     )
 }

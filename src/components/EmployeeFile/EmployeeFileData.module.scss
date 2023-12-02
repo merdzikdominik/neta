@@ -1,0 +1,35 @@
+.main {
+    display: flex;
+    justify-content: space-between;
+}
+
+.employeeFileData__container {
+    width: 50%;
+    padding: 40px;
+    color: #fff;
+}
+
+.employeeFileData__header {
+    border: 1px solid #e4f1fe;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 0 20px;
+    background-color: #005689; 
+}
+
+.employeeFileData__data_container {
+    border: 1px solid #e4f1fe;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 20px;
+    background-color: #007cb9;
+}
+
+.employeeFileData__field {
+    font-weight: bold;
+    padding: 30px 0;
+}
+
+.employeeFileData__element {
+    padding: 5px 0;
+}

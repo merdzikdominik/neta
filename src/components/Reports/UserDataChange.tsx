@@ -48,7 +48,7 @@ const userInitial: IUserResidenceData = {
     mobileNumber: ''
 }
 
-const Test: React.FC = () => {
+const UserDataChange: React.FC = () => {
     const [isCheckedFirstResidence, setIsCheckedFirstResidence] = useState<boolean>(false)
     const [isCheckedSecondResidence, setIsCheckedSecondResidence] = useState<boolean>(false)
     const [isCheckedCorrespondenceAddressAnother, setIsCheckedCorrespondenceAddressAnother] = useState<boolean>(false)
@@ -291,4 +291,4 @@ const Test: React.FC = () => {
     )
 }
 
-export default Test
+export default UserDataChange
