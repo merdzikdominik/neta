@@ -1,6 +1,7 @@
 import React from "react"
 import Navigation from '../Navigation'
 import Nav from "../Utils/Nav"
+import InteractiveBackground from "../Utils/InteractiveBackground"
 
 const EmployeeFile: React.FC = () => {
 
@@ -11,6 +12,7 @@ const EmployeeFile: React.FC = () => {
             </header>
             <Navigation />
             <Nav />
+            <InteractiveBackground />
         </>
     )
 }

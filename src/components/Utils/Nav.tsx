@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useEffect } from "react"
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import UserDataChange from "../Reports/UserDataChange"
+import { Icon, listIcons  } from '@iconify/react'
 import classes from './Nav.module.scss'
 
 const Nav: React.FC = () => {
@@ -20,6 +21,10 @@ const Nav: React.FC = () => {
             }
         }
     }
+
+    useEffect(() => {
+        console.log(listIcons())
+    }, [])
 
     return (
         <section className={classes['app']}>

@@ -1,21 +1,9 @@
 import React from 'react'
-import classes from './EmployeeFileData.module.scss'
 import Nav from '../Utils/Nav'
+import InteractiveBackground from '../Utils/InteractiveBackground'
+import classes from './EmployeeFileData.module.scss'
 
 const EmployeeFileData: React.FC = () => {
-    // const exampleData = [{
-    //     content: "Dominik",
-    //     secondName: "Rafał",
-    //     lastName: "Merdzik",
-    //     birthDate: "28.11.1998",
-    //     phone: "+48511210172",
-    //     emailAddress: "dominik.merdzik@onet.pl",
-    //     age: "25 lat",
-    //     employmentDate: "20.02.2023",
-    //     contractTerminationDate: "10.03.2023",
-    //     role: "IT Support Engineer",
-    //     education: "Inżynier"
-    // }]
 
     const exampleData = [
         {id: 1, field: "Imię", content: "Dominik"},
@@ -47,6 +35,7 @@ const EmployeeFileData: React.FC = () => {
                 }
                 </div>
             </section>
+            <InteractiveBackground />
         </div>
     )
 }

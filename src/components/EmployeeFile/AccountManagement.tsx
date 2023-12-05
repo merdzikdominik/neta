@@ -1,34 +1,48 @@
 import React from 'react'
+import Nav from '../Utils/Nav'
+import InteractiveBackground from '../Utils/InteractiveBackground'
+import classes from './AccountManagement.module.scss'
 
 const AccountManagement: React.FC = () => {
     return (
-        <section>
-            <div>
-                <h1>Uzytkownicy w aplikacji - MODYFIKACJA</h1>
-            </div>
-            <div>
-                <div>
-                    <label>Login </label>
-                    <input type="text" placeholder="Adres email"></input>
+        <div className={classes['main']}>
+            <Nav />
+            <section className={classes['accountManagement__container']}>
+                <div className={classes['accountManagement__header']}>
+                    <h1>Uzytkownicy w aplikacji - MODYFIKACJA</h1>
                 </div>
-                <div>
-                    <label>Stare hasło </label>
-                    <input type="text" placeholder="Stare hasło"></input>
+                <div className={classes['accountManagement__data_container']}>
+                    <div className={classes['accountManagement__field_container']}>
+                        <label>Login </label>
+                        <input type="text" className={classes['accountManagement__input']} placeholder="Wprowadź adres email"></input>
+                    </div>
+                    <div className={classes['accountManagement__field_container']}>
+                        <label>Stare hasło </label>
+                        <input type="text" className={classes['accountManagement__input']} placeholder="Wprowadź stare hasło"></input>
+                    </div>
+                    <div className={classes['accountManagement__field_container']}>
+                        <label>Nowe hasło </label>
+                        <input type="text" className={classes['accountManagement__input']} placeholder="Wprowadź nowe hasło"></input>
+                    </div>
+                    <div className={classes['accountManagement__field_container']}>
+                        <label>Weryfikacja hasła </label>
+                        <input type="text" className={classes['accountManagement__input']} placeholder="weryfikacja hasła" disabled></input>
+                    </div>
                 </div>
-                <div>
-                    <label>Nowe hasło </label>
-                    <input type="text" placeholder="Nowe hasło"></input>
+                <div className={classes['accountManagement__button_container']}>
+                    {/* zrobic komponenty z tych buttonow */}
+                    <button className={classes['button']}>
+                        <span className={classes['buttonText']}>Zapisz</span>
+                        <div className={classes['fillContainer']}></div>
+                    </button>
+                    <button className={classes['button']}>
+                        <span className={classes['buttonText']}>Anuluj</span>
+                        <div className={classes['fillContainer']}></div>
+                    </button>
                 </div>
-                <div>
-                    <label>Weryfikacja hasła </label>
-                    <input type="text" placeholder="weryfikacja hasła" disabled></input>
-                </div>
-            </div>
-            <div>
-                <button>Zapisz</button>
-                <button>Anuluj</button>
-            </div>
-        </section>
+            </section>
+            <InteractiveBackground />
+        </div>
     )
 }
 

@@ -25,7 +25,7 @@ a{
 }
 
 .app{
-  height: 100vh;
+  // height: 100vh;
 }
 /* -------------
 Sidebar
@@ -131,7 +131,8 @@ Nav-Flyout
     position: absolute;
     background-color: #080D11;
     z-index: 9;
-    left: 2.5em;
+    // left: 2.5em;
+    left: 3.5em;
     top: 0;
     height: 100vh;
     transform: translateX(100%);
