@@ -1,6 +1,7 @@
 import React from 'react'
 import Nav from '../Utils/Nav'
 import InteractiveBackground from '../Utils/InteractiveBackground'
+import Button from '../Utils/Button'
 import classes from './AccountManagement.module.scss'
 
 const AccountManagement: React.FC = () => {
@@ -31,14 +32,9 @@ const AccountManagement: React.FC = () => {
                 </div>
                 <div className={classes['accountManagement__button_container']}>
                     {/* zrobic komponenty z tych buttonow */}
-                    <button className={classes['button']}>
-                        <span className={classes['buttonText']}>Zapisz</span>
-                        <div className={classes['fillContainer']}></div>
-                    </button>
-                    <button className={classes['button']}>
-                        <span className={classes['buttonText']}>Anuluj</span>
-                        <div className={classes['fillContainer']}></div>
-                    </button>
+                    <Button type="submit" text="Zapisz"/>
+                    <Button type="submit" text="Anuluj"/>
+
                 </div>
             </section>
             <InteractiveBackground />

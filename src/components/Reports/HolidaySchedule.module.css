@@ -1,14 +1,50 @@
-.scheduler-container {
+.main {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
 }
 
-.scheduler-date-container {
+.holiday-schedule__container {
+    width: 50%;
+    padding: 40px;
+    color: #fff;
+}
+
+.holiday-schedule__header {
+    border: 1px solid #e4f1fe;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 0 20px;
+    background-color: #005689; 
+}
+
+.holiday-schedule__data_container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e4f1fe;
+    border-bottom: none;
+    padding: 20px 5%;
+    background-color: #007cb9;
+}
+
+.holiday-schedule__date-container {
     display: flex;
     justify-content: space-between;
     max-width: 500px;
     max-height: 300px;
     padding: 10px 0;
+}
+
+.holiday-schedule__button_container {
+    display: flex;
+    justify-content: end;
+    border: 1px solid #e4f1fe;
+    background-color: #007cb9;
+    border-top: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 20px;
+    gap: 50px;
+    
 }
 
 .scheduler-button-container {
