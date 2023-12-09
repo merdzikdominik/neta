@@ -1,7 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import HolidayStatusReport from './HolidayStatusReport'
-import classes from '../Reports/EmployeePersonalData.module.css'
+import Nav from '../Utils/Nav'
+import Button from '../Utils/Button'
+import InteractiveBackground from '../Utils/InteractiveBackground'
+import classes from './HolidayStatus.module.scss'
 
 const HolidayStatus: React.FC = () => {
     const handleOpenNewWindow = (content: React.ComponentType) => {
@@ -19,21 +22,23 @@ const HolidayStatus: React.FC = () => {
             }
         }
     }
-
+// ogarnac stany urlopowe zeby nie byly urlopem rodzicielskim
     return (
-        <section className={classes['employee-data-container']}>
-            <div>
-                <h1>Urlop rodzicielski</h1>
-            </div>
-            <div>
-                <div className={classes['employee-data-message']}>
+        <div className={classes['main']}>
+            <Nav />
+            <section className={classes['holiday-status__container']}>
+                <div className={classes['holiday-status__header']}>
+                    <h1>Urlop rodzicielski</h1>
+                </div>
+                <div className={classes['holiday-status__data_container']}>
                     <span>Zaraz otworzysz raport zawierający request na urlop rodzicielski</span>
                 </div>
-                <div>
-                    <button type="submit" onClick={handleOpenNewWindow.bind(null, HolidayStatusReport)}>Wykonaj</button>
+                <div className={classes['holiday-status__button_container']}>
+                    <Button type="button" text="Wykonaj" onClick={handleOpenNewWindow.bind(null, HolidayStatusReport)}/>
                 </div>
-            </div>
-        </section>
+            </section>
+            <InteractiveBackground />
+        </div>
     )
 }
 

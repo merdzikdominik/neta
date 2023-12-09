@@ -1,7 +1,10 @@
 import React, { useState, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import HolidayUsedReport from './HolidayUsedReport'
-import classes from './EmployeePersonalData.module.css'
+import Nav from '../Utils/Nav'
+import Button from '../Utils/Button'
+import InteractiveBackground from '../Utils/InteractiveBackground'
+import classes from './HolidayUsed.module.scss'
 
 const HolidayUsed: React.FC = () => {
     const [isFirstCheckboxPressed, setIsFirstCheckboxPressed] = useState<boolean>(false)
@@ -98,37 +101,46 @@ const HolidayUsed: React.FC = () => {
     )
 
     return (
-        <section className={classes['employee-data-container']}>
-            <div>
-                <h1>Wykorzystane urlopy</h1>
-            </div>
-            <div>
-                <div className={classes['employee-data-message']}>
-                    <input 
-                        type="radio" 
-                        name="radio1"
-                        onChange={handleFirstCheckboxPress}
-                    />
-                    Miesiąc i Rok dla wygenerowania raportu: 
-
-                    { isFirstCheckboxPressed ? monthsYearsDropdown : ''}
-
-                    <input 
-                        type="radio" 
-                        name="radio1"
-                        onChange={handleSecondCheckboxPress}
-                    /> Inny okres: 
-                    <label>Data od: </label>
-                    <input type="date" />
-                    <label>Data do: </label>
-                    <input type="date" />
+        <div className={classes['main']}>
+            <Nav />
+            <section className={classes['holiday-used__container']}>
+                <div className={classes['holiday-used__header']}>
+                    <h1>Wykorzystane urlopy</h1>
                 </div>
-
                 <div>
-                    <button type="submit" onClick={handleOpenNewWindow.bind(null, HolidayUsedReport)}>Wykonaj</button>
+                    <div className={classes['holiday-used__data-container']}>
+                        <div>
+                            <input 
+                                type="radio" 
+                                name="radio1"
+                                onChange={handleFirstCheckboxPress}
+                            />
+                            Miesiąc i Rok dla wygenerowania raportu: 
+
+                            { isFirstCheckboxPressed ? monthsYearsDropdown : ''}
+
+                        </div>
+
+                        <div>
+                            <input 
+                                type="radio" 
+                                name="radio1"
+                                onChange={handleSecondCheckboxPress}
+                            /> Inny okres: 
+                            <label>Data od: </label>
+                            <input type="date" />
+                            <label>Data do: </label>
+                            <input type="date" />
+                        </div>
+                    </div>
+
+                    <div className={classes['holiday-used__button-container']}>
+                        <Button type="button" text="Wykonaj" onClick={handleOpenNewWindow.bind(null, HolidayUsedReport)}/>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+            <InteractiveBackground />
+        </div>
     )
 }
 

@@ -1,7 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import classes from '../Reports/EmployeePersonalData.module.css'
 import PaternityLeaveForm from './PaternityLeaveForm'
+import Nav from '../Utils/Nav'
+import Button from '../Utils/Button'
+import InteractiveBackground from '../Utils/InteractiveBackground'
+import classes from './PaternityLeave.module.scss'
 
 const PaternityLeave: React.FC = () => {
     const handleOpenNewWindow = (content: React.ComponentType) => {
@@ -21,19 +24,21 @@ const PaternityLeave: React.FC = () => {
     }
 
     return (
-        <section className={classes['employee-data-container']}>
-            <div>
-                <h1>Urlop rodzicielski</h1>
-            </div>
-            <div>
-                <div className={classes['employee-data-message']}>
+        <div className={classes['main']}>
+            <Nav />
+            <section className={classes['paternity-leave__container']}>
+                <div className={classes['paternity-leave__header']}>
+                    <h1>Urlop rodzicielski</h1>
+                </div>
+                <div className={classes['paternity-leave__data-container']}>
                     <span>Zaraz otworzysz raport zawierający request na urlop rodzicielski</span>
                 </div>
-                <div>
-                    <button type="submit" onClick={handleOpenNewWindow.bind(null, PaternityLeaveForm)}>Wykonaj</button>
+                <div className={classes['paternity-leave__button-container']}>
+                    <Button type="button" text="Wykonaj" onClick={handleOpenNewWindow.bind(null, PaternityLeaveForm)}/>
                 </div>
-            </div>
-        </section>
+            </section>
+            <InteractiveBackground />
+        </div>
     )
 }
 

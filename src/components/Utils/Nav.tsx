@@ -72,7 +72,7 @@ const Nav: React.FC = () => {
                                             <Link to='/raportowanie/stan-urlopowy'><i className="ion-ios-color-filter-outline"></i>Stan Urlopowy</Link>
                                         </li>
                                         <li>
-                                            <Link to='/raportowanie/wykorzystane-urlopy'><i className="ion-ios-color-filter-outline"></i>Wykorzystane Urlopy</Link>
+                                            <Link to='/raportowanie/wykorzystane-urlopy'>Wykorzystane Urlopy</Link>
                                         </li>
                                         <li>
                                             <Link to='/raportowanie/nieobecnosci'><i className="ion-ios-color-filter-outline"></i>Nieobecnosci</Link>

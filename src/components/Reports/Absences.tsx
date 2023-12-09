@@ -1,6 +1,10 @@
 import React, { useRef } from "react"
 import ReactDOM from 'react-dom'
 import AbsencesReport from "./AbsencesReport"
+import Nav from "../Utils/Nav"
+import InteractiveBackground from "../Utils/InteractiveBackground"
+import Button from "../Utils/Button"
+import classes from './Absences.module.scss'
 
 const Absences: React.FC = () => {
     const chosenMonth = useRef<HTMLSelectElement | null>(null)
@@ -87,24 +91,30 @@ const Absences: React.FC = () => {
     )
 
     return (
-        <div>
-            <div>
-                <h1>Nieobecności</h1>
-            </div>
-            <div>
-                <div>
-                    <input type="radio" name="input" /> Wybierz miesiąc i rok do generowania raportu
-                    { monthsYearsDropdown }
+        <div className={classes['main']}>
+            <Nav />
+            <section className={classes['absences__container']}>
+                <div className={classes['absences__header']}>
+                    <h1>Nieobecności</h1>
                 </div>
-                <div>
-                    <input type="radio" name="input" /> Inny okres:
-                    <label>Data od</label>
-                    <input type="date" />
-                    <label>Data do</label>
-                    <input type="date" />
+                <div className={classes['absences__data-container']}>
+                    <div>
+                        <input type="radio" name="input" /> Wybierz miesiąc i rok do generowania raportu
+                        { monthsYearsDropdown }
+                    </div>
+                    <div>
+                        <input type="radio" name="input" /> Inny okres:
+                        <label>Data od</label>
+                        <input type="date" />
+                        <label>Data do</label>
+                        <input type="date" />
+                    </div>
                 </div>
-            </div>
-            <button type="submit" onClick={handleOpenNewWindow.bind(null, AbsencesReport)}>Wykonaj</button>
+                <div className={classes['absences__button-container']}>
+                    <Button type="button" text="Wykonaj" onClick={handleOpenNewWindow.bind(null, AbsencesReport)} />
+                </div>
+            </section>
+            <InteractiveBackground />
         </div>
     )
 }
