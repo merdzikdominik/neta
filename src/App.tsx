@@ -21,6 +21,7 @@ import HolidayRequestList from './components/Holiday/HolidayRequestList'
 import HolidayYearPlans from './components/Holiday/HolidayYearPlans'
 import HolidayPlanningStatus from './components/Holiday/HolidayPlanningStatus'
 import AccountManagement from './components/EmployeeFile/AccountManagement'
+import CalendarHolder from './components/Utils/Calendar'
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
         <Route path='raportowanie/stan-urlopowy' element={<HolidayStatus />} />
         <Route path='raportowanie/wykorzystane-urlopy' element={<HolidayUsed />} />
         <Route path='raportowanie/nieobecnosci' element={<Absences />} />
+        <Route path='kalendarz' element={<CalendarHolder />} />
       </Routes>
     </div>
   );
