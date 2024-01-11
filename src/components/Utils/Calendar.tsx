@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { format } from 'date-fns'
+import React, { useState } from 'react'
+import { format, isWithinInterval } from 'date-fns'
 import Calendar from 'react-calendar'
 import InteractiveBackground from './InteractiveBackground'
 import styled from 'styled-components'
@@ -43,6 +43,11 @@ const CalendarContainer = styled.section`
     height: 40px;
 }
 
+.react-calendar__tile--custom {
+    color: #fff;
+    background-color: #ADD8E6;
+}
+
 .react-calendar__navigation__label {
     pointer-events: none;
 }
@@ -52,17 +57,14 @@ button {
     background-color: #fff;
     border: 0;
     border-radius: 3px;
-    color: blue;
+    color: #000C66;
     padding: 5px 0;
 
     &:hover {
-        background-color: #556b55;
+        background-color: #75E6DA;
     }
 }
 
-.react-calendar__tile--custom {
-    background-color: red;
-}
 
 `
 
@@ -72,41 +74,40 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const CalendarHolder: React.FC = () => {
     const [value, setValue] = useState<Value>(new Date());
-
-    useEffect(() => {
-        const formattedDate = format(value as Date, 'dd.MM.yyyy')
-        setValue(formattedDate)
-
-        console.log(value)
-    }, [])
-
+  
     const handleDateChange = (newValue: Value) => {
-        // it will format the date clicked on the particular day
-        const formattedDate = format(value as Date, 'dd.MM.yyyy')
-        setValue(formattedDate)
-        // console.log(format(newValue as Date, 'dd.MM.yyyy'))
-    }
+      setValue(newValue);
+    };
 
-    const tileClassName = ({ date, view }: any) => {
-        if (date.toISOString().split('T')[0] === '10.01.2024') {
-          return '.react-calendar__tile--custom'
+    const isDateInRange = (date: Date, startDate: Date, endDate: Date) => {
+        return isWithinInterval(date, { start: startDate, end: endDate });
+    };
+  
+    const tileClassName = ({ date }: any) => {
+    //   const formattedDate = format(date, 'dd.MM.yyyy');
+        //  sterowanie data
+        const startDate = new Date('2024-01-11');
+        const endDate = new Date('2024-01-15');
+
+        if (isDateInRange(date, startDate, endDate)) {
+            return 'react-calendar__tile--custom';
         }
-        return ''
-      };
-
+      return '';
+    };
+  
     return (
-        <>
-            <CalendarContainer>
-                <Calendar 
-                    onChange={handleDateChange} 
-                    value={value} 
-                    showNeighboringMonth={false}
-                    tileClassName={tileClassName}
-                />
-            </CalendarContainer>
-            <InteractiveBackground />
-        </>
-    )
-}
+      <>
+        <CalendarContainer>
+          <Calendar
+            onChange={handleDateChange}
+            value={value}
+            showNeighboringMonth={false}
+            tileClassName={tileClassName}
+          />
+        </CalendarContainer>
+        <InteractiveBackground />
+      </>
+    );
+};
 
 export default CalendarHolder

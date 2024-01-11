@@ -1,6 +1,8 @@
 .reports-data-change__form {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    min-height: 100vh;
 }
 
 .reports-data-change__second-position {

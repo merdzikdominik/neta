@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Nav from "../Utils/Nav"
 import Button from "../Utils/Button"
 import InteractiveBackground from "../Utils/InteractiveBackground"
-import Calendar from "../Utils/Calendar"
-import NewWindow from 'react-new-window'
+import CalendarHolder from "../Utils/Calendar"
+// import NewWindow from 'react-new-window'
 import classes from "./HolidaySchedule.module.css"
 import '../Utils/Calendar.module.scss'
 
@@ -20,8 +20,8 @@ interface IState {
 
 const HolidaySchedule: React.FC = () => {
     const [date, setDate] = useState<IDate>({ dateFrom: '', dateTo: '' })
+    const [isCalendarOpened, setIsCalendarOpened] = useState<boolean>(false)
     // const [state, setState] = useState<IState>({ showWindowPortal: false })
-    const [isOpen, setIsOpen] = useState<boolean>(false)
     const navigate = useNavigate()
 
     const handleDate = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,10 +41,12 @@ const HolidaySchedule: React.FC = () => {
     }
 
     const handleOpenNewWindow = () => {
-        if (!isOpen) {
-            setIsOpen(true);
-          }
-      };
+        window.open('/kalendarz', '_blank')
+    }
+
+    const handleOpenCalendar = () => {
+        setIsCalendarOpened(prev => !prev)
+    }
 
     return (
         <>
@@ -69,14 +71,14 @@ const HolidaySchedule: React.FC = () => {
                             </div>
                         </div>
                         <div className={classes['holiday-schedule__button_container']}>
+                            <Button type="submit" text="Pokaz kalendarz urlopowy" onClick={handleOpenCalendar}/>
                             <Button type="submit" text="Wykonaj" onClick={handleOpenNewWindow}/>
                         </div>
                     </form>
+                    {isCalendarOpened && <CalendarHolder />}
                 </section>
                 <InteractiveBackground />
             </div>
-
-
         </>
     )
 }
