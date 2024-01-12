@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
-import { format, isWithinInterval } from 'date-fns'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { isWithinInterval } from 'date-fns'
+import { RootState } from '../../store/types'
 import Calendar from 'react-calendar'
 import InteractiveBackground from './InteractiveBackground'
 import styled from 'styled-components'
@@ -64,8 +66,6 @@ button {
         background-color: #75E6DA;
     }
 }
-
-
 `
 
 type ValuePiece = Date | string | null;
@@ -73,26 +73,32 @@ type ValuePiece = Date | string | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const CalendarHolder: React.FC = () => {
-    const [value, setValue] = useState<Value>(new Date());
-  
+    const { dateFrom, dateTo } = useSelector((state: RootState) => state.dates)
+    const [value, setValue] = useState<Value>(new Date())
+
+    useEffect(() => {
+        console.log(`dateFrom: ${dateFrom} & dateTo: ${dateTo}`)
+    }, [dateFrom, dateTo])
+
     const handleDateChange = (newValue: Value) => {
       setValue(newValue);
     };
 
     const isDateInRange = (date: Date, startDate: Date, endDate: Date) => {
-        return isWithinInterval(date, { start: startDate, end: endDate });
+        const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+        return +date === +startOfDay(startDate) || isWithinInterval(date, { start: startOfDay(startDate), end: endDate });
     };
   
     const tileClassName = ({ date }: any) => {
-    //   const formattedDate = format(date, 'dd.MM.yyyy');
-        //  sterowanie data
-        const startDate = new Date('2024-01-11');
-        const endDate = new Date('2024-01-15');
+        const startDate = new Date(dateFrom)
+        const endDate = new Date(dateTo)
 
-        if (isDateInRange(date, startDate, endDate)) {
-            return 'react-calendar__tile--custom';
+        if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+            if (isDateInRange(date, startDate, endDate)) {
+              return 'react-calendar__tile--custom';
+            }
         }
-      return '';
+        return '';
     };
   
     return (

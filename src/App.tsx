@@ -20,7 +20,7 @@ import HolidayRequestList from './components/Holiday/HolidayRequestList'
 import HolidayYearPlans from './components/Holiday/HolidayYearPlans'
 import HolidayPlanningStatus from './components/Holiday/HolidayPlanningStatus'
 import AccountManagement from './components/EmployeeFile/AccountManagement'
-import CalendarHolder from './components/Utils/Calendar'
+import CalendarHolder from './components/Utils/CalendarHolder'
 
 function App() {
   return (

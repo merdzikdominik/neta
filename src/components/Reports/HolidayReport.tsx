@@ -1,19 +1,20 @@
 import React, { useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { RootState } from "../../store/types"
+import CalendarHolder from "../Utils/CalendarHolder"
 
 const HolidayReport: React.FC = () => {
-    const location = useLocation()
-    const prop = location.state && location.state.prop
+    // const { dateFrom, dateTo } = useSelector((state: RootState) => state.dates)
 
-    useEffect(() => {
-        console.log(prop)
-    }, [prop])
+    // useEffect(() => {
+    //     if (dateFrom && dateTo) {
+    //         console.log(dateFrom, dateTo)
+    //     }
+        
+    // }, [dateFrom, dateTo])
 
     return (
-        <>
-            Holiday Report prop: {prop['dateFrom']} {prop['dateTo']}
-            PYTHON PART HERE TO GENERATE THE CALENDAR WITH IMPORT CALENDAR
-        </>
+        <CalendarHolder />
     )
 }
 

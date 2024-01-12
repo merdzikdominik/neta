@@ -1,86 +1,87 @@
-import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import Nav from "../Utils/Nav"
-import Button from "../Utils/Button"
-import InteractiveBackground from "../Utils/InteractiveBackground"
-import CalendarHolder from "../Utils/Calendar"
-// import NewWindow from 'react-new-window'
-import classes from "./HolidaySchedule.module.css"
-import '../Utils/Calendar.module.scss'
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Nav from "../Utils/Nav";
+import Button from "../Utils/Button";
+import InteractiveBackground from "../Utils/InteractiveBackground";
+import CalendarHolder from "../Utils/CalendarHolder";
+import classes from "./HolidaySchedule.module.css";
 
-
-interface IDate {
-    dateFrom: string,
-    dateTo: string
-}
-
-interface IState {
-    showWindowPortal: boolean
+interface RootState {
+  dates: {
+    dateFrom: string;
+    dateTo: string;
+  };
 }
 
 const HolidaySchedule: React.FC = () => {
-    const [date, setDate] = useState<IDate>({ dateFrom: '', dateTo: '' })
-    const [isCalendarOpened, setIsCalendarOpened] = useState<boolean>(false)
-    // const [state, setState] = useState<IState>({ showWindowPortal: false })
-    const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { dateFrom, dateTo } = useSelector((state: RootState) => state.dates)
 
-    const handleDate = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault()
+  const [isCalendarOpened, setIsCalendarOpened] = useState<boolean>(false)
 
-        setDate(prev => ({
-            ...prev,
-            [event.target.name]: event.target.value
-        }))
-        
-    } 
+  const handleDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault()
 
-    const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
+    dispatch({
+      type: 'SET_DATES',
+      payload: {
+        dateFrom: event.target.name === 'dateFrom' ? event.target.value : dateFrom,
+        dateTo: event.target.name === 'dateTo' ? event.target.value : dateTo,
+      },
+    })
+  }
 
-        navigate('/raportowanie/data-urlopu/raport-urlopowy', { state: { prop: date } })
-    }
+  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
 
-    const handleOpenNewWindow = () => {
-        window.open('/kalendarz', '_blank')
-    }
+    // navigate('/raportowanie/data-urlopu/raport-urlopowy')
+    window.open('/raportowanie/data-urlopu/raport-urlopowy', '_blank')
+  };
 
-    const handleOpenCalendar = () => {
-        setIsCalendarOpened(prev => !prev)
-    }
+  const handleOpenNewWindow = () => {
+    // Tutaj możesz użyć wartości z Redux do przekazania dat do nowego okna
+    window.open('/kalendarz', '_blank')
+  };
 
-    return (
-        <>
-            <div className={classes['main']}>
-                <Nav /> 
-                <section className={classes['holiday-schedule__container']}>
-                    <div className={classes['holiday-schedule__header']}>
-                        <h1>Planowanie urlopów</h1>
-                    </div>
-                    <form onSubmit={handleSubmitForm}>
-                        <div className={classes['holiday-schedule__data_container']}>
-                            <span>Wybierz datę początkową i końcową na które ma zostać wygenerowany raport:</span>
-                            <div>
-                                <div className={classes['holiday-schedule__date-container']}>
-                                    <label>Data od:</label>
-                                    <input type="date" onChange={handleDate} name="dateFrom" required />
-                                </div>
-                                <div className={classes['holiday-schedule__date-container']}>
-                                    <label>Data do:</label>
-                                    <input type="date" onChange={handleDate} name="dateTo" required />
-                                </div>
-                            </div>
-                        </div>
-                        <div className={classes['holiday-schedule__button_container']}>
-                            <Button type="submit" text="Pokaz kalendarz urlopowy" onClick={handleOpenCalendar}/>
-                            <Button type="submit" text="Wykonaj" onClick={handleOpenNewWindow}/>
-                        </div>
-                    </form>
-                    {isCalendarOpened && <CalendarHolder />}
-                </section>
-                <InteractiveBackground />
+  const handleOpenCalendar = () => {
+    setIsCalendarOpened(prev => !prev);
+  };
+
+  return (
+    <>
+      <div className={classes['main']}>
+        <Nav />
+        <section className={classes['holiday-schedule__container']}>
+          <div className={classes['holiday-schedule__header']}>
+            <h1>Planowanie urlopów</h1>
+          </div>
+          <form onSubmit={handleSubmitForm}>
+            <div className={classes['holiday-schedule__data_container']}>
+              <span>Wybierz datę początkową i końcową na które ma zostać wygenerowany raport:</span>
+              <div>
+                <div className={classes['holiday-schedule__date-container']}>
+                  <label>Data od:</label>
+                  <input type="date" onChange={handleDate} name="dateFrom" value={dateFrom} required />
+                </div>
+                <div className={classes['holiday-schedule__date-container']}>
+                  <label>Data do:</label>
+                  <input type="date" onChange={handleDate} name="dateTo" value={dateTo} required />
+                </div>
+              </div>
             </div>
-        </>
-    )
-}
+            <div className={classes['holiday-schedule__button_container']}>
+              <Button type="submit" text="Pokaz kalendarz urlopowy" onClick={handleOpenCalendar} />
+              <Button type="button" text="Wykonaj" onClick={handleOpenNewWindow} />
+            </div>
+          </form>
+          {isCalendarOpened && <CalendarHolder />}
+        </section>
+        <InteractiveBackground />
+      </div>
+    </>
+  );
+};
 
-export default HolidaySchedule
+export default HolidaySchedule;
