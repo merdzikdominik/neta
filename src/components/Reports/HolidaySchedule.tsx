@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { SET_DATES } from "../../store/types";
 import Nav from "../Utils/Nav";
 import Button from "../Utils/Button";
 import InteractiveBackground from "../Utils/InteractiveBackground";
@@ -16,7 +17,7 @@ interface RootState {
 
 const HolidaySchedule: React.FC = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+//   const navigate = useNavigate()
   const { dateFrom, dateTo } = useSelector((state: RootState) => state.dates)
 
   const [isCalendarOpened, setIsCalendarOpened] = useState<boolean>(false)
@@ -24,12 +25,14 @@ const HolidaySchedule: React.FC = () => {
   const handleDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
 
-    dispatch({
-      type: 'SET_DATES',
-      payload: {
+    const payload = {
         dateFrom: event.target.name === 'dateFrom' ? event.target.value : dateFrom,
-        dateTo: event.target.name === 'dateTo' ? event.target.value : dateTo,
-      },
+        dateTo: event.target.name === 'dateTo' ? event.target.value : dateTo
+    }
+
+    dispatch({
+      type: SET_DATES,
+      payload
     })
   }
 
@@ -41,7 +44,6 @@ const HolidaySchedule: React.FC = () => {
   };
 
   const handleOpenNewWindow = () => {
-    // Tutaj możesz użyć wartości z Redux do przekazania dat do nowego okna
     window.open('/kalendarz', '_blank')
   };
 
