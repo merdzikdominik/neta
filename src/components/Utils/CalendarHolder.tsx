@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { isWithinInterval } from 'date-fns'
 import { RootState } from '../../store/types'
@@ -75,10 +75,6 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 const CalendarHolder: React.FC = () => {
     const { dateFrom, dateTo } = useSelector((state: RootState) => state.dates)
     const [value, setValue] = useState<Value>(new Date())
-
-    useEffect(() => {
-        console.log(`dateFrom: ${dateFrom} & dateTo: ${dateTo}`)
-    }, [dateFrom, dateTo])
 
     const handleDateChange = (newValue: Value) => {
       setValue(newValue);

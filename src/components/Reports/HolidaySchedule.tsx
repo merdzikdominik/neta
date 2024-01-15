@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SET_DATES } from "../../store/types";
 import Nav from "../Utils/Nav";
 import Button from "../Utils/Button";
@@ -17,7 +17,7 @@ interface RootState {
 
 const HolidaySchedule: React.FC = () => {
   const dispatch = useDispatch()
-//   const navigate = useNavigate()
+  const navigate = useNavigate()
   const { dateFrom, dateTo } = useSelector((state: RootState) => state.dates)
 
   const [isCalendarOpened, setIsCalendarOpened] = useState<boolean>(false)
@@ -25,31 +25,67 @@ const HolidaySchedule: React.FC = () => {
   const handleDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
 
-    const payload = {
-        dateFrom: event.target.name === 'dateFrom' ? event.target.value : dateFrom,
-        dateTo: event.target.name === 'dateTo' ? event.target.value : dateTo
-    }
+    const { name, value } = event.target
 
     dispatch({
       type: SET_DATES,
-      payload
+      payload: {
+        dateFrom: name === 'dateFrom' ? value : dateFrom,
+        dateTo: name === 'dateTo' ? value : dateTo
+      }
     })
   }
 
-  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const handleAddHoliday = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/add_holiday/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          dateFrom,
+          dateTo
+        }),
+      });
 
-    // navigate('/raportowanie/data-urlopu/raport-urlopowy')
-    window.open('/raportowanie/data-urlopu/raport-urlopowy', '_blank')
-  };
-
-  const handleOpenNewWindow = () => {
-    window.open('/kalendarz', '_blank')
+      if (response.ok) {
+        console.log('Urlop dodany pomyślnie');
+        // Tutaj możesz dodać logikę, która będzie wykonywana po dodaniu urlopu
+      } else {
+        console.error('Błąd przy dodawaniu urlopu');
+      }
+    } catch (error) {
+      console.error('Błąd przy wysyłaniu żądania', error);
+    }
   };
 
   const handleOpenCalendar = () => {
     setIsCalendarOpened(prev => !prev);
   };
+
+  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    handleAddHoliday()
+
+    navigate('/raportowanie/data-urlopu/raport-urlopowy');
+    // window.open('/raportowanie/data-urlopu/raport-urlopowy', '_blank')
+  };
+
+  const handleButtonClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.FormEvent<HTMLFormElement>
+  ) => {
+    if (event.currentTarget instanceof HTMLButtonElement) {
+      // Zdarzenie kliknięcia przycisku
+      handleSubmitForm(event as React.FormEvent<HTMLFormElement>);
+    } else {
+      // Zdarzenie submit formularza
+      event.preventDefault();
+      navigate('/raportowanie/data-urlopu/raport-urlopowy');
+    }
+  };
+
 
   return (
     <>
@@ -74,8 +110,8 @@ const HolidaySchedule: React.FC = () => {
               </div>
             </div>
             <div className={classes['holiday-schedule__button_container']}>
-              <Button type="submit" text="Pokaz kalendarz urlopowy" onClick={handleOpenCalendar} />
-              <Button type="button" text="Wykonaj" onClick={handleOpenNewWindow} />
+              <Button type="button" text="Wyświetl w kalendarzu" onClick={handleOpenCalendar} />
+              <Button type="submit" text="Wykonaj" onClick={handleButtonClick} />
             </div>
           </form>
           {isCalendarOpened && <CalendarHolder />}

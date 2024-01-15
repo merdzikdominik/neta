@@ -10,8 +10,8 @@ const EmployeeFile: React.FC = () => {
             <header>
                 <h1>Kartoteka</h1>
             </header>
-            <Navigation />
             <Nav />
+            <Navigation />
             <InteractiveBackground />
         </>
     )
