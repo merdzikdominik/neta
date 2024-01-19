@@ -1,8 +1,18 @@
 import React from 'react'
-import Navigation from '../Navigation'
+import Nav from '../Utils/Nav'
+import InteractiveBackground from '../Utils/InteractiveBackground'
+import classes from './Reports.module.scss'
 
 const Reports: React.FC = () => {
-    return <Navigation />
+    return (
+        <div className={classes['main']}>
+            <Nav />
+            <section className={classes['reports__container']}>
+
+            </section>
+            <InteractiveBackground />
+        </div>
+    )
 }
 
 export default Reports
