@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar } from 'react-calendar';
+import { isWithinInterval } from 'date-fns'
 import InteractiveBackground from './InteractiveBackground';
 import styled from 'styled-components';
 
@@ -103,11 +104,13 @@ const CalendarHolder: React.FC = () => {
   };
 
   const isDateInRange = (date: Date) => {
-    return calendarDates.some((item) => {
-      const startDate = new Date(item.dateFrom);
-      const endDate = new Date(item.dateTo);
-      return date >= startDate && date <= endDate;
-    });
+        return calendarDates.some((item) => {
+            const startDate = new Date(item.dateFrom);
+            const endDate = new Date(item.dateTo);
+            const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+            
+            return +date === +startOfDay(startDate) || isWithinInterval(date, { start: startOfDay(startDate), end: endDate });
+          });
   };
 
   const tileClassName = ({ date }: any) => {
