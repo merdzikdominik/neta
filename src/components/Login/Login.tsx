@@ -1,116 +1,102 @@
-import React, { useState } from 'react'
-import EmailValidator from 'email-validator'
-import classes from './Login.module.scss'
+import React, { useState } from 'react';
+import EmailValidator from 'email-validator';
+import classes from './Login.module.scss';
 
 const Login: React.FC = () => {
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const [errorFirstname, setErrorFirstname] = useState(false);
-  const [errorLastname, setErrorLastname] = useState(false);
-  const [errorEmail, setErrorEmail] = useState(false);
-  const [errorPassword, setErrorPassword] = useState(false);
+  const [errorEmail, setErrorEmail] = useState<boolean>(false);
+  const [errorPassword, setErrorPassword] = useState<boolean>(false);
+  const [loginError, setLoginError] = useState<string | undefined>(undefined);
+
+  const login = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: email,
+          password: password,
+        }),
+      });
+
+      if (response.ok) {
+        // Obsłuż sukces logowania, np. przekieruj użytkownika do innej strony
+        console.log('Logowanie udane!');
+      } else {
+        // Obsłuż błąd logowania
+        setLoginError('Błąd logowania. Sprawdź wprowadzone dane.');
+      }
+    } catch (error) {
+      console.error('Błąd logowania:',  error instanceof Error ? error.message : 'Nieznany błąd');
+      setLoginError('Wystąpił błąd podczas logowania. Spróbuj ponownie.');
+    }
+  };
 
   const submit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    firstname === '' ? setErrorFirstname(true) : setErrorFirstname(false);
-    lastname === '' ? setErrorLastname(true) : setErrorLastname(false);
-    !EmailValidator.validate(email) ? setErrorEmail(true) : setErrorEmail(false);
-    password === '' ? setErrorPassword(true) : setErrorPassword(false);
+    setErrorEmail(!EmailValidator.validate(email));
+    setErrorPassword(password === '');
+
+    if (!errorEmail && !errorPassword) {
+      login();
+    }
   };
 
   return (
     <main>
-      <div className={classes["container"]}>
-        <div className={classes["left-panel"]}>
-          <h1 className={classes["left-panel__title"]}>Learn to code by watching others</h1>
-          <p className={classes["left-panel__description"]}>
-            See how experienced developers solve problems in real-time. Watching scripted tutorials is great, but understanding how developers think is invaluable.
+      <div className={classes['container']}>
+        <div className={classes['left-panel']}>
+          <h1 className={classes['left-panel__title']}>Logowanie</h1>
+          <p className={classes['left-panel__description']}>
+            Zaloguj się do swojego profilu, aby móc zarządzać swoimi urlopami i danymi osobistymi.
           </p>
         </div>
-        <div className={classes["right-panel"]}>
-          <div className={classes["right-panel__top-box"]}>
-            Try it free 7 days <span>then $20/mo. thereafter</span>
-          </div>
-          <form className={classes["right-panel__form"]} onSubmit={submit} noValidate>
-            <div className={classes["right-panel__form__section"]}>
-              <input
-                type="text"
-                id="firstname"
-                className={classes[`right-panel__form__section__input ${errorFirstname ? 'error' : ''}`]}
-                autoComplete="off"
-                required
-                onChange={(e) => setFirstname(e.target.value)}
-              />
-              <label htmlFor="firstname" className={classes["right-panel__form__section__label"]}>
-                <span className={classes["right-panel__form__section__label__content"]}>
-                  {errorFirstname ? '' : 'First Name'}
-                </span>
-              </label>
-            </div>
-            {errorFirstname && <div className={classes["message-error"]}>First Name cannot be empty</div>}
-
-            <div className={classes["right-panel__form__section"]}>
-              <input
-                type="text"
-                id="lastname"
-                className={classes[`right-panel__form__section__input ${errorLastname ? 'error' : ''}`]}
-                autoComplete="off"
-                required
-                onChange={(e) => setLastname(e.target.value)}
-              />
-              <label htmlFor="lastname" className={classes["right-panel__form__section__label"]}>
-                <span className={classes["right-panel__form__section__label__content"]}>
-                  {errorLastname ? '' : 'Last Name'}
-                </span>
-              </label>
-            </div>
-            {errorLastname && <div className={classes["message-error"]}>Last Name cannot be empty</div>}
-
-            <div className={classes["right-panel__form__section"]}>
+        <div className={classes['right-panel']}>
+          <form className={classes['right-panel__form']} onSubmit={submit} noValidate>
+            <div className={classes['right-panel__form__section']}>
               <input
                 type="text"
                 id="email"
-                className={classes[`right-panel__form__section__input ${errorEmail ? 'error' : ''}`]}
+                className={(errorEmail ? classes['error'] : '') as string}
                 autoComplete="off"
                 required
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <label htmlFor="email" className={classes["right-panel__form__section__label"]}>
-                <span className={classes["right-panel__form__section__label__content"]}>
-                  {errorEmail ? '' : 'Email Address'}
+              <label htmlFor="email" className={classes['right-panel__form__section__label']}>
+                <span className={classes['right-panel__form__section__label__content']}>
+                  {errorEmail ? '' : 'Adres email'}
                 </span>
               </label>
             </div>
-            {errorEmail && <div className={classes["message-error"]}>Looks like this is not an email</div>}
+            {errorEmail && <div className={classes['message-error']}>Wprowadź poprawny adres.</div>}
 
-            <div className={classes["right-panel__form__section"]}>
+            <div className={classes['right-panel__form__section']}>
               <input
                 type="password"
                 id="password"
-                className={classes[`right-panel__form__section__input ${errorPassword ? 'error' : ''}`]}
+                className={(errorPassword ? classes['error'] : '') as string}
                 autoComplete="off"
                 required
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <label htmlFor="password" className={classes["right-panel__form__section__label"]}>
-                <span className={classes["right-panel__form__section__label__content"]}>
-                  {errorPassword ? '' : 'Password'}
+              <label htmlFor="password" className={classes['right-panel__form__section__label']}>
+                <span className={classes['right-panel__form__section__label__content']}>
+                  {errorPassword ? '' : 'Hasło'}
                 </span>
               </label>
             </div>
-            {errorPassword && <div className={classes["message-error"]}>Password cannot be empty</div>}
+            {errorPassword && <div className={classes['message-error']}>Hasło nie może być puste.</div>}
 
-            <button type="submit" className={classes["right-panel__form__btn"]}>
-              Claim your free trial
+            {loginError && <div className={classes['message-error']}>{loginError}</div>}
+
+            <button type="submit" className={classes['right-panel__form__btn']}>
+              Zaloguj
             </button>
-            <div className={classes["right-panel__form__terms"]}>
-              By clicking the button, you are agreeing to our&nbsp;
-              <span>Terms and Services</span>
-            </div>
           </form>
         </div>
       </div>
@@ -119,3 +105,8 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
+// {
+//   "username": "damian.gowno@onet.pl",
+//   "password": "123"
+// }

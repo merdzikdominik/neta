@@ -23,7 +23,6 @@
     --red: hsl(0, 100%, 74%);
     --green: hsl(154, 59%, 51%);
     --blue: hsl(248, 32%, 49%);
-    --top-box: #5d54a3;
   }
   
   $bp-medium: 41.125em; // 658px
@@ -45,7 +44,7 @@
   
   html {
     box-sizing: border-box;
-    font-size: 62.5%; // 1rem = 10px, 10px/16px = 62.5%
+    font-size: 62.5%;
   }
   
   body {
@@ -54,8 +53,7 @@
     font-weight: 400;
     line-height: 1.6;
   
-    background: var(--red);
-    // background-image: url(../img/bg-intro-desktop.png);
+    background: #0040C1;
   }
   
   main {
@@ -79,11 +77,11 @@
     }
   
     @media only screen and (max-width: $bp-small-2) {
-      padding: 10rem 5rem 0 5rem;
+      padding: 5rem 5rem 0 5rem;
     }
   
     @media only screen and (max-width: $bp-small-3) {
-      padding: 10rem 2.4rem 0 2.4rem;
+      padding: 5rem 2.4rem 0 2.4rem;
     }
   }
 
@@ -141,53 +139,12 @@
     width: auto;
   }
 
-  &__top-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: white;
-    background: var(--top-box);
-    border-radius: 1rem;
-    height: 6rem;
-    padding-top: 0.3rem;
-
-    box-shadow: var(--shadow);
-
-    @media only screen and (max-width: $bp-small-1) {
-      flex-direction: column;
-      padding-top: 0;
-    }
-
-    @media only screen and (max-width: $bp-small-2) {
-      display: inline-block;
-      margin-top: 6.3rem;
-      height: 8.7rem;
-      width: 100%;
-      text-align: center;
-      padding: 2rem 6rem 0 6rem;
-
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
-    @media only screen and (max-width: $bp-small-3) {
-      line-height: 2.6rem;
-    }
-
-    span {
-      font-weight: 400;
-      opacity: 0.9;
-    }
-  }
-
   &__form {
     display: flex;
     flex-direction: column;
 
     background: white;
-    margin-top: 2.4rem;
+    // margin-top: 2.4rem;
     border-radius: 1rem;
 
     padding: 4rem 4rem 3rem 4rem;
@@ -203,6 +160,7 @@
     }
 
     &__section {
+      width: 100%;
       position: relative;
       height: 5.6rem;
       margin-bottom: 2rem;
@@ -211,16 +169,15 @@
         margin-bottom: 1.6rem;
       }
 
-      &__input {
+      input {
         width: 100%;
-        // height: 5.6rem;
+        max-width: inherit;
+        margin: auto;
+        padding: 0 3rem;
         height: 100%;
         font-size: 1.5rem;
         font-weight: 600;
         color: var(--color-grey-dark-1);
-
-        padding: 0 3rem;
-        // margin-bottom: 2rem;
         outline: none;
         border-radius: 0.5rem;
         border: 1px solid var(--color-grey-light-3);
@@ -237,11 +194,10 @@
           .right-panel__form__section__label__content {
           visibility: hidden;
         }
-      }
-
-      &__input.error {
-        border: 2px solid var(--red);
-        color: var(--red);
+        &__error {
+          border: 2px solid var(--red);
+          color: var(--red);
+        }
       }
 
       &__label {
@@ -287,29 +243,6 @@
       border-radius: 0.5rem;
       padding-top: 0.2rem;
       letter-spacing: 0.1rem;
-    }
-    &__terms {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-size: 1.1rem;
-      font-weight: 400;
-      color: var(--color-grey-dark-3);
-
-      height: 4.4rem;
-
-      @media only screen and (max-width: $bp-small-2) {
-        display: inline-block;
-        margin-top: 1rem;
-        text-align: center;
-        line-height: 2rem;
-      }
-
-      span {
-        color: var(--red);
-        font-weight: 600;
-      }
     }
 
     .message-error {
