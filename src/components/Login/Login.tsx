@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import EmailValidator from 'email-validator';
 import classes from './Login.module.scss';
 
@@ -9,6 +10,8 @@ const Login: React.FC = () => {
   const [errorEmail, setErrorEmail] = useState<boolean>(false);
   const [errorPassword, setErrorPassword] = useState<boolean>(false);
   const [loginError, setLoginError] = useState<string | undefined>(undefined);
+
+  const navigate = useNavigate()
 
   const login = async () => {
     try {
@@ -22,16 +25,31 @@ const Login: React.FC = () => {
           password: password,
         }),
       });
-
+  
       if (response.ok) {
         // Obsłuż sukces logowania, np. przekieruj użytkownika do innej strony
         console.log('Logowanie udane!');
-      } else {
+
+        const data = await response.json()
+
+        if (!data || !data.token) {
+          console.log('Brak danych o użytkowniku lub tokenie')
+          return;
+        }
+        // console.log(data)
+        localStorage.setItem('authToken', data.token)
+        // console.log(data.token)
+
+        navigate('/strona-glowna')
+
+      }
+      else {
         // Obsłuż błąd logowania
+        console.log(response)
         setLoginError('Błąd logowania. Sprawdź wprowadzone dane.');
       }
     } catch (error) {
-      console.error('Błąd logowania:',  error instanceof Error ? error.message : 'Nieznany błąd');
+      console.error('Błąd logowania:', error instanceof Error ? error.message : 'Nieznany błąd');
       setLoginError('Wystąpił błąd podczas logowania. Spróbuj ponownie.');
     }
   };
@@ -109,4 +127,12 @@ export default Login;
 // {
 //   "username": "damian.gowno@onet.pl",
 //   "password": "123"
+// }
+
+// amokebio1234@gmail.com
+//zaq1@WSX
+
+// {
+//   "username": "amokebio1234@gmail.com",
+//   "password": "zaq1@WSX"
 // }

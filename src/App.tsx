@@ -26,17 +26,18 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path='/' element={<MainPage/>} />
-        <Route path='modul-administracyjny' element={<AdminModule/>} />
-        <Route path='kartoteka-pracownika' element={<EmployeeFile/>} />
-        <Route path='kartoteka-pracownika/dane-pracownika' element={<EmployeeFileData/>} />
-        <Route path='kartoteka-pracownika/zarzadzanie-kontami' element={<AccountManagement/>} />
+        <Route path='/' element={<Login/>} />
+        <Route path='/strona-glowna' element={<MainPage />} />
+        <Route path='modul-administracyjny' element={<AdminModule />} />
+        <Route path='kartoteka-pracownika' element={<EmployeeFile />} />
+        <Route path='kartoteka-pracownika/dane-pracownika' element={<EmployeeFileData />} />
+        <Route path='kartoteka-pracownika/zarzadzanie-kontami' element={<AccountManagement />} />
         <Route path='urlopy' element={<Holiday/>} />
         <Route path='urlopy/wnioski-urlopowe' element={<HolidayRequest />} />
         <Route path='urlopy/lista-wnioskow' element={<HolidayRequestList />} />
         <Route path='urlopy/roczne-plany-urlopowe' element={<HolidayYearPlans />} />
         <Route path='urlopy/stan-rozplanowywania-urlopow' element={<HolidayPlanningStatus />} />
-        <Route path='logowanie' element={<Login />} />
+        {/* <Route path='logowanie' element={<Login />} /> */}
         <Route path='rejestracja' element={<Register />} />
         <Route path='raportowanie' element={<Reports/>} />
         <Route path='raportowanie/data-urlopu' element={<HolidaySchedule />} />
