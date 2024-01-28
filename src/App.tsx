@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+
 import { Routes, Route } from 'react-router-dom'
 import MainPage from './components/MainPage'
 import AdminModule from './components/Admin/AdminModule'
@@ -22,12 +24,32 @@ import HolidayPlanningStatus from './components/Holiday/HolidayPlanningStatus'
 import AccountManagement from './components/EmployeeFile/AccountManagement'
 import CalendarHolder from './components/Utils/CalendarHolder'
 
+const hasToken = (): boolean => {
+  const token = localStorage.getItem('authToken');
+  return token !== null;
+}
+
 function App() {
+
+  const [hasValidToken, setHasValidToken] = useState(hasToken());
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setHasValidToken(hasToken());
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   return (
     <div>
       <Routes>
-        <Route path='/' element={<Login/>} />
-        <Route path='/strona-glowna' element={<MainPage />} />
+        <Route path='/' element={ hasValidToken ? <MainPage /> : <Login /> } />
+        <Route path='strona-glowna' element={<MainPage />} />
         <Route path='modul-administracyjny' element={<AdminModule />} />
         <Route path='kartoteka-pracownika' element={<EmployeeFile />} />
         <Route path='kartoteka-pracownika/dane-pracownika' element={<EmployeeFileData />} />
@@ -37,7 +59,6 @@ function App() {
         <Route path='urlopy/lista-wnioskow' element={<HolidayRequestList />} />
         <Route path='urlopy/roczne-plany-urlopowe' element={<HolidayYearPlans />} />
         <Route path='urlopy/stan-rozplanowywania-urlopow' element={<HolidayPlanningStatus />} />
-        {/* <Route path='logowanie' element={<Login />} /> */}
         <Route path='rejestracja' element={<Register />} />
         <Route path='raportowanie' element={<Reports/>} />
         <Route path='raportowanie/data-urlopu' element={<HolidaySchedule />} />
