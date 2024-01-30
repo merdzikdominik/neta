@@ -36,6 +36,20 @@ const EmployeeFileData: React.FC = () => {
         }
     })
 
+const fieldsMap: Record<keyof IUserInfo['user'], string>  = {
+    first_name: 'Imię',
+    second_name: 'Drugie imię',
+    last_name: 'Nazwisko',
+    birth_date: 'Data urodzenia',
+    mobile_number: 'Nr telefonu',
+    email: 'Adres email',
+    age: 'Wiek',
+    employment_start_date: 'Data rozpoczęcia pracy',
+    employment_end_date: 'Data zakończenia pracy',
+    role: 'Stanowisko',
+    education: 'Wykształcenie' 
+}
+
     const fetchUserData = async () => {
         const token = localStorage.getItem('authToken');
         
@@ -86,20 +100,6 @@ const EmployeeFileData: React.FC = () => {
         fetchUserData()
     }, [])
 
-    // const exampleData = [
-    //     {id: 1, field: "Imię", content: "Dominik"},
-    //     {id: 2, field: "Drugię Imię", content: "Rafał"},
-    //     {id: 3, field: "Nazwisko", content: "Merdzik"},
-    //     {id: 4, field: "Data Urodzenia", content: "28.11.1998"},
-    //     {id: 5, field: "Nr Telefonu", content: "+48511210172"},
-    //     {id: 6, field: "Adres Email", content: "dominik.merdzik@onet.pl"},
-    //     {id: 7, field: "Wiek", content: "25 lat"},
-    //     {id: 8, field: "Data Zatrudnienia", content: "20.02.2023"},
-    //     {id: 9, field: "Data Rozwiązania Umowy", content: "10.03.2023"},
-    //     {id: 10, field: "Stanowisko", content: "IT Support Engineer"},
-    //     {id: 11, field: "Wykształcenie", content: "Inżynier"},
-    // ]
-
     return (
         <div className={classes['main']}>
             <Nav />
@@ -110,8 +110,8 @@ const EmployeeFileData: React.FC = () => {
                 <div className={classes['employeeFileData__data_container']}>
                     {Object.entries(userInfo.user).map(([field, content]) => (
                         <div key={field} className={classes['employeeFileData__element']}>
-                        <span className={classes['employeeFileData__field']}>{field}: </span>
-                        <span className={classes['employeeFileData__content']}>{content}</span>
+                            <span className={classes['employeeFileData__field']}>{fieldsMap[field as keyof IUserInfo['user']]}: </span>
+                            <span className={classes['employeeFileData__content']}>{content}</span>
                         </div>
                     ))}
                 </div>
