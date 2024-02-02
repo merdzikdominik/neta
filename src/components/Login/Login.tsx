@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import EmailValidator from 'email-validator';
 import classes from './Login.module.scss';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-
   const [errorEmail, setErrorEmail] = useState<boolean>(false);
   const [errorPassword, setErrorPassword] = useState<boolean>(false);
   const [loginError, setLoginError] = useState<string | undefined>(undefined);
-
-  const navigate = useNavigate()
 
   const login = async () => {
     try {
@@ -25,27 +21,24 @@ const Login: React.FC = () => {
           password: password,
         }),
       });
-  
-      if (response.ok) {
-        // Obsłuż sukces logowania, np. przekieruj użytkownika do innej strony
-        console.log('Logowanie udane!');
 
-        const data = await response.json()
+      if (response.ok) {
+        const data = await response.json();
 
         if (!data || !data.token) {
-          console.log('Brak danych o użytkowniku lub tokenie')
+          console.log('Brak danych o użytkowniku lub tokenie');
           return;
         }
-        // console.log(data)
-        localStorage.setItem('authToken', data.token)
-        // console.log(data.token)
+        
+        localStorage.setItem('authToken', data.token);
 
-        navigate('/strona-glowna')
+        setLoginError(undefined);
 
-      }
-      else {
-        // Obsłuż błąd logowania
-        console.log(response)
+        window.location.reload()
+
+
+      } else {
+        console.log(response);
         setLoginError('Błąd logowania. Sprawdź wprowadzone dane.');
       }
     } catch (error) {

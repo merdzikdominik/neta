@@ -1,7 +1,8 @@
 import React, { useEffect } from "react"
 import ReactDOM from 'react-dom'
-import { Link } from 'react-router-dom'
 import UserDataChange from "../Reports/UserDataChange"
+import LogoutButton from "../Logout/LogoutButton"
+import { Link } from 'react-router-dom'
 import { Icon, listIcons  } from '@iconify/react'
 import classes from './Nav.module.scss'
 
@@ -108,9 +109,7 @@ const Nav: React.FC = () => {
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                        <Link to='/wyloguj'><i className="ion-ios-medical-outline"></i>Wyloguj się</Link>
-                        </li>
+                        <LogoutButton />
                     </ul>
                 </nav>
             </aside>
