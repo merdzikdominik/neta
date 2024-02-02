@@ -18,8 +18,10 @@ const LogoutButton: React.FC = () => {
                 if (response.ok) {
                     // Pomyślnie wylogowano użytkownika
                     localStorage.removeItem('authToken');
+
+                    window.location.reload()
                     // Tutaj możesz przekierować użytkownika na stronę logowania
-                    window.location.href = '/'; // Przykładowa przekierowanie na stronę logowania
+                    // window.location.href = '/'; // Przykładowa przekierowanie na stronę logowania
                 } else {
                     // Obsługa błędu
                     console.error('Błąd podczas wylogowywania');
