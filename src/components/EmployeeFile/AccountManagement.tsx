@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Nav from '../Utils/Nav'
 import InteractiveBackground from '../Utils/InteractiveBackground'
+import PasswordStrengthBar from 'react-password-strength-bar'
 import Button from '../Utils/Button'
 import classes from './AccountManagement.module.scss'
 
@@ -78,6 +79,19 @@ const AccountManagement: React.FC = () => {
         setEmail('')
     }
     
+    const handleBadRequest = (response: Object) => {
+        switch(Object.keys(response)[0]) {
+            case 'old_password':
+                return 'Podaj obecne hasło'
+            
+            case 'detail':
+                return 'Stare hasło jest niepoprawne.'
+            
+            default: 
+                return ''
+        }
+    }
+
     const handleSubmit = async () => {
         try {
           if (token) {
@@ -111,13 +125,13 @@ const AccountManagement: React.FC = () => {
             if (response.ok) {
               console.log('Hasło zostało pomyślnie zmienione.');
               setPasswordChanged(true);
-            } else if (response.status === 400) {
+            } 
+            
+            else if (response.status === 400) {
                 const res = await response.json()
-                const { detail } = res
+                const data = handleBadRequest(res)
 
-                console.log(`Błąd podczas zmiany hasła: ${detail}`)
-
-                setPasswordError(detail)
+                setPasswordError(data)
             } else {
               console.log('Błąd podczas zmiany hasła.');
               setPasswordChanged(false);
@@ -171,12 +185,20 @@ const AccountManagement: React.FC = () => {
                     {passwordChanged && <p className={classes['accountManagement__message-success']}>Hasło zostało pomyślnie zmienione!</p>}
                     <div className={classes['accountManagement__field_container']}>
                         <label>Weryfikacja hasła </label>
-                        <input type="text" className={classes['accountManagement__input']} placeholder="weryfikacja hasła" disabled></input>
+                        {/* <input type="text" className={classes['accountManagement__input']} placeholder="weryfikacja hasła" disabled></input> */}
+                        <PasswordStrengthBar 
+                            style={{ width: '160px' }}
+                            password={newPassword}
+                            scoreWordStyle={{ color: '#fff' }}
+                            shortScoreWord={newPassword.length !== 0 ? 'za krótkie' : ''}
+                            barColors={['#ddd', '#ef4836', '#FFAE00', '#00FBFF', '#00FF46']}
+                            scoreWords={['bardzo słabe', 'słabe', 'średnie', 'mocne', 'bardzo mocne']}
+                        />
                     </div>
                 </div>
                 <div className={classes['accountManagement__button_container']}>
                     <Button type="submit" onClick={handleSubmit} text="Zapisz"/>
-                    <Button type="submit" onClick ={handleClearForm} text="Anuluj"/>
+                    <Button type="submit" onClick ={handleClearForm} text="Wyczyść"/>
                 </div>
             </section>
             <InteractiveBackground />
