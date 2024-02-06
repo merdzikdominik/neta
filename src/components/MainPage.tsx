@@ -39,7 +39,7 @@ const MainPage: React.FC = () => {
 
   return (
     <main className={classes['main-page']}>
-      { isAdmin ?? <Link to='/modul-administracyjny'>Moduł administracyjny</Link> }
+      { isAdmin ? <Link to='/modul-administracyjny'>Moduł administracyjny</Link> : ''}
       <Link to='/raportowanie'>Raportowanie</Link>
       <Link to='/kartoteka-pracownika'>Kartoteka Pracownika</Link>
       <Link to='/urlopy'>Urlopy</Link>
