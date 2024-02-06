@@ -187,7 +187,6 @@ const AccountManagement: React.FC = () => {
                     {passwordChanged && <p className={classes['accountManagement__message-success']}>Hasło zostało pomyślnie zmienione!</p>}
                     <div className={classes['accountManagement__field_container']}>
                         <label>Weryfikacja hasła </label>
-                        {/* <input type="text" className={classes['accountManagement__input']} placeholder="weryfikacja hasła" disabled></input> */}
                         <PasswordStrengthBar 
                             style={{ width: '160px' }}
                             password={newPassword}
