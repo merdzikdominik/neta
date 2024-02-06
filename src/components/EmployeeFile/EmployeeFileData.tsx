@@ -68,8 +68,9 @@ const fieldsMap: Record<keyof IUserInfo['user'], string>  = {
                 }
         
                 const userData = await response.json();
-    
-                setUserInfo({
+
+                setUserInfo(prev => ({
+                    ...prev,
                     user: {
                         first_name: userData.first_name,
                         second_name: userData.second_name,
@@ -83,7 +84,9 @@ const fieldsMap: Record<keyof IUserInfo['user'], string>  = {
                         role: userData.role,
                         education: userData.education,
                     }
-                })
+                }))
+
+                console.log(userData)
     
             } catch (error) {
                 if (error instanceof Error) {
