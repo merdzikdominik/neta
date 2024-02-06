@@ -95,9 +95,11 @@ const AccountManagement: React.FC = () => {
     const handleSubmit = async () => {
         try {
           if (token) {
+            if (oldPassword === '' && newPassword === '') return
+
             if (oldPassword === newPassword) {
-              setPasswordError('Hasła nie mogą być takie same.');
-              return;
+                setPasswordError('Hasła nie mogą być takie same.');
+                return;
             }
     
             if (!isPasswordValid(newPassword)) {
