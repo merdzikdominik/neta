@@ -1,0 +1,53 @@
+.main {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 100vh;
+}
+
+.holidayRequest__header {
+    border: 1px solid #e4f1fe;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 0 20px;
+    background-color: #005689; 
+}
+
+.holidayRequest__container {
+    width: 50%;
+    padding: 40px;
+    color: #fff;
+}
+
+.holidayRequest__input {
+    width: 150px;
+}
+
+.holidayRequest__data_container {
+    border: 1px solid #e4f1fe;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 20px;
+    background-color: #007cb9;
+}
+
+.holidayRequest__field_container {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.holidayRequest__months-dropdown {
+    width: 100%;
+    margin-bottom: 20px;
+
+    select {
+        width: inherit;
+    }
+}
+
+.holidayRequest__button_container {
+    display: flex;
+    justify-content: end;
+    background-color: #007cb9;
+}
