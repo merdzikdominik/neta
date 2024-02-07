@@ -57,16 +57,20 @@ const HolidayRequest: React.FC = () => {
         }
     }
 
+    const clearInputs = () => {
+        setStartDate('')
+        setEndDate('')
+        setDifferenceInDays(0)
+        
+        if (selectedHolidayTypesRef.current) {
+            // Zresetuj wartość wybranego miesiąca poprzez referencję
+            selectedHolidayTypesRef.current.value = '';
+        }
+    }
+
     const handleSubmit = async () => {
         if (token) {
             try {
-                // const requestData = {
-                //     startDate,
-                //     endDate,
-                //     differenceInDays,
-                //     selectedHolidayType,
-                // };
-    
                 const response = await fetch("http://127.0.0.1:8000/api/create_holiday_request", {
                     method: "POST",
                     headers: {
@@ -87,6 +91,8 @@ const HolidayRequest: React.FC = () => {
     
                 const data = await response.json();
                 console.log("Successfully created holiday request:", data);
+
+                clearInputs()
     
             } catch (error) {
                 console.error("Error creating holiday request:", error);
