@@ -61,9 +61,8 @@ const HolidayRequest: React.FC = () => {
         setStartDate('')
         setEndDate('')
         setDifferenceInDays(0)
-        
+
         if (selectedHolidayTypesRef.current) {
-            // Zresetuj wartość wybranego miesiąca poprzez referencję
             selectedHolidayTypesRef.current.value = '';
         }
     }
@@ -71,6 +70,21 @@ const HolidayRequest: React.FC = () => {
     const handleSubmit = async () => {
         if (token) {
             try {
+                const responseUserData = await fetch('http://127.0.0.1:8000/api/user', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${token}`,
+                    }
+                });
+    
+                if (!responseUserData.ok) {
+                    throw new Error(`Błąd pobierania danych użytkownika: ${responseUserData.statusText}`);
+                }
+    
+                const userData = await responseUserData.json();
+                const { first_name, last_name, email } = userData;
+    
                 const response = await fetch("http://127.0.0.1:8000/api/create_holiday_request", {
                     method: "POST",
                     headers: {
@@ -78,22 +92,28 @@ const HolidayRequest: React.FC = () => {
                         'Authorization': `Token ${token}`,
                     },
                     body: JSON.stringify({
+                        user: {
+                            first_name,
+                            last_name,
+                            email
+                        },
                         start_date: startDate,
                         end_date: endDate,
                         difference_in_days: differenceInDays,
                         selected_holiday_type: selectedHolidayType,
                     }),
                 });
-    
+
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    const errorMessage = await response.text()
+                    throw new Error(`HTTP error! Status: ${response.status}, Error: ${errorMessage}`);
                 }
-    
+
                 const data = await response.json();
                 console.log("Successfully created holiday request:", data);
 
-                clearInputs()
-    
+                clearInputs();
+
             } catch (error) {
                 console.error("Error creating holiday request:", error);
             }

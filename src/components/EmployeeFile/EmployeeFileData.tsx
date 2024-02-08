@@ -97,7 +97,7 @@ const fieldsMap: Record<keyof IUserInfo['user'], string>  = {
             } 
         }
 
-    };
+    }
 
     useEffect(() => {
         fetchUserData()
