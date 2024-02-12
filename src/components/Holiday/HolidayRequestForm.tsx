@@ -2,9 +2,9 @@ import React, { useState, useRef, ChangeEvent } from "react";
 import Nav from "../Utils/Nav";
 import InteractiveBackground from "../Utils/InteractiveBackground";
 import Button from "../Utils/Button";
-import classes from './HolidayRequest.module.scss';
+import classes from './HolidayRequestForm.module.scss';
 
-const HolidayRequest: React.FC = () => {
+const HolidayRequestForm: React.FC = () => {
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
     const [differenceInDays, setDifferenceInDays] = useState<number | null>(null);
@@ -177,4 +177,4 @@ const HolidayRequest: React.FC = () => {
     )
 }
 
-export default HolidayRequest;
+export default HolidayRequestForm;

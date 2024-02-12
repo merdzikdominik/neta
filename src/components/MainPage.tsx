@@ -6,9 +6,9 @@ import classes from './MainPage.module.css';
 const MainPage: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
 
-  const token = localStorage.getItem('authToken');
-
   const fetchIsAdmin = async () => {
+    const token = localStorage.getItem('authToken');
+
     if (token) {
       try {
         const response = await fetch('http://127.0.0.1:8000/api/user', {
@@ -35,7 +35,7 @@ const MainPage: React.FC = () => {
   useEffect(() => {
     fetchIsAdmin();
     
-  }, [token]);
+  }, []);
 
   return (
     <main className={classes['main-page']}>

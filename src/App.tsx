@@ -16,12 +16,13 @@ import PaternityLeave from './components/Reports/PaternityLeave'
 import HolidayStatus from './components/Reports/HolidayStatus'
 import HolidayUsed from './components/Reports/HolidayUsed'
 import Absences from './components/Reports/Absences'
-import HolidayRequest from './components/Holiday/HolidayRequest'
+import HolidayRequestForm from './components/Holiday/HolidayRequestForm'
 import HolidayRequestList from './components/Holiday/HolidayRequestList'
 import HolidayYearPlans from './components/Holiday/HolidayYearPlans'
 import HolidayPlanningStatus from './components/Holiday/HolidayPlanningStatus'
 import AccountManagement from './components/EmployeeFile/AccountManagement'
 import CalendarHolder from './components/Utils/CalendarHolder'
+import HolidayRequest from './components/Admin/HolidayRequest'
 import ProtectedRoute from './components/Utils/ProtectedRoute'
 
 const hasToken = (): boolean => {
@@ -48,13 +49,14 @@ function App() {
     <div>
       <Routes>
         <Route path='/' element={hasValidToken ? <MainPage /> : <Login />} />
+        <Route path='/req' element={<HolidayRequest/>} />
         <Route path='/strona-glowna' element={<ProtectedRoute element={<MainPage />} authenticated={hasValidToken} />} />
         <Route path='/modul-administracyjny' element={<ProtectedRoute element={<AdminModule />} authenticated={hasValidToken} />} />
         <Route path='/kartoteka-pracownika' element={<ProtectedRoute element={<EmployeeFile />} authenticated={hasValidToken} />} />
         <Route path='/kartoteka-pracownika/dane-pracownika' element={<ProtectedRoute element={<EmployeeFileData />} authenticated={hasValidToken} />} />
         <Route path='/kartoteka-pracownika/zarzadzanie-kontami' element={<ProtectedRoute element={<AccountManagement />} authenticated={hasValidToken} />} />
         <Route path='/urlopy' element={<ProtectedRoute element={<Holiday />} authenticated={hasValidToken} />} />
-        <Route path='/urlopy/wnioski-urlopowe' element={<ProtectedRoute element={<HolidayRequest />} authenticated={hasValidToken} />} />
+        <Route path='/urlopy/wnioski-urlopowe' element={<ProtectedRoute element={<HolidayRequestForm />} authenticated={hasValidToken} />} />
         <Route path='/urlopy/lista-wnioskow' element={<ProtectedRoute element={<HolidayRequestList />} authenticated={hasValidToken} />} />
         <Route path='/urlopy/roczne-plany-urlopowe' element={<ProtectedRoute element={<HolidayYearPlans />} authenticated={hasValidToken} />} />
         <Route path='/urlopy/stan-rozplanowywania-urlopow' element={<ProtectedRoute element={<HolidayPlanningStatus />} authenticated={hasValidToken} />} />

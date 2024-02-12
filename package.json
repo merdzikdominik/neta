@@ -18,8 +18,8 @@
     "react": "^18.2.0",
     "react-calendar": "^4.7.0",
     "react-dom": "^18.2.0",
+    "react-google-charts": "^4.0.1",
     "react-new-window": "^1.0.1",
-    "react-password-strength-bar": "^0.4.1",
     "react-redux": "^9.0.4",
     "react-router": "^6.22.0",
     "react-router-dom": "^6.22.0",
@@ -59,6 +59,7 @@
     "@iconify/react": "^4.1.1",
     "@types/react-redux": "^7.1.33",
     "@types/redux": "^3.6.0",
-    "email-validator": "^2.0.4"
+    "email-validator": "^2.0.4",
+    "react-password-strength-bar": "^0.4.1"
   }
 }
