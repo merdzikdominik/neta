@@ -1,0 +1,65 @@
+.listRow__user-data-header {
+    font-size: 0.9em;
+}
+
+.listRow__header-container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+}
+
+.listRow__user-data-subheader {
+    font-size: 13px;
+}
+
+.listRow__request-title {
+    padding-bottom: 10px;
+}
+
+.listRow__request-content-container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+}
+
+.listRow__main {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    color: #000;
+    padding-left: 15px;
+    margin-top: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: height 0.3s ease;
+    border-bottom: 1px solid #000;
+
+    &:last-child {
+        border: none;
+    }
+}
+
+.listRow__container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 900px;
+    height: 100%;
+}
+
+.expanded {
+    height: 350px;
+}
+
+.listRow__button-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+}

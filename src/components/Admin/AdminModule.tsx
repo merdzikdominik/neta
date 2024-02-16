@@ -3,14 +3,15 @@ import { Chart } from "react-google-charts"
 import Nav from "../Utils/Nav"
 import InteractiveBackground from "../Utils/InteractiveBackground"
 import Spinner from "../Utils/Loader"
+import Modal from "../Utils/Modal"
 import classes from './AdminModule.module.scss'
 
-interface IUser {
+export interface IUser {
     first_name: string
-    last_Name: string
+    last_name: string
     email: string
 }
-interface IHolidayRequest {
+export interface IHolidayRequest {
     id: string
     approved: boolean
     created_at: string
@@ -61,6 +62,7 @@ const AdminModule: React.FC = () => {
     const [requestsList, setRequestsList] = useState<IHolidayRequest[]>([])
     const [holidayRequestData, setHolidayRequestData] = useState<(string | number)[][]>([])
     const [mostOccupiedMonths, setMostOccupiedMonths] = useState<[string, number, string, null][]>([])
+    const [isRequestsModalOpen, setIsRequestModalOpen] = useState<boolean>(false)
 
     const fetchRequests = async () => {
         const token = localStorage.getItem('authToken')
@@ -85,7 +87,13 @@ const AdminModule: React.FC = () => {
               console.error('Błąd podczas pobierania dat', error);
           }
         }
-    };
+    }
+
+    const toggleModal = () => {
+        setIsRequestModalOpen(prev => !prev)
+
+        return isRequestsModalOpen
+    }
     
     useEffect(() => {
         fetchRequests()
@@ -158,7 +166,7 @@ const AdminModule: React.FC = () => {
             <section className={classes['adminModule__container']}>
                 <div className={classes['adminModule__grid-container']}>
                     <div className={classes['adminModule__left-grid-column']}>
-                        <div className={classes['adminModule__exmaple-blocks']}><span>Lista wniosków urlopowych</span></div>
+                        <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsRequestModalOpen(true)}><span>Lista wniosków urlopowych</span></div>
                         <div className={classes['adminModule__exmaple-blocks']}><span>Zatwierdzanie wniosków</span></div>
                         <div className={classes['adminModule__exmaple-blocks']}><span>Statystyki urlopów</span></div>
                     </div>
@@ -195,6 +203,9 @@ const AdminModule: React.FC = () => {
 
             </section>
             <InteractiveBackground />
+            {isRequestsModalOpen && (
+                <Modal modalTitle={'Lista wniosków urlopowych'} modalContent={requestsList} toggleModal={toggleModal} />
+            )}
         </div>
     )
 }
