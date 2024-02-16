@@ -25,10 +25,18 @@ interface IHolidayRequest {
 const OPTIONS_PIE_CHART = {
     title: "Najczęściej Wybierane Urlopy",
     is3D: true,
+    pieSliceText: 'percentage',
+    // pieSliceTextStyle: { fontSize: 10 },
+    chartArea: {
+        left: 10,
+        top: 10,
+        width: '90%',
+        height: '80%',
+    }
 }
 
 const OPTIONS_BAR_CHART = {
-    title: "Najchętniej Wybierany Miesiąc urlopu",
+    title: "Najchętniej Wybierany Miesiąc Urlopu",
     bar: { groupWidth: "95%" },
     borderRadius: 40,
     legend: { position: "none" },
