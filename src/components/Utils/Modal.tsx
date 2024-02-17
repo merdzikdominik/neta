@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { IHolidayRequest } from "../Admin/AdminModule"
-import { ToastContainer } from "react-toastify"
+// import { ToastContainer } from "react-toastify"
 import ListRow from "./ListRow"
 import Button from "./Button"
 import classes from './Modal.module.scss'
@@ -37,7 +37,6 @@ const Modal: React.FC<IModal> = ({ toggleModal, modalTitle, modalContent }) => {
                     <Button type='button' text='Zamknij' background='white' onClick={() => toggleModal()} />
                 </footer>
             </div>
-            <ToastContainer />
         </div>
     );
 }

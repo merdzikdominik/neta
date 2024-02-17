@@ -4,6 +4,7 @@ import Nav from "../Utils/Nav"
 import InteractiveBackground from "../Utils/InteractiveBackground"
 import Spinner from "../Utils/Loader"
 import Modal from "../Utils/Modal"
+import { ToastContainer } from "react-toastify"
 import classes from './AdminModule.module.scss'
 
 export interface IUser {
@@ -200,7 +201,7 @@ const AdminModule: React.FC = () => {
                         />
                     </div>
                 </div>
-
+                <ToastContainer />
             </section>
             <InteractiveBackground />
             {isRequestsModalOpen && (
