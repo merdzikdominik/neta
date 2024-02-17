@@ -1,47 +1,63 @@
-import React from "react"
-import classes from '../Reports/EmployeePersonalData.module.css'
+import React, { useState, useEffect } from "react"
+import Nav from "../Utils/Nav"
+import InteractiveBackground from "../Utils/InteractiveBackground"
+import ListRow from "../Utils/ListRow"
+import classes from './HolidayRequestList.module.scss'
+import { IHolidayRequest } from "../Admin/AdminModule"
 
 const HolidayRequestList: React.FC = () => {
-    const data: string[][] = [
-        ['1', 'A1', 'B1', 'C1', 'D1', 'E1'],
-        ['2', 'A2', 'B2', 'C2', 'D2', 'E2'],
-    ]
+    const [holidayRequests, setHolidayRequests] = useState<IHolidayRequest[]>([])
 
-    const headers: string[] = [
-        'Nr', 
-        'Data od', 
-        'Data do', 
-        'Typ urlopu', 
-        'Status wniosku',
-        'Pracownik'
-    ]
+    useEffect(() => {
+        const fetchUserHolidayRequests = async () => {
+            const token = localStorage.getItem('authToken')
+
+            if (token) {
+                try {
+                    const response = await fetch('http://127.0.0.1:8000/api/user_holiday_requests', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Token ${token}`,
+                        },
+                    })
+
+                    if (response.ok) {
+                        const data = await response.json();
+        
+                        setHolidayRequests(data);
+                    } else {
+                        console.error('Błąd podczas pobierania dat');
+                    }
+                } catch (error) {
+                    console.error('Błąd podczas pobierania dat', error);
+                }
+                }
+            }
+        fetchUserHolidayRequests()
+    }, [])
 
     return (
-        <section className={classes['employee-data-container']}>
-            <div>
-                <h1>Wnioski Urlopowe</h1>
-            </div>
-            <div>
-            <table>
-            <thead>
-            <tr>
-                {headers.map((header, index) => (
-                <th key={index}>{header}</th>
-                ))}
-            </tr>
-            </thead>
-            <tbody>
-            {data.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                {row.map((cell, cellIndex) => (
-                    <td key={cellIndex}>{cell}</td>
-                ))}
-                </tr>
-            ))}
-            </tbody>
-        </table>
-            </div>
-        </section>
+        <div className={classes['main']}>
+            <Nav />
+            <section className={classes['holidayRequestList__container']}>
+                <div className={classes['holidayRequestList__header']}>
+                    <h1>Twoje wnioski urlopowe</h1>
+                </div>
+                <div className={classes['holidayRequestList__data_container']}>
+                    <div className={classes['holidayRequestList__content']}>
+                        {holidayRequests.map(request => (
+                            <ListRow 
+                                key={request.id}
+                                userInfo={request.user}
+                                requestInfo={request}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </section>
+            <InteractiveBackground />
+        </div>
     )
 }
 

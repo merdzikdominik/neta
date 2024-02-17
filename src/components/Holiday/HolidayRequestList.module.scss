@@ -1,0 +1,36 @@
+.main {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 100vh;
+}
+
+.holidayRequestList__container {
+    width: 50%;
+    padding: 40px;
+    color: #fff;
+}
+
+.holidayRequestList__header {
+    border: 1px solid #e4f1fe;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 0 20px;
+    background-color: #005689; 
+}
+
+.holidayRequestList__data_container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e4f1fe;
+    padding: 20px 5%;
+    background-color: #007cb9;
+    height: 100%;
+    max-height: 600px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.holidayRequestList__content {
+    overflow-y: auto;
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import { IHolidayRequest } from "../Admin/AdminModule"
 import ListRow from "./ListRow"
 import classes from './Modal.module.scss'
@@ -10,6 +10,7 @@ interface IModal {
 }
 
 const Modal: React.FC<IModal> = ({ toggleModal, modalTitle, modalContent }) => {
+
     return (
         <div className={classes['modal']}>
             <div className={classes['modal__container']}>
