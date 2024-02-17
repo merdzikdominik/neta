@@ -1,6 +1,8 @@
 import React, { useEffect } from "react"
 import { IHolidayRequest } from "../Admin/AdminModule"
+import { ToastContainer } from "react-toastify"
 import ListRow from "./ListRow"
+import Button from "./Button"
 import classes from './Modal.module.scss'
 
 interface IModal {
@@ -31,10 +33,11 @@ const Modal: React.FC<IModal> = ({ toggleModal, modalTitle, modalContent }) => {
                         />
                     ))}
                 </div>
-                <footer>
-                    <button onClick={() => toggleModal()}>Close</button>
+                <footer className={classes['modal__footer-button-container']}>
+                    <Button type='button' text='Zamknij' background='white' onClick={() => toggleModal()} />
                 </footer>
             </div>
+            <ToastContainer />
         </div>
     );
 }

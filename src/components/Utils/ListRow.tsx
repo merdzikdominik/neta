@@ -1,6 +1,9 @@
-import React, { useState } from "react"
-import classes from './ListRow.module.scss'
+import React, { useState, useEffect } from "react"
 import { IHolidayRequest, IUser } from "../Admin/AdminModule"
+import { toast } from "react-toastify"
+import Button from "./Button"
+import 'react-toastify/dist/ReactToastify.css'
+import classes from './ListRow.module.scss'
 
 interface IListRow {
     userInfo: IUser,
@@ -22,6 +25,25 @@ const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
     
     const { first_name, last_name, email } = userInfo;
 
+    useEffect(() => {
+        setIsApproved(approved)
+    }, [approved])
+
+    const notify = (status: string) => {
+        switch(status) {
+            case 'accept':
+                toast.success('Zatwierdzono wniosek pomyślnie.')
+                break
+            
+            case 'reject':
+                toast.info('Odrzucono wniosek pomyślnie.')
+                break
+            
+            default:
+                return
+        }
+    }
+
     const handleApprove = async (id: string) => {
         const token = localStorage.getItem('authToken')
 
@@ -37,6 +59,9 @@ const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
             if (response.ok) {
                 setIsApproved(true)
                 console.log('Pomyslnie zatwierdzono wniosek')
+
+                notify('accept')
+
             } else {
                 console.error('Failed to approve holiday request');
             }
@@ -60,6 +85,9 @@ const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
             if (response.ok) {
                 setIsApproved(false)
                 console.log('Pomyslnie odrzucono wniosek')
+
+                notify('reject')
+
             } else {
                 console.error('Failed to reject holiday request');
             }
@@ -88,11 +116,11 @@ const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
                         <span>Email uzytkownika: <i>{email}</i></span>
                         <span><i>{message}</i></span>
                         <span>Długość urlopu: <i>{difference_in_days === 1 ? `${difference_in_days} dzień` : `${difference_in_days} dni`}</i></span>
-                        <span>Status wniosku: <b><i>{approved ? 'Zatwierdzony' : 'Niezatwierdzony'}</i></b> </span>
+                        <span>Status wniosku: <b><i>{isApproved ? 'Zatwierdzony' : 'Niezatwierdzony'}</i></b> </span>
                     </div>
                     <div className={classes['listRow__button-container']}>
-                        <button onClick={() => handleApprove(id)}>Zatwierdz</button>
-                        <button onClick={() => handleReject(id)}>Odrzuć</button>
+                        <Button type='button' text='Zatwierdzony' onClick={() => handleApprove(id)} disabled={isApproved ? true : false} background='white' />
+                        <Button type='button' text='Odrzuć' onClick={() => handleReject(id)} disabled={isApproved ? false : true} background='white' />
                     </div>
                 </div>
             )}
