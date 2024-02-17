@@ -1,6 +1,5 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { IHolidayRequest } from "../Admin/AdminModule"
-// import { ToastContainer } from "react-toastify"
 import ListRow from "./ListRow"
 import Button from "./Button"
 import classes from './Modal.module.scss'

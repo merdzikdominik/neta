@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
+    cursor: pointer;
 }
 
 .listRow__user-data-subheader {
@@ -34,7 +35,7 @@
     // padding-left: 15px;
     margin-top: 10px;
     overflow: hidden;
-    cursor: pointer;
+    // cursor: pointer;
     transition: height 0.3s ease;
     border-bottom: 1px solid #000;
 
