@@ -1,4 +1,5 @@
 import React, { useState, useRef, ChangeEvent } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import Nav from "../Utils/Nav";
 import InteractiveBackground from "../Utils/InteractiveBackground";
 import Button from "../Utils/Button";
@@ -79,6 +80,7 @@ const HolidayRequestForm: React.FC = () => {
                 });
     
                 if (!responseUserData.ok) {
+                    toast.error('Wystąpił bład podczas pobierania Twoich danych.')
                     throw new Error(`Błąd pobierania danych użytkownika: ${responseUserData.statusText}`);
                 }
     
@@ -106,16 +108,19 @@ const HolidayRequestForm: React.FC = () => {
 
                 if (!response.ok) {
                     const errorMessage = await response.text()
+                    toast.error('Wystąpił błąd podczas przetwarzania Twojego wniosku.')
                     throw new Error(`HTTP error! Status: ${response.status}, Error: ${errorMessage}`);
                 }
 
-                const data = await response.json();
-                console.log("Successfully created holiday request:", data);
+                const data = await response.json()
+                console.log("Successfully created holiday request:", data)
+                toast.success('Pomyślnie dodano wniosek urlopowy.')
 
                 clearInputs();
 
             } catch (error) {
                 console.error("Error creating holiday request:", error);
+                toast.error('Wystąpił błąd podczas wysyłania wniosku urlopowego.')
             }
         }
     };
@@ -171,6 +176,7 @@ const HolidayRequestForm: React.FC = () => {
                         <Button type="submit" onClick={handleSubmit} text="Wykonaj" />
                     </div>
                 </div>
+                <ToastContainer />
             </section>
             <InteractiveBackground />
         </div>

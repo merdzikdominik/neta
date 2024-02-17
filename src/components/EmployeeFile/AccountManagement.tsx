@@ -34,11 +34,13 @@ const AccountManagement: React.FC = () => {
     
               if (!response.ok) {
                 console.log('Błąd podczas pobierania e-maila.');
+
                 return;
               }
     
               const data = await response.json();
               const userEmail = data.email;
+
               setLoggedInUserEmail(userEmail);
             }
           } catch (error) {
@@ -125,7 +127,7 @@ const AccountManagement: React.FC = () => {
             });
     
             if (response.ok) {
-              console.log('Hasło zostało pomyślnie zmienione.');
+              console.log('Hasło zostało pomyślnie zmienione.')
               setPasswordChanged(true);
             } 
             
@@ -136,11 +138,12 @@ const AccountManagement: React.FC = () => {
                 setPasswordError(data)
             } else {
               console.log('Błąd podczas zmiany hasła.');
+
               setPasswordChanged(false);
             }
           }
         } catch (error) {
-          console.log(`Wystąpił błąd: ${error}`);
+          console.log(`Wystąpił błąd: ${error}`)
         }
     };
 

@@ -10,6 +10,21 @@ interface IListRow {
     requestInfo: IHolidayRequest
 }
 
+export const notify = (status: string, message: string) => {
+    switch(status) {
+        case 'accept':
+            toast.success(message)
+            break
+        
+        case 'reject':
+            toast.info(message)
+            break
+        
+        default:
+            return
+    }
+}
+
 const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
     const [isExpanded, setIsExpanded] = useState<boolean>(false)
     const [isApproved, setIsApproved] = useState<boolean>(false)
@@ -29,21 +44,6 @@ const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
         setIsApproved(approved)
     }, [approved])
 
-    const notify = (status: string) => {
-        switch(status) {
-            case 'accept':
-                toast.success('Zatwierdzono wniosek pomyślnie.')
-                break
-            
-            case 'reject':
-                toast.info('Odrzucono wniosek pomyślnie.')
-                break
-            
-            default:
-                return
-        }
-    }
-
     const handleApprove = async (id: string) => {
         const token = localStorage.getItem('authToken')
 
@@ -60,7 +60,7 @@ const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
                 setIsApproved(true)
                 console.log('Pomyslnie zatwierdzono wniosek')
 
-                notify('accept')
+                notify('accept', 'Pomyslnie zatwierdzono wniosek')
 
             } else {
                 console.error('Failed to approve holiday request');
@@ -86,7 +86,7 @@ const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
                 setIsApproved(false)
                 console.log('Pomyslnie odrzucono wniosek')
 
-                notify('reject')
+                notify('reject', 'Pomyslnie odrzucono wniosek')
 
             } else {
                 console.error('Failed to reject holiday request');
