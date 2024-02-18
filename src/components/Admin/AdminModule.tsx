@@ -61,7 +61,7 @@ const MONTHS = [
 ]
 
 const AdminModule: React.FC = () => {
-    const [requestsList, setRequestsList] = useState<IHolidayRequest[]>([])
+    const [requestsList, setRequestsList] = useState<IHolidayRequest[] | []>([])
     const [holidayRequestData, setHolidayRequestData] = useState<(string | number)[][]>([])
     const [mostOccupiedMonths, setMostOccupiedMonths] = useState<[string, number, string, null][]>([])
     const [isRequestsModalOpen, setIsRequestModalOpen] = useState<boolean>(false)
