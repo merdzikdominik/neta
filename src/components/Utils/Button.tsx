@@ -7,9 +7,10 @@ interface IButtonProps {
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.FormEvent<HTMLFormElement>) => void
     disabled?: boolean
     background?: string
+    style?: object
 }
 
-const Button: React.FC<IButtonProps> = ({ type, text, onClick, disabled, background }) => {
+const Button: React.FC<IButtonProps> = ({ type, style, text, onClick, disabled, background }) => {
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         if (onClick) {
             onClick(event)
@@ -17,7 +18,7 @@ const Button: React.FC<IButtonProps> = ({ type, text, onClick, disabled, backgro
       };
 
     return (
-        <button type={type} className={`${classes['button']} ${background === 'white' ? classes['button__background'] : ''} `} onClick={handleClick} disabled={disabled}>
+        <button type={type} style={style} className={`${classes['button']} ${background === 'white' ? classes['button__background'] : ''} `} onClick={handleClick} disabled={disabled}>
             <span className={classes['buttonText']}>{text}</span>
             <div className={classes['fillContainer']}></div>
         </button>

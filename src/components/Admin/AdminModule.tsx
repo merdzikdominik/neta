@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { Chart } from "react-google-charts"
+import { ToastContainer } from "react-toastify"
+import * as ExcelJS from 'exceljs'
 import Nav from "../Utils/Nav"
 import InteractiveBackground from "../Utils/InteractiveBackground"
 import Spinner from "../Utils/Loader"
 import Modal from "../Utils/Modal"
-import { ToastContainer } from "react-toastify"
 import classes from './AdminModule.module.scss'
 
 export interface IUser {
@@ -64,6 +65,7 @@ const AdminModule: React.FC = () => {
     const [holidayRequestData, setHolidayRequestData] = useState<(string | number)[][]>([])
     const [mostOccupiedMonths, setMostOccupiedMonths] = useState<[string, number, string, null][]>([])
     const [isRequestsModalOpen, setIsRequestModalOpen] = useState<boolean>(false)
+    const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false)
 
     const fetchRequests = async () => {
         const token = localStorage.getItem('authToken')
@@ -90,10 +92,46 @@ const AdminModule: React.FC = () => {
         }
     }
 
-    const toggleModal = () => {
-        setIsRequestModalOpen(prev => !prev)
+    const exportToExcel = async (data: IHolidayRequest[]) => {
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Wnioski_Urlopowe');
+        const headers = ['id', 'approved', 'created_at', 'difference_in_days', 'start_date', 'end_date', 'message', 'user_first_name', 'user_last_name', 'user_email'];
+    
+        worksheet.addRow(headers);
 
-        return isRequestsModalOpen
+        data.forEach((item) => {
+            const userColumns = Object.values(item.user);
+
+            const row = [
+                item.id,
+                item.approved,
+                item.created_at,
+                item.difference_in_days,
+                item.start_date,
+                item.end_date,
+                item.message,
+                ...userColumns
+            ];
+
+            worksheet.addRow(row);
+        });
+    
+        const buffer = await workbook.xlsx.writeBuffer();
+        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url = URL.createObjectURL(blob);
+    
+        const a = document.createElement('a');
+
+        a.href = url;
+        a.download = 'WnioskiUrlopowe.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    const handleToggleModal = (setter: React.Dispatch<React.SetStateAction<boolean>>) => {
+        setter(prev => !prev)
     }
     
     useEffect(() => {
@@ -156,6 +194,11 @@ const AdminModule: React.FC = () => {
         console.log(mostOccupiedMonths)
     }, [mostOccupiedMonths])
 
+    useEffect(() => {
+        console.log("isExportModalOpen:", isRequestsModalOpen);
+    }, [isRequestsModalOpen]);
+    
+
     const barChartData = [
         ["Element", "Density", { role: "style" }, { sourceColumn: 0, role: "annotation", type: "string", calc: "stringify" }],
         ...mostOccupiedMonths
@@ -174,7 +217,7 @@ const AdminModule: React.FC = () => {
                     <div className={classes['adminModule__right-grid-column']}>
                         <div className={classes['adminModule__exmaple-blocks']}><span>Zarządzanie rodzajami urlopów</span></div>
                         <div className={classes['adminModule__exmaple-blocks']}><span>Powiadomienia</span></div>
-                        <div className={classes['adminModule__exmaple-blocks']}><span>Eksport Danych</span></div>
+                        <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsExportModalOpen(true)}><span>Eksport Danych dla HR</span></div>
                     </div>
                 </div>
                 <div className={classes['adminModule__charts-container']}>
@@ -205,7 +248,10 @@ const AdminModule: React.FC = () => {
             </section>
             <InteractiveBackground />
             {isRequestsModalOpen && (
-                <Modal modalTitle={'Lista wniosków urlopowych'} modalContent={requestsList} toggleModal={toggleModal} />
+                <Modal modalTitle={'Lista wniosków urlopowych'} modalContent={requestsList} toggleModal={() => handleToggleModal(setIsRequestModalOpen)} />
+            )}
+            {isExportModalOpen && (
+                <Modal modalTitle={'Tryb eksportu wniosków urlopowych dla HR'} modalContent={requestsList} toggleModal={() => handleToggleModal(setIsExportModalOpen)} handleExcel={() => exportToExcel(requestsList)} />
             )}
         </div>
     )
