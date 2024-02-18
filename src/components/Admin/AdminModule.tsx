@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Chart } from "react-google-charts"
-import { ToastContainer } from "react-toastify"
+import { ToastContainer, toast } from "react-toastify"
 import * as ExcelJS from 'exceljs'
 import Nav from "../Utils/Nav"
 import InteractiveBackground from "../Utils/InteractiveBackground"
@@ -82,7 +82,12 @@ const AdminModule: React.FC = () => {
               if (response.ok) {
                 const data = await response.json();
 
-                setRequestsList(data);
+                if (data.length === 0) {
+                    toast.info('Nie ma wniosków do pobrania.')
+                    return
+                } else {
+                    setRequestsList(data)
+                }
               } else {
                 console.error('Błąd podczas pobierania dat');
               }
