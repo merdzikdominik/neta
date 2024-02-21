@@ -9,13 +9,7 @@ import Login from './components/Login/Login'
 import Register from './components/Registration/Register'
 import HolidaySchedule from './components/Reports/HolidaySchedule'
 import HolidayReport from './components/Reports/HolidayReport'
-import EmployeePersonalData from './components/Reports/EmployeePersonalData'
-import Employee from './components/Reports/Employee'
 import EmployeeFileData from './components/EmployeeFile/EmployeeFileData'
-import PaternityLeave from './components/Reports/PaternityLeave'
-import HolidayStatus from './components/Reports/HolidayStatus'
-import HolidayUsed from './components/Reports/HolidayUsed'
-import Absences from './components/Reports/Absences'
 import HolidayRequestForm from './components/Holiday/HolidayRequestForm'
 import HolidayRequestList from './components/Holiday/HolidayRequestList'
 import HolidayYearPlans from './components/Holiday/HolidayYearPlans'
@@ -64,12 +58,6 @@ function App() {
         <Route path='/raportowanie' element={<ProtectedRoute element={<Reports />} authenticated={hasValidToken} />} />
         <Route path='/raportowanie/data-urlopu' element={<ProtectedRoute element={<HolidaySchedule />} authenticated={hasValidToken} />} />
         <Route path='/raportowanie/data-urlopu/raport-urlopowy' element={<ProtectedRoute element={<HolidayReport />} authenticated={hasValidToken} />} />
-        <Route path='/raportowanie/dane-pracownika' element={<ProtectedRoute element={<EmployeePersonalData />} authenticated={hasValidToken} />} />
-        <Route path='/raportowanie/dane-pracownika/pracownik' element={<ProtectedRoute element={<Employee />} authenticated={hasValidToken} />} />
-        <Route path='/raportowanie/urlop-rodzicielski' element={<ProtectedRoute element={<PaternityLeave />} authenticated={hasValidToken} />} />
-        <Route path='/raportowanie/stan-urlopowy' element={<ProtectedRoute element={<HolidayStatus />} authenticated={hasValidToken} />} />
-        <Route path='/raportowanie/wykorzystane-urlopy' element={<ProtectedRoute element={<HolidayUsed />} authenticated={hasValidToken} />} />
-        <Route path='/raportowanie/nieobecnosci' element={<ProtectedRoute element={<Absences />} authenticated={hasValidToken} />} />
         <Route path='/kalendarz' element={<ProtectedRoute element={<CalendarHolder />} authenticated={hasValidToken} />} />
       </Routes>
     </div>

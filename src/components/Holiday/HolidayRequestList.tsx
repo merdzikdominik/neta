@@ -46,7 +46,9 @@ const HolidayRequestList: React.FC = () => {
                 </div>
                 <div className={classes['holidayRequestList__data_container']}>
                     <div className={classes['holidayRequestList__content']}>
-                        {holidayRequests.map(request => (
+                        {holidayRequests.length === 0 
+                        ? <div className={classes['holidayRequestList__no-requests-container']}><span>BRAK WNIOSKOW URLOPOWYCH</span></div> 
+                        : holidayRequests.map(request => (
                             <ListRow 
                                 key={request.id}
                                 userInfo={request.user}

@@ -9,6 +9,14 @@
     cursor: pointer;
 }
 
+.approved {
+    background-color: #00ea5e;
+}
+
+.denied {
+    background-color: #ff3700;
+}
+
 .listRow__user-data-subheader {
     font-size: 13px;
 }

@@ -8,7 +8,12 @@ const Reports: React.FC = () => {
         <div className={classes['main']}>
             <Nav />
             <section className={classes['reports__container']}>
-
+                <div className={classes['reports__header']}>
+                    <h1>Raportowanie</h1>
+                </div>
+                <div className={classes['reports__content-container']}>
+                    <span>Sekcja raportowania przeznaczona jest dla potrzeb wystawiania wniosków dotyczących zmiany informacji o uzytkowniku.</span>
+                </div>
             </section>
             <InteractiveBackground />
         </div>

@@ -28,6 +28,7 @@ export const notify = (status: string, message: string) => {
 const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
     const [isExpanded, setIsExpanded] = useState<boolean>(false)
     const [isApproved, setIsApproved] = useState<boolean>(false)
+    const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
 
     const {
         id,
@@ -43,6 +44,37 @@ const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
     useEffect(() => {
         setIsApproved(approved)
     }, [approved])
+
+    const fetchIsAdmin = async () => {
+        const token = localStorage.getItem('authToken');
+    
+        if (token) {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/user', {
+                    method: 'GET',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${token}`,
+                    }
+                })
+        
+                if (!response.ok) {
+                    throw new Error(`Błąd pobierania danych użytkownika: ${response.statusText}`)
+                }
+        
+                const userData = await response.json()
+                setIsAdmin(userData.is_superuser)
+            
+            } catch (error) {
+                console.log(`Błąd pobierania danych o użytkowniku: ${error}`)
+            }
+        }
+    }
+    
+    useEffect(() => {
+        fetchIsAdmin();
+    
+    }, []);
 
     const handleApprove = async (id: string) => {
         const token = localStorage.getItem('authToken')
@@ -102,7 +134,7 @@ const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
 
     return (
         <article className={`${classes['listRow__main']} ${isExpanded ? classes['expanded'] : ''}`}>
-            <div className={`${classes['listRow__header-container']} ${isExpanded ? classes['highlight'] : ''}`} onClick={handleExpandToggle}>
+            <div className={`${classes['listRow__header-container']} ${isApproved ? classes['approved'] : classes['denied']} ${isExpanded ? classes['highlight'] : ''}`} onClick={handleExpandToggle}>
                 <h1 className={classes['listRow__user-data-header']}>{first_name} {last_name} | {selected_holiday_type}</h1>
                 <span className={classes['listRow__user-data-subheader']}>Utworzony w dniu {created_at}</span>
             </div>
@@ -118,10 +150,14 @@ const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
                         <span>Długość urlopu: <i>{difference_in_days === 1 ? `${difference_in_days} dzień` : `${difference_in_days} dni`}</i></span>
                         <span>Status wniosku: <b><i>{isApproved ? 'Zatwierdzony' : 'Niezatwierdzony'}</i></b> </span>
                     </div>
-                    <div className={classes['listRow__button-container']}>
+                    {isAdmin 
+                    ?
+                    (<div className={classes['listRow__button-container']}>
                         <Button type='button' text='Zatwierdzony' onClick={() => handleApprove(id)} disabled={isApproved ? true : false} background='white' />
                         <Button type='button' text='Odrzuć' onClick={() => handleReject(id)} disabled={isApproved ? false : true} background='white' />
-                    </div>
+                    </div>)
+                    : ''
+                    }
                 </div>
             )}
         </article>

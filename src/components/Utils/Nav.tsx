@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import ReactDOM from 'react-dom'
 import UserDataChange from "../Reports/UserDataChange"
 import LogoutButton from "../Logout/LogoutButton"
@@ -7,6 +7,39 @@ import { Icon, listIcons  } from '@iconify/react'
 import classes from './Nav.module.scss'
 
 const Nav: React.FC = () => {
+    const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
+
+    const fetchIsAdmin = async () => {
+      const token = localStorage.getItem('authToken');
+  
+      if (token) {
+        try {
+          const response = await fetch('http://127.0.0.1:8000/api/user', {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`,
+            }
+          })
+    
+          if (!response.ok) {
+              throw new Error(`Błąd pobierania danych użytkownika: ${response.statusText}`)
+          }
+    
+          const userData = await response.json()
+          setIsAdmin(userData.is_superuser)
+        
+        } catch (error) {
+          console.log(`Błąd pobierania danych o użytkowniku: ${error}`)
+        }
+      }
+    }
+  
+    useEffect(() => {
+      fetchIsAdmin();
+      
+    }, []);
+
     const handleOpenNewWindow = (content: React.ComponentType) => {
         const newWindow = window.open('', '_blank', 'popup')
 
@@ -35,6 +68,7 @@ const Nav: React.FC = () => {
                 </header>
                 <nav className={classes['sidebar-nav']}>
                     <ul>
+                        { isAdmin ? <li><Link to='/modul-administracyjny'><i className="ion-ios-color-filter-outline"></i>Moduł administracyjny</Link></li> : '' }
                         <li>
                             <a href="#"><i className="ion-bag"></i> <span>Kartoteka</span></a>
                             <ul className={classes['nav-flyout']}>
@@ -59,26 +93,6 @@ const Nav: React.FC = () => {
                                 </Link>
                                 <li>
                                     <Link to='/raportowanie/data-urlopu'><i className="ion-ios-camera-outline"></i>Plany Urlopowe</Link>
-                                </li>
-                                <li>
-                                    <a href="#"><i className="ion-ios-chatboxes-outline"></i>Dane Pracownika</a>
-                                    <ul className={classes['nav-sub-flyout']}>
-                                        <li>
-                                            <Link to='/raportowanie/dane-pracownika'><i className="ion-ios-color-filter-outline"></i>Pracownik - wyswietl informacje</Link>
-                                        </li>
-                                        <li>
-                                            <Link to='/raportowanie/urlop-rodzicielski'><i className="ion-ios-color-filter-outline"></i>Urlop rodzicielski</Link>
-                                        </li>
-                                        <li>
-                                            <Link to='/raportowanie/stan-urlopowy'><i className="ion-ios-color-filter-outline"></i>Stan Urlopowy</Link>
-                                        </li>
-                                        <li>
-                                            <Link to='/raportowanie/wykorzystane-urlopy'>Wykorzystane Urlopy</Link>
-                                        </li>
-                                        <li>
-                                            <Link to='/raportowanie/nieobecnosci'><i className="ion-ios-color-filter-outline"></i>Nieobecnosci</Link>
-                                        </li>
-                                    </ul>
                                 </li>
                             </ul>
                         </li>
