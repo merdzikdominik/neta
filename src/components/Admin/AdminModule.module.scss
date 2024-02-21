@@ -51,6 +51,11 @@
     }
 }
 
+.adminModule__excel-button {
+    @extend .adminModule__exmaple-blocks;
+    margin-bottom: 0;
+}
+
 .adminModule__charts-container {
     display: flex;
     justify-content: space-between;

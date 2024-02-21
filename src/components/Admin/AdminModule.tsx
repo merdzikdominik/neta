@@ -216,15 +216,14 @@ const AdminModule: React.FC = () => {
                 <div className={classes['adminModule__grid-container']}>
                     <div className={classes['adminModule__left-grid-column']}>
                         <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsRequestModalOpen(true)}><span>Lista wniosków urlopowych</span></div>
-                        <div className={classes['adminModule__exmaple-blocks']}><span>Zatwierdzanie wniosków</span></div>
-                        <div className={classes['adminModule__exmaple-blocks']}><span>Statystyki urlopów</span></div>
+                        <div className={classes['adminModule__exmaple-blocks']}><span>Lista uzytkownikow</span></div>
                     </div>
                     <div className={classes['adminModule__right-grid-column']}>
                         <div className={classes['adminModule__exmaple-blocks']}><span>Zarządzanie rodzajami urlopów</span></div>
                         <div className={classes['adminModule__exmaple-blocks']}><span>Powiadomienia</span></div>
-                        <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsExportModalOpen(true)}><span>Eksport Danych dla HR</span></div>
                     </div>
                 </div>
+                <div className={classes['adminModule__excel-button']} onClick={() => setIsExportModalOpen(true)}><span>Eksport Danych dla HR</span></div>
                 <div className={classes['adminModule__charts-container']}>
                     <div className={classes['chart-container']}>
                         <Chart 
