@@ -9,6 +9,28 @@ import Modal from "../Utils/Modal"
 import classes from './AdminModule.module.scss'
 
 export interface IUser {
+    id: number
+    age: number | null
+    birth_date: string | null
+    education: string | null
+    email: string
+    employment_end_date: string | null
+    employment_start_date: string | null
+    first_name: string
+    is_active: boolean
+    is_staff: boolean
+    is_superuser: boolean
+    last_login: string
+    last_name: string
+    mobile_number: string | null
+    password: string
+    role: string | null
+    second_name: string | null
+    groups?: []
+    user_permissions?: []
+}
+
+export interface IRequestUser {
     first_name: string
     last_name: string
     email: string
@@ -22,14 +44,13 @@ export interface IHolidayRequest {
     end_date: string
     message: string
     selected_holiday_type: string
-    user: IUser
+    user: IRequestUser
 }
 
 const OPTIONS_PIE_CHART = {
     title: "Najczęściej Wybierane Urlopy",
     is3D: true,
     pieSliceText: 'percentage',
-    // pieSliceTextStyle: { fontSize: 10 },
     chartArea: {
         left: 10,
         top: 10,
@@ -62,10 +83,12 @@ const MONTHS = [
 
 const AdminModule: React.FC = () => {
     const [requestsList, setRequestsList] = useState<IHolidayRequest[] | []>([])
+    const [users, setUsers] = useState<IUser[] | []>([])
     const [holidayRequestData, setHolidayRequestData] = useState<(string | number)[][]>([])
     const [mostOccupiedMonths, setMostOccupiedMonths] = useState<[string, number, string, null][]>([])
     const [isRequestsModalOpen, setIsRequestModalOpen] = useState<boolean>(false)
     const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false)
+    const [isUsersModalOpen, setIsUsersModalOpen] = useState<boolean>(false)
 
     const fetchRequests = async () => {
         const token = localStorage.getItem('authToken')
@@ -89,12 +112,41 @@ const AdminModule: React.FC = () => {
                     setRequestsList(data)
                 }
               } else {
-                console.error('Błąd podczas pobierania dat');
+                console.error('Błąd podczas pobierania wniosków');
               }
           } catch (error) {
-              console.error('Błąd podczas pobierania dat', error);
+              console.error('Błąd podczas pobierania wniosków', error);
           }
         }
+    }
+
+    const fetchUsers = async () => {
+        const token = localStorage.getItem('authToken')
+
+        if (token) {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/all_users', {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Token ${token}`,
+                },
+              });
+              if (response.ok) {
+                const data = await response.json();
+
+                // console.log(data)
+
+                setUsers(data)
+
+              } else {
+                console.error('Błąd podczas pobierania uzytkowników');
+              }
+            } catch (error) {
+                console.error('Błąd podczas pobierania uzytkowników');
+            }
+        }
+
     }
 
     const exportToExcel = async (data: IHolidayRequest[]) => {
@@ -141,6 +193,10 @@ const AdminModule: React.FC = () => {
     
     useEffect(() => {
         fetchRequests()
+    }, [])
+
+    useEffect(() => {
+        fetchUsers()
     }, [])
 
     useEffect(() => {
@@ -194,18 +250,9 @@ const AdminModule: React.FC = () => {
       
         setMostOccupiedMonths(result);
     }, [requestsList]);
-
-    useEffect(() => {
-        console.log(mostOccupiedMonths)
-    }, [mostOccupiedMonths])
-
-    useEffect(() => {
-        console.log("isExportModalOpen:", isRequestsModalOpen);
-    }, [isRequestsModalOpen]);
     
-
     const barChartData = [
-        ["Element", "Density", { role: "style" }, { sourceColumn: 0, role: "annotation", type: "string", calc: "stringify" }],
+        ["Urlop", "Częstość", { role: "style" }, { sourceColumn: 0, role: "annotation", type: "string", calc: "stringify" }],
         ...mostOccupiedMonths
     ]
 
@@ -216,7 +263,7 @@ const AdminModule: React.FC = () => {
                 <div className={classes['adminModule__grid-container']}>
                     <div className={classes['adminModule__left-grid-column']}>
                         <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsRequestModalOpen(true)}><span>Lista wniosków urlopowych</span></div>
-                        <div className={classes['adminModule__exmaple-blocks']}><span>Lista uzytkownikow</span></div>
+                        <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsUsersModalOpen(true)}><span>Lista uzytkownikow</span></div>
                     </div>
                     <div className={classes['adminModule__right-grid-column']}>
                         <div className={classes['adminModule__exmaple-blocks']}><span>Zarządzanie rodzajami urlopów</span></div>
@@ -256,6 +303,9 @@ const AdminModule: React.FC = () => {
             )}
             {isExportModalOpen && (
                 <Modal modalTitle={'Tryb eksportu wniosków urlopowych dla HR'} modalContent={requestsList} toggleModal={() => handleToggleModal(setIsExportModalOpen)} handleExcel={() => exportToExcel(requestsList)} />
+            )}
+            {isUsersModalOpen && (
+                <Modal modalTitle={'Lista uzytkowników w systemie'} modalContent={users} toggleModal={() => handleToggleModal(setIsUsersModalOpen)} />
             )}
         </div>
     )

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react"
-import { IHolidayRequest, IUser } from "../Admin/AdminModule"
+import { IHolidayRequest, IRequestUser } from "../Admin/AdminModule"
 import { toast } from "react-toastify"
 import Button from "./Button"
 import 'react-toastify/dist/ReactToastify.css'
-import classes from './ListRow.module.scss'
+import classes from './RequestListRow.module.scss'
 
 interface IListRow {
-    userInfo: IUser,
+    userInfo: IRequestUser,
     requestInfo: IHolidayRequest
 }
 
