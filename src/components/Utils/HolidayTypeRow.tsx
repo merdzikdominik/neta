@@ -20,6 +20,7 @@ const HolidayTypeRow: React.FC<IHolidayType> = ({ id, label }) => {
 
                 if (response.ok) {
                     console.log(`Usunięto typ urlopu ${id}`);
+                    document.location.reload()
                 } else {
                     const data = await response.json();
                     console.error(data);

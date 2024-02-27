@@ -119,6 +119,7 @@ const Modal: React.FC<IModal> = ({ toggleModal, modalTitle, modalContent, handle
                 });
                 if (response.ok) {
                     console.log(`Zaktualizowano typ urlopu ${response}`);
+                    document.location.reload()
                 } else {
                     const data = await response.json();
                     console.error(data);
