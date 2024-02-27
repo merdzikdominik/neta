@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { RootState } from "../../store/types"
 import { Chart } from "react-google-charts"
 import { ToastContainer, toast } from "react-toastify"
 import * as ExcelJS from 'exceljs'
@@ -47,6 +48,11 @@ export interface IHolidayRequest {
     user: IRequestUser
 }
 
+export interface IHolidayType {
+    id: string
+    label: string
+}
+
 const OPTIONS_PIE_CHART = {
     title: "Najczęściej Wybierane Urlopy",
     is3D: true,
@@ -86,9 +92,11 @@ const AdminModule: React.FC = () => {
     const [users, setUsers] = useState<IUser[] | []>([])
     const [holidayRequestData, setHolidayRequestData] = useState<(string | number)[][]>([])
     const [mostOccupiedMonths, setMostOccupiedMonths] = useState<[string, number, string, null][]>([])
+    const [holidayTypes, setHolidayTypes] = useState<IHolidayType[]>([])
     const [isRequestsModalOpen, setIsRequestModalOpen] = useState<boolean>(false)
     const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false)
     const [isUsersModalOpen, setIsUsersModalOpen] = useState<boolean>(false)
+    const [isHolidayTypeModalOpen, setIsHolidayTypeModalOpen] = useState<boolean>(false)
 
     const fetchRequests = async () => {
         const token = localStorage.getItem('authToken')
@@ -135,8 +143,6 @@ const AdminModule: React.FC = () => {
               if (response.ok) {
                 const data = await response.json();
 
-                // console.log(data)
-
                 setUsers(data)
 
               } else {
@@ -147,6 +153,32 @@ const AdminModule: React.FC = () => {
             }
         }
 
+    }
+
+    const fetchHolidayTypes = async () => {
+        const token = localStorage.getItem('authToken')
+
+        if (token) {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/all_holiday_types', {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Token ${token}`,
+                },
+              });
+              if (response.ok) {
+                const data = await response.json();
+
+                setHolidayTypes(data)
+
+              } else {
+                console.error('Błąd podczas pobierania typów urlopowych');
+              }
+            } catch (error) {
+                console.error('Błąd podczas pobierania typów urlopowych');
+            }
+        }
     }
 
     const exportToExcel = async (data: IHolidayRequest[]) => {
@@ -197,6 +229,10 @@ const AdminModule: React.FC = () => {
 
     useEffect(() => {
         fetchUsers()
+    }, [])
+
+    useEffect(() => {
+        fetchHolidayTypes()
     }, [])
 
     useEffect(() => {
@@ -266,7 +302,7 @@ const AdminModule: React.FC = () => {
                         <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsUsersModalOpen(true)}><span>Lista uzytkownikow</span></div>
                     </div>
                     <div className={classes['adminModule__right-grid-column']}>
-                        <div className={classes['adminModule__exmaple-blocks']}><span>Zarządzanie rodzajami urlopów</span></div>
+                        <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsHolidayTypeModalOpen(true)}><span>Zarządzanie rodzajami urlopów</span></div>
                         <div className={classes['adminModule__exmaple-blocks']}><span>Powiadomienia</span></div>
                     </div>
                 </div>
@@ -306,6 +342,9 @@ const AdminModule: React.FC = () => {
             )}
             {isUsersModalOpen && (
                 <Modal modalTitle={'Lista uzytkowników w systemie'} modalContent={users} toggleModal={() => handleToggleModal(setIsUsersModalOpen)} />
+            )}
+            {isHolidayTypeModalOpen && (
+                <Modal modalTitle={'Rodzaje urlopów'} modalContent={holidayTypes} toggleModal={() => handleToggleModal(setIsHolidayTypeModalOpen)} />
             )}
         </div>
     )
