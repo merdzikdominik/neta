@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { RootState } from "../../store/types"
 import { Chart } from "react-google-charts"
-import { ToastContainer, toast } from "react-toastify"
+import { toast } from "react-toastify"
 import * as ExcelJS from 'exceljs'
 import Nav from "../Utils/Nav"
 import InteractiveBackground from "../Utils/InteractiveBackground"
@@ -120,10 +120,12 @@ const AdminModule: React.FC = () => {
                     setRequestsList(data)
                 }
               } else {
+                toast.error('Błąd podczas pobierania wniosków')
                 console.error('Błąd podczas pobierania wniosków');
               }
           } catch (error) {
-              console.error('Błąd podczas pobierania wniosków', error);
+                toast.error('Błąd podczas pobierania wniosków')
+                console.error('Błąd podczas pobierania wniosków', error);
           }
         }
     }
@@ -331,7 +333,6 @@ const AdminModule: React.FC = () => {
                         />
                     </div>
                 </div>
-                <ToastContainer />
             </section>
             <InteractiveBackground />
             {isRequestsModalOpen && (

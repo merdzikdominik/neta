@@ -1,5 +1,6 @@
-import React, { useState, useRef, ChangeEvent } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useState, useEffect, useRef, ChangeEvent } from "react";
+import { toast } from "react-toastify";
+import { IHolidayType } from "../Admin/AdminModule";
 import Nav from "../Utils/Nav";
 import InteractiveBackground from "../Utils/InteractiveBackground";
 import Button from "../Utils/Button";
@@ -10,18 +11,9 @@ const HolidayRequestForm: React.FC = () => {
     const [endDate, setEndDate] = useState<string>('');
     const [differenceInDays, setDifferenceInDays] = useState<number | null>(null);
     const [selectedHolidayType, setSelectedHolidayType] = useState<string>('');
+    const [holidayTypes, setHolidayTypes] = useState<IHolidayType[]>([])
     const selectedHolidayTypesRef = useRef<HTMLSelectElement | null>(null);
     const token = localStorage.getItem('authToken')
-
-    const holidayTypes = [
-        { id: '01', label: 'Urlop wypoczynkowy (w tym urlop na żądanie, urlop zaległy z poprzedniego roku czy wczasy pod gruszą)' },
-        { id: '02', label: 'Urlop macierzyński' },
-        { id: '03', label: 'Urlop ojcowski' },
-        { id: '04', label: 'Urlop rodzicielski' },
-        { id: '05', label: 'Opieka nad dzieckiem' },
-        { id: '06', label: 'Urlop okolicznościowy' },
-        { id: '07', label: 'Urlop szkoleniowy' }
-    ];
 
     const handleHolidayTypes = () => {
         if (selectedHolidayTypesRef.current) {
@@ -67,6 +59,36 @@ const HolidayRequestForm: React.FC = () => {
             selectedHolidayTypesRef.current.value = '';
         }
     }
+
+    useEffect(() => {
+        const fetchHolidayTypes = async () => {
+            const token = localStorage.getItem('authToken')
+
+            if (token) {
+                try {
+                    const response = await fetch('http://127.0.0.1:8000/api/all_holiday_types', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Token ${token}`,
+                        },
+                    })
+
+                    if (response.ok) {
+                        const data = await response.json();
+        
+                        setHolidayTypes(data);
+                    } else {
+                        console.error('Błąd podczas pobierania dat');
+                        toast.error('Wystąpił bład podczas pobierania dat.')
+                    }
+                } catch (error) {
+                    console.error('Błąd podczas pobierania dat', error);
+                }
+                }
+            }
+        fetchHolidayTypes()
+    }, [])
 
     const handleSubmit = async () => {
         if (token) {
@@ -176,7 +198,6 @@ const HolidayRequestForm: React.FC = () => {
                         <Button type="submit" onClick={handleSubmit} text="Wykonaj" />
                     </div>
                 </div>
-                <ToastContainer />
             </section>
             <InteractiveBackground />
         </div>

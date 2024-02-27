@@ -1,5 +1,6 @@
 import React from "react"
 import { IHolidayType } from "../Admin/AdminModule"
+import { toast } from "react-toastify"
 import classes from './HolidayTypeRow.module.scss'
 
 
@@ -19,10 +20,23 @@ const HolidayTypeRow: React.FC<IHolidayType> = ({ id, label }) => {
                 });
 
                 if (response.ok) {
+
+                    toast.success('Usunięto typ urlopu pomyślnie.')
                     console.log(`Usunięto typ urlopu ${id}`);
-                    document.location.reload()
+
+                    setTimeout(() => {
+                        document.location.reload()
+                    }, 2000)
+
                 } else {
                     const data = await response.json();
+                    
+                    toast.error('Nie udało się usunąć danego typu urlopu. Spróbuj jeszcze raz.')
+
+                    setTimeout(() => {
+                        document.location.reload()
+                    }, 2000)
+                    
                     console.error(data);
                     console.error(`Błąd podczas usuwania typu urlopu ${data}`);
                 }

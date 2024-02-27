@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IHolidayRequest, IUser, IHolidayType } from "../Admin/AdminModule";
+import { toast } from "react-toastify";
 import UserRequestRow from "./UserRequestRow";
 import RequestListRow from "./RequestListRow";
 import HolidayTypeRow from "./HolidayTypeRow";
@@ -119,10 +120,17 @@ const Modal: React.FC<IModal> = ({ toggleModal, modalTitle, modalContent, handle
                 });
                 if (response.ok) {
                     console.log(`Zaktualizowano typ urlopu ${response}`);
-                    document.location.reload()
+
+                    toast.success('Pomyślnie dodano typ urlopowy.')
+
+                    setTimeout(() => {
+                        document.location.reload()
+                    }, 2000)
+
                 } else {
                     const data = await response.json();
-                    console.error(data);
+
+                    toast.error('Błąd podczas dodawania nowego typu urlopu. Spróbuj ponownie później.')
                     console.error(`Błąd podczas dodawania nowego typu urlopu ${data}`);
                 }
             } catch (error) {
