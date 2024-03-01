@@ -3,33 +3,61 @@ import { Dispatch } from 'redux';
 
 export type AppDispatch = Dispatch<Action>;
 
-export const SET_DATES = 'SET_DATES';
+export const SET_DATES = 'SET_DATES'
+export const ADD_NOTIFICATION = 'ADD_NOTIFICATION'
+export const FETCH_NOTIFICATIONS = 'FETCH_NOTIFICATIONS'
 
-// export const SET_HOLIDAY_TYPES = 'SET_HOLIDAY_TYPES';
+export const FETCH_NOTIFICATIONS_SUCCESS = 'FETCH_NOTIFICATIONS_SUCCESS';
+export const FETCH_NOTIFICATIONS_FAILURE = 'FETCH_NOTIFICATIONS_FAILURE';
 
-export interface DateState {
+export const SEND_NOTIFICATION_SUCCESS = 'SEND_NOTIFICATION_SUCCESS'
+export const SEND_NOTIFICATION_FAILURE = 'SEND_NOTIFICATION_FAILURE'
+
+export interface IDateState {
     dateFrom: string;
     dateTo: string;
 }
 
-// export interface IHolidayTypes {
-//     id: string
-//     label: string
-// }
+export interface INotificationState {
+    id: number,
+    label: string
+}
 
 export interface RootState {
-    dates: DateState
-    // holidayTypes: IHolidayTypes
+    dates: IDateState,
+    notifications: INotificationState[]
+}
+
+export interface ISendNotificationSuccessAction {
+    type: typeof SEND_NOTIFICATION_SUCCESS;
+    payload: INotificationState;
+}
+
+export interface ISendNotificationFailureAction {
+    type: typeof SEND_NOTIFICATION_FAILURE;
+    payload: string;
+}
+
+export interface IFetchRequestsSuccessAction {
+    type: typeof FETCH_NOTIFICATIONS_SUCCESS;
+    payload: INotificationState[];
+}
+
+export interface IFetchRequestsFailureAction {
+    type: typeof FETCH_NOTIFICATIONS_FAILURE;
+    error: string;
 }
 
 export interface SetDateAction extends Action {
     type: 'SET_DATES';
-    payload: DateState;
+    payload: IDateState;
 }
 
-// export interface SetHolidayTypesAction extends Action {
-//     type: 'SET_HOLIDAY_TYPES'
-//     payload: IHolidayTypes
-// }
-  
+export interface SetNotificationAction extends Action {
+    type: 'ADD_NOTIFICATION'
+    payload: INotificationState
+}
+
 export type DateActionTypes = SetDateAction
+
+export type ActionTypes = ISendNotificationSuccessAction | IFetchRequestsFailureAction | IFetchRequestsSuccessAction | IFetchRequestsFailureAction

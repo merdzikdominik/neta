@@ -1,10 +1,19 @@
-import { legacy_createStore as createStore, combineReducers } from 'redux';
+import { legacy_createStore as createStore, combineReducers, applyMiddleware, Reducer } from 'redux';
+import { thunk } from 'redux-thunk';
+import { RootState } from './types';
 import { dateReducer } from './reducers/datesReducer';
-// import { holidayTypesReducer } from './reducers/holidayTypesReducer'
+import { notificationsReducer } from './reducers/notificationReducer';
 
-const rootReducer = combineReducers({
+const initialState: RootState = {
+  dates: { dateFrom: '', dateTo: '' },
+  notifications: []
+};
+
+const rootReducer: Reducer = combineReducers({
   dates: dateReducer,
-  // holidayTypes: holidayTypesReducer
+  notifications: notificationsReducer,
 });
 
-export const store = createStore(rootReducer);
+const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
+
+export default store;

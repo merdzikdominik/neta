@@ -1,10 +1,7 @@
 // reducers.ts
-interface DateState {
-    dateFrom: string;
-    dateTo: string;
-}
+import { IDateState } from "../types";
   
-const initialDateState: DateState = {
+const initialDateState: IDateState = {
     dateFrom: '',
     dateTo: '',
 };

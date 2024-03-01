@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../store/types"
 import { Chart } from "react-google-charts"
 import { toast } from "react-toastify"
+import { fetchNotifications } from "../../store/actions/action-creators"
 import * as ExcelJS from 'exceljs'
 import Nav from "../Utils/Nav"
 import InteractiveBackground from "../Utils/InteractiveBackground"
@@ -93,10 +95,14 @@ const AdminModule: React.FC = () => {
     const [holidayRequestData, setHolidayRequestData] = useState<(string | number)[][]>([])
     const [mostOccupiedMonths, setMostOccupiedMonths] = useState<[string, number, string, null][]>([])
     const [holidayTypes, setHolidayTypes] = useState<IHolidayType[]>([])
+    const notifications = useSelector((state: RootState) => state.notifications)
+    // const [notifications, setNotifications] = useState<INotificationState[]>([])
     const [isRequestsModalOpen, setIsRequestModalOpen] = useState<boolean>(false)
     const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false)
     const [isUsersModalOpen, setIsUsersModalOpen] = useState<boolean>(false)
     const [isHolidayTypeModalOpen, setIsHolidayTypeModalOpen] = useState<boolean>(false)
+    const [isNotificationModalOpen, setIsNotificationModalOpen] = useState<boolean>(false)
+    const dispatch = useDispatch()
 
     const fetchRequests = async () => {
         const token = localStorage.getItem('authToken')
@@ -267,6 +273,14 @@ const AdminModule: React.FC = () => {
     }, [requestsList]);
 
     useEffect(() => {
+        fetchNotifications()(dispatch)
+    }, [dispatch])
+
+    useEffect(() => {
+        console.log(notifications)
+    }, [notifications])
+
+    useEffect(() => {
         const monthCounts: Record<string, number> = {};
       
         requestsList.forEach((request) => {
@@ -305,7 +319,7 @@ const AdminModule: React.FC = () => {
                     </div>
                     <div className={classes['adminModule__right-grid-column']}>
                         <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsHolidayTypeModalOpen(true)}><span>Zarządzanie rodzajami urlopów</span></div>
-                        <div className={classes['adminModule__exmaple-blocks']}><span>Powiadomienia</span></div>
+                        <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsNotificationModalOpen(true)}><span>Powiadomienia</span></div>
                     </div>
                 </div>
                 <div className={classes['adminModule__excel-button']} onClick={() => setIsExportModalOpen(true)}><span>Eksport Danych dla HR</span></div>
@@ -346,6 +360,9 @@ const AdminModule: React.FC = () => {
             )}
             {isHolidayTypeModalOpen && (
                 <Modal modalTitle={'Rodzaje urlopów'} modalContent={holidayTypes} toggleModal={() => handleToggleModal(setIsHolidayTypeModalOpen)} />
+            )}
+            {isNotificationModalOpen && (
+                <Modal modalTitle={'Powiadomienia'} modalContent={notifications} toggleModal={() => handleToggleModal(setIsNotificationModalOpen)} />
             )}
         </div>
     )

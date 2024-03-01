@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sendNotifications } from "../../store/actions/action-creators";
+import { RootState } from "../../store/types";
+// import { sendNotifications, getNotifications } from '../../store/reducers/notificationReducer'
 import { toast } from "react-toastify";
 import { IHolidayType } from "../Admin/AdminModule";
 import Nav from "../Utils/Nav";
 import InteractiveBackground from "../Utils/InteractiveBackground";
 import Button from "../Utils/Button";
 import classes from './HolidayRequestForm.module.scss';
+// import { fetchNotifications } from "../../store/actions/action-creators";
 
 const HolidayRequestForm: React.FC = () => {
     const [startDate, setStartDate] = useState<string>('');
@@ -13,6 +18,8 @@ const HolidayRequestForm: React.FC = () => {
     const [selectedHolidayType, setSelectedHolidayType] = useState<string>('');
     const [holidayTypes, setHolidayTypes] = useState<IHolidayType[]>([])
     const selectedHolidayTypesRef = useRef<HTMLSelectElement | null>(null);
+    const dispatch = useDispatch()
+    const notifications = useSelector((state: RootState) => state.notifications)
     const token = localStorage.getItem('authToken')
 
     const handleHolidayTypes = () => {
@@ -85,8 +92,8 @@ const HolidayRequestForm: React.FC = () => {
                 } catch (error) {
                     console.error('Błąd podczas pobierania dat', error);
                 }
-                }
             }
+        }
         fetchHolidayTypes()
     }, [])
 
@@ -130,12 +137,18 @@ const HolidayRequestForm: React.FC = () => {
 
                 if (!response.ok) {
                     const errorMessage = await response.text()
+
                     toast.error('Wystąpił błąd podczas przetwarzania Twojego wniosku.')
                     throw new Error(`HTTP error! Status: ${response.status}, Error: ${errorMessage}`);
                 }
 
                 const data = await response.json()
                 console.log("Successfully created holiday request:", data)
+
+                // let notificationId = notifications.length + 1
+
+                sendNotifications({ id: notifications.length + 1, label: `Nowy wniosek urlopowy dla ${first_name} ${last_name}` }, dispatch)
+
                 toast.success('Pomyślnie dodano wniosek urlopowy.')
 
                 clearInputs();
