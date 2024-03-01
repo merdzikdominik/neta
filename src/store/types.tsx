@@ -4,11 +4,12 @@ import { Dispatch } from 'redux';
 export type AppDispatch = Dispatch<Action>;
 
 export const SET_DATES = 'SET_DATES'
-export const ADD_NOTIFICATION = 'ADD_NOTIFICATION'
-export const FETCH_NOTIFICATIONS = 'FETCH_NOTIFICATIONS'
 
+export const FETCH_NOTIFICATIONS = 'FETCH_NOTIFICATIONS'
 export const FETCH_NOTIFICATIONS_SUCCESS = 'FETCH_NOTIFICATIONS_SUCCESS';
 export const FETCH_NOTIFICATIONS_FAILURE = 'FETCH_NOTIFICATIONS_FAILURE';
+
+export const CLEAR_NOTIFICATIONS = 'CLEAR_NOTIFICATIONS'
 
 export const SEND_NOTIFICATION_SUCCESS = 'SEND_NOTIFICATION_SUCCESS'
 export const SEND_NOTIFICATION_FAILURE = 'SEND_NOTIFICATION_FAILURE'
@@ -35,17 +36,22 @@ export interface ISendNotificationSuccessAction {
 
 export interface ISendNotificationFailureAction {
     type: typeof SEND_NOTIFICATION_FAILURE;
-    payload: string;
+    error: string;
 }
 
-export interface IFetchRequestsSuccessAction {
+export interface IFetchNotificationsSuccessAction {
     type: typeof FETCH_NOTIFICATIONS_SUCCESS;
     payload: INotificationState[];
 }
 
-export interface IFetchRequestsFailureAction {
+export interface IFetchNotificationsFailureAction {
     type: typeof FETCH_NOTIFICATIONS_FAILURE;
     error: string;
+}
+
+export interface IClearNotificationsAction {
+    type: typeof CLEAR_NOTIFICATIONS
+    payload: []
 }
 
 export interface SetDateAction extends Action {
@@ -53,11 +59,6 @@ export interface SetDateAction extends Action {
     payload: IDateState;
 }
 
-export interface SetNotificationAction extends Action {
-    type: 'ADD_NOTIFICATION'
-    payload: INotificationState
-}
-
 export type DateActionTypes = SetDateAction
 
-export type ActionTypes = ISendNotificationSuccessAction | IFetchRequestsFailureAction | IFetchRequestsSuccessAction | IFetchRequestsFailureAction
+export type ActionTypes = ISendNotificationSuccessAction | ISendNotificationFailureAction | IFetchNotificationsFailureAction | IFetchNotificationsSuccessAction | IClearNotificationsAction

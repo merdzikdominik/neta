@@ -145,9 +145,14 @@ const HolidayRequestForm: React.FC = () => {
                 const data = await response.json()
                 console.log("Successfully created holiday request:", data)
 
-                // let notificationId = notifications.length + 1
+                const currentDate = new Date();
+                const currentHour = currentDate.getHours();
+                const currentMinute = currentDate.getMinutes();
+                const currentTime = `${currentHour}:${currentMinute}`;
 
-                sendNotifications({ id: notifications.length + 1, label: `Nowy wniosek urlopowy dla ${first_name} ${last_name}` }, dispatch)
+                let newId = notifications.length + 1
+
+                sendNotifications({ id: newId, label: `Nowy wniosek urlopowy dla ${first_name} ${last_name} | (${currentTime})` }, dispatch)
 
                 toast.success('Pomyślnie dodano wniosek urlopowy.')
 

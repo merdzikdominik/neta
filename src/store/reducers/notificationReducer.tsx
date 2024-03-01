@@ -3,6 +3,7 @@ import {
     FETCH_NOTIFICATIONS_FAILURE, 
     SEND_NOTIFICATION_SUCCESS,
     SEND_NOTIFICATION_FAILURE,
+    CLEAR_NOTIFICATIONS,
     ActionTypes, 
     INotificationState
 } from '../types';
@@ -12,21 +13,26 @@ const initialState: INotificationState[] = []
 export const notificationsReducer = (state = initialState, action: ActionTypes): INotificationState[] => {
     switch (action.type) {
         case FETCH_NOTIFICATIONS_SUCCESS:
-            return [...state, ...action.payload];
+            const newNotifications = action.payload.filter(newNotification => 
+                !state.some(existingNotification => existingNotification.id === newNotification.id)
+            );
+
+            return [...state, ...newNotifications];
 
         case FETCH_NOTIFICATIONS_FAILURE:
             console.error(action.error);
             return state;
         
         case SEND_NOTIFICATION_SUCCESS:
-            let newId = state.length + 1;
 
-            const newPayload: INotificationState = {
-                ...action.payload,
-                id: newId,
-            }
+            return [...state, action.payload];
 
-            return [...state, newPayload];
+        case SEND_NOTIFICATION_FAILURE:
+            console.error(action.error);
+            return state;
+
+        case CLEAR_NOTIFICATIONS: 
+            return action.payload
 
         default:
             return state;

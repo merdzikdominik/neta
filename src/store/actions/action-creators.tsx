@@ -3,9 +3,7 @@ import {
     IDateState, 
     INotificationState, 
     SetDateAction, 
-    SetNotificationAction, 
     SET_DATES, 
-    ADD_NOTIFICATION,
     FETCH_NOTIFICATIONS_SUCCESS, 
     FETCH_NOTIFICATIONS_FAILURE,
     SEND_NOTIFICATION_SUCCESS,
@@ -36,11 +34,6 @@ export const setDate = (dates: IDateState): SetDateAction => ({
     type: SET_DATES,
     payload: dates,
 });
-
-export const setNotifications = (notification: INotificationState): SetNotificationAction => ({
-    type: ADD_NOTIFICATION,
-    payload: notification
-})
 
 export const fetchNotifications = () => async (dispatch: Dispatch<Action>) => {
     const token = localStorage.getItem('authToken');
