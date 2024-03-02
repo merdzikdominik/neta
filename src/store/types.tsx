@@ -19,19 +19,18 @@ export interface IDateState {
     dateTo: string;
 }
 
-export interface INotificationState {
-    id: number,
+export interface INotification {
+    id: string,
     label: string
 }
 
 export interface RootState {
-    dates: IDateState,
-    notifications: INotificationState[]
+    dates: IDateState
 }
 
 export interface ISendNotificationSuccessAction {
     type: typeof SEND_NOTIFICATION_SUCCESS;
-    payload: INotificationState;
+    payload: INotification;
 }
 
 export interface ISendNotificationFailureAction {
@@ -41,7 +40,7 @@ export interface ISendNotificationFailureAction {
 
 export interface IFetchNotificationsSuccessAction {
     type: typeof FETCH_NOTIFICATIONS_SUCCESS;
-    payload: INotificationState[];
+    payload: INotification[];
 }
 
 export interface IFetchNotificationsFailureAction {

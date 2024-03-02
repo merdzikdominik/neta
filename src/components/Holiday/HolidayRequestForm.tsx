@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { sendNotifications } from "../../store/actions/action-creators";
-import { RootState } from "../../store/types";
-// import { sendNotifications, getNotifications } from '../../store/reducers/notificationReducer'
 import { toast } from "react-toastify";
 import { IHolidayType } from "../Admin/AdminModule";
+import uuid from "react-uuid";
 import Nav from "../Utils/Nav";
 import InteractiveBackground from "../Utils/InteractiveBackground";
 import Button from "../Utils/Button";
 import classes from './HolidayRequestForm.module.scss';
-// import { fetchNotifications } from "../../store/actions/action-creators";
 
 const HolidayRequestForm: React.FC = () => {
     const [startDate, setStartDate] = useState<string>('');
@@ -18,8 +15,6 @@ const HolidayRequestForm: React.FC = () => {
     const [selectedHolidayType, setSelectedHolidayType] = useState<string>('');
     const [holidayTypes, setHolidayTypes] = useState<IHolidayType[]>([])
     const selectedHolidayTypesRef = useRef<HTMLSelectElement | null>(null);
-    const dispatch = useDispatch()
-    const notifications = useSelector((state: RootState) => state.notifications)
     const token = localStorage.getItem('authToken')
 
     const handleHolidayTypes = () => {
@@ -115,13 +110,19 @@ const HolidayRequestForm: React.FC = () => {
 
                 const [ startYear, startMonth, startDay ] = startDate.split('-')
                 const [ endYear, endMonth, endDay ] = endDate.split('-')
+
+                const handleCheckDates = () => {
+                    if (
+                        (Number(startDay) > Number(endDay) && Number(startMonth) > Number(endMonth) && Number(startYear) > Number(endYear)) ||
+                        (Number(startDay) > Number(endDay) && Number(startMonth) > Number(endMonth) && Number(startYear) === Number(endYear)) || 
+                        (Number(startDay) > Number(endDay) && Number(startMonth) === Number(endMonth) && Number(startYear) > Number(endYear)) || 
+                        (Number(startDay) > Number(endDay) && Number(startMonth) === Number(endMonth) && Number(startYear) === Number(endYear))
+                    ) { return true }
+                    
+                    return false
+                }
         
-                if (
-                    (Number(startDay) > Number(endDay) && Number(startMonth) > Number(endMonth) && Number(startYear) > Number(endYear)) ||
-                    (Number(startDay) > Number(endDay) && Number(startMonth) > Number(endMonth) && Number(startYear) === Number(endYear)) || 
-                    (Number(startDay) > Number(endDay) && Number(startMonth) === Number(endMonth) && Number(startYear) > Number(endYear)) || 
-                    (Number(startDay) > Number(endDay) && Number(startMonth) === Number(endMonth) && Number(startYear) === Number(endYear))
-                ) { 
+                if (handleCheckDates()) { 
                     toast.info('Błędnie wprowadzone daty.') 
                     return
                 }
@@ -168,9 +169,7 @@ const HolidayRequestForm: React.FC = () => {
                 const currentMinute = currentDate.getMinutes() < 10 ? `0${currentDate.getMinutes()}` : currentDate.getMinutes()
                 const currentTime = `${currentHour}:${currentMinute}`;
 
-                let newId = notifications.length + 1
-
-                sendNotifications({ id: newId, label: `Nowy wniosek urlopowy dla ${first_name} ${last_name} | (${currentTime})` }, dispatch)
+                sendNotifications({ id: uuid(), label: `Nowy wniosek urlopowy dla ${first_name} ${last_name} | (${currentTime})` }, token)
 
                 toast.success('Pomyślnie dodano wniosek urlopowy.')
 
