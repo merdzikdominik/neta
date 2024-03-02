@@ -112,6 +112,20 @@ const HolidayRequestForm: React.FC = () => {
                     toast.error('Wystąpił bład podczas pobierania Twoich danych.')
                     throw new Error(`Błąd pobierania danych użytkownika: ${responseUserData.statusText}`);
                 }
+
+                const [ startYear, startMonth, startDay ] = startDate.split('-')
+                const [ endYear, endMonth, endDay ] = endDate.split('-')
+        
+                if (
+                    (Number(startDay) > Number(endDay) && Number(startMonth) > Number(endMonth) && Number(startYear) > Number(endYear)) ||
+                    (Number(startDay) > Number(endDay) && Number(startMonth) > Number(endMonth) && Number(startYear) === Number(endYear)) || 
+                    (Number(startDay) > Number(endDay) && Number(startMonth) === Number(endMonth) && Number(startYear) > Number(endYear)) || 
+                    (Number(startDay) > Number(endDay) && Number(startMonth) === Number(endMonth) && Number(startYear) === Number(endYear))
+                ) { 
+                    toast.info('Błędnie wprowadzone daty') 
+                    return
+                }
+        
     
                 const userData = await responseUserData.json();
                 const { first_name, last_name, email } = userData;
