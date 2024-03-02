@@ -86,11 +86,11 @@ const HolidayRequestForm: React.FC = () => {
         
                         setHolidayTypes(data);
                     } else {
-                        console.error('Błąd podczas pobierania dat');
-                        toast.error('Wystąpił bład podczas pobierania dat.')
+                        console.error('Błąd podczas pobierania typów urlopowych');
+                        toast.error('Wystąpił bład podczas pobierania typów urlopowych.')
                     }
                 } catch (error) {
-                    console.error('Błąd podczas pobierania dat', error);
+                    console.error('Błąd podczas pobierania typów urlopowych', error);
                 }
             }
         }
@@ -221,8 +221,8 @@ const HolidayRequestForm: React.FC = () => {
                     </div>
                     <div className={classes['holidayRequest__months-dropdown']}>
                         <label htmlFor="months">Typ urlopu:</label>
-                        <select id="months" name="months" onChange={handleHolidayTypes} ref={selectedHolidayTypesRef}>
-                            <option value="">Wybierz miesiąc</option>
+                        <select id="months" name="holiday_types" onChange={handleHolidayTypes} ref={selectedHolidayTypesRef}>
+                            <option value="">Wybierz typ urlopu</option>
                             {holidayTypes.map((holidayType) => (
                                 <option key={holidayType.id} value={holidayType.label}>
                                     {holidayType.label}
