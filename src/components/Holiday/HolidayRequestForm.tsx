@@ -147,7 +147,7 @@ const HolidayRequestForm: React.FC = () => {
 
                 const currentDate = new Date();
                 const currentHour = currentDate.getHours();
-                const currentMinute = currentDate.getMinutes();
+                const currentMinute = currentDate.getMinutes() < 10 ? `0${currentDate.getMinutes()}` : currentDate.getMinutes()
                 const currentTime = `${currentHour}:${currentMinute}`;
 
                 let newId = notifications.length + 1

@@ -278,7 +278,7 @@ const AdminModule: React.FC = () => {
 
     useEffect(() => {
         console.log(notifications)
-    }, [])
+    }, [notifications])
 
     useEffect(() => {
         const monthCounts: Record<string, number> = {};
