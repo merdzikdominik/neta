@@ -122,10 +122,14 @@ const HolidayRequestForm: React.FC = () => {
                     (Number(startDay) > Number(endDay) && Number(startMonth) === Number(endMonth) && Number(startYear) > Number(endYear)) || 
                     (Number(startDay) > Number(endDay) && Number(startMonth) === Number(endMonth) && Number(startYear) === Number(endYear))
                 ) { 
-                    toast.info('Błędnie wprowadzone daty') 
+                    toast.info('Błędnie wprowadzone daty.') 
                     return
                 }
         
+                if (selectedHolidayType === '') {
+                    toast.info('Wybierz typ urlopowy.')
+                    return
+                }
     
                 const userData = await responseUserData.json();
                 const { first_name, last_name, email } = userData;
