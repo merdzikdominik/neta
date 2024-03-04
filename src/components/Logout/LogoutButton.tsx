@@ -1,4 +1,5 @@
 import React from 'react';
+import {InlineIcon, } from '@iconify/react'
 import { Link } from 'react-router-dom';
 
 const LogoutButton: React.FC = () => {
@@ -16,14 +17,10 @@ const LogoutButton: React.FC = () => {
                 });
 
                 if (response.ok) {
-                    // Pomyślnie wylogowano użytkownika
                     localStorage.removeItem('authToken');
 
                     window.location.reload()
-                    // Tutaj możesz przekierować użytkownika na stronę logowania
-                    // window.location.href = '/'; // Przykładowa przekierowanie na stronę logowania
                 } else {
-                    // Obsługa błędu
                     console.error('Błąd podczas wylogowywania');
                 }
 
@@ -36,7 +33,7 @@ const LogoutButton: React.FC = () => {
     return (
         <li onClick={handleLogout}>
             <Link to='/'>
-                <i className="ion-ios-color-filter-outline"></i>Wyloguj
+                <InlineIcon style={{fontSize: '18px'}} icon="ic:baseline-logout" /> Wyloguj
             </Link>
         </li>
     );

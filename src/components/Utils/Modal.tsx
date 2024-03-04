@@ -91,11 +91,15 @@ const modalMode = (
             if (Array.isArray(modalContent)) {
                 return (
                     <div>
-                        {(modalContent as INotification[]).map((notification: INotification) => (
-                            <div key={ notification.id }>
-                                <span>{ notification.label }</span>
-                            </div>
-                        ))}
+                        {modalContent.length > 0
+                            ? 
+                                (modalContent as INotification[]).map((notification: INotification) => (
+                                <div key={ notification.id }>
+                                    <span>{ notification.label }</span>
+                                </div>
+                                ))
+                            : 'Nie ma zadnych powiadomień.'
+                        }
                     </div>
                 )
             } else {

@@ -26,7 +26,7 @@ const HolidayTypeRow: React.FC<IHolidayType> = ({ id, label }) => {
 
                     setTimeout(() => {
                         document.location.reload()
-                    }, 2000)
+                    }, 500)
 
                 } else {
                     const data = await response.json();

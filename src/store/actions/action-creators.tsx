@@ -1,4 +1,3 @@
-import { Action, Dispatch } from 'redux';
 import { INotification } from '../types';
 
 export const sendNotifications = async (data: INotification, token: string) => {
