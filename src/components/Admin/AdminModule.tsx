@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../../store/types"
 import { Chart } from "react-google-charts"
 import { toast } from "react-toastify"
 import { INotification } from "../../store/types"
-// import { fetchNotifications } from "../../store/actions/action-creators"
 import * as ExcelJS from 'exceljs'
 import Nav from "../Utils/Nav"
 import InteractiveBackground from "../Utils/InteractiveBackground"
@@ -213,6 +210,39 @@ const AdminModule: React.FC = () => {
             }
         }
     };
+
+    const clearNotifications = async () => {
+        const token = localStorage.getItem('authToken')
+
+        if (token) {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/all_notifications', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${token}`,
+                    }
+                })
+
+                if (response.ok) {
+                    setNotifications([])
+                    console.log('Usunieto wszystkie powiadomienia.')
+                } else {
+                    console.error('Nie udalo sie usunac powiadomien.')
+                }
+
+            } catch (error) {
+                console.error('Wystapil blad podczas usuwania powiadomien.')
+            }
+        }
+    }
+
+    const handleNotificationsModal = () => {
+        setIsNotificationModalOpen(!isNotificationModalOpen)
+
+        if (notifications.length > 0) clearNotifications()
+
+    }
     
 
     const exportToExcel = async (data: IHolidayRequest[]) => {
@@ -390,7 +420,7 @@ const AdminModule: React.FC = () => {
                 <Modal modalTitle={'Rodzaje urlopów'} modalContent={holidayTypes} toggleModal={() => handleToggleModal(setIsHolidayTypeModalOpen)} />
             )}
             {isNotificationModalOpen && (
-                <Modal modalTitle={'Powiadomienia'} modalContent={notifications} toggleModal={() => handleToggleModal(setIsNotificationModalOpen)} />
+                <Modal modalTitle={'Powiadomienia'} modalContent={notifications} toggleModal={handleNotificationsModal} />
             )}
         </div>
     )
