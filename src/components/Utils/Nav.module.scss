@@ -118,7 +118,7 @@ Sidebar: icons
 Chev elements
 ----------------*/ 
   & > ul > li > a:after {
-    content: '\f125';
+    content: '\276F';
     font-family: ionicons;
     font-size: 0.5em;
     width: 10px;
@@ -127,6 +127,15 @@ Chev elements
     right: 0.75em;
     top: 45%;
   }
+
+  & > ul > li:first-child > a:after {
+    content: '';
+  }
+
+  & > ul > li:last-child > a:after {
+    content: '';
+  }
+
 /* -------------
 Nav-Flyout
 ----------------*/
