@@ -345,7 +345,9 @@ const AdminModule: React.FC = () => {
                     </div>
                     <div className={classes['adminModule__right-grid-column']}>
                         <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsHolidayTypeModalOpen(true)}><span>Zarządzanie rodzajami urlopów</span></div>
-                        <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsNotificationModalOpen(true)}><span>Powiadomienia</span></div>
+                        <div className={`${classes['adminModule__exmaple-blocks-notifications']} ${notifications.length > 0 ? classes['visible'] : classes['hidden'] }`} onClick={() => setIsNotificationModalOpen(true)}>
+                            <span>Powiadomienia</span>
+                        </div>
                     </div>
                 </div>
                 <div className={classes['adminModule__excel-button']} onClick={() => setIsExportModalOpen(true)}><span>Eksport Danych dla HR</span></div>
