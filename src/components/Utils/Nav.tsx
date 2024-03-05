@@ -68,6 +68,15 @@ const Nav: React.FC = () => {
         const title = location.pathname.split('/')[1];
         setCurrentRoute(title);
         
+        if (location.pathname.split('/').length > 2) {
+            setIsActive(prev => ({
+                ...prev,
+                isFileActive: false,
+                isReportsActive: false,
+                isHolidayActive: false 
+            }))    
+            return 
+        }
         setIsActive(prev => ({
             ...prev,
             isFileActive: title === 'kartoteka-pracownika',

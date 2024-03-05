@@ -1,7 +1,13 @@
 import React from 'react'
+import Nav from "../Utils/Nav";
+import classes from './HolidayYearPlans.module.scss'
 
 const HolidayYearPlans: React.FC = () => {
-    return <>Strzal z API w celu pobrania kalendarza</>
+    return (
+        <div className={classes['main']}>
+            <Nav />
+        </div>
+    )
 }
 
 export default HolidayYearPlans
