@@ -128,7 +128,7 @@ Chev elements
     top: 45%;
   }
 
-  & > ul > li:first-child > a:after {
+  & > ul > li > a.admin:after {
     content: '';
   }
 

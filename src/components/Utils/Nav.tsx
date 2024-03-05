@@ -73,7 +73,16 @@ const Nav: React.FC = () => {
                 </header>
                 <nav className={classes['sidebar-nav']}>
                     <ul>
-                        { isAdmin ? <li><Link to='/modul-administracyjny'><InlineIcon style={{ fontSize: '20px' }} icon="ic:baseline-admin-panel-settings" />Moduł administracyjny</Link></li> : '' }
+                        { isAdmin 
+                            ? (
+                                <li>
+                                    <Link className={classes['admin']} to='/modul-administracyjny'>
+                                        <InlineIcon style={{ fontSize: '20px' }} icon="ic:baseline-admin-panel-settings"></InlineIcon> <span>Moduł administracyjny</span>
+                                    </Link>
+                                </li> 
+                                )
+                            : '' 
+                        }
                         <li>
                             <a href="#" onMouseOver={() => handleOnMouseOver('Kartoteka')} onMouseOut={handleOnMouseOut}>
                                 <InlineIcon style={{ fontSize: '16px' }} icon="solar:folder-with-files-bold" /> <span>Kartoteka</span>
