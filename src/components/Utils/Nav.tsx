@@ -47,31 +47,27 @@ const Nav: React.FC = () => {
       }
     }
   
-    useEffect(() => {
-        fetchIsAdmin();
-      
-    }, []);
-
+    
     const handleOpenNewWindow = (content: React.ComponentType) => {
         const newWindow = window.open('', '_blank', 'popup')
-
+        
         if (newWindow) {
             newWindow.document.write('<html><body><div id="root"></div></body></html>')
             newWindow.document.close();
-
+            
             const rootDiv = newWindow.document.getElementById('root')
-
+            
             if (rootDiv) {
                 const App = () => React.createElement(content)
                 ReactDOM.render(<App />, rootDiv)
             }
         }
     }
-
+    
     const handleIsActivePane = () => {
         const title = location.pathname.split('/')[1];
         setCurrentRoute(title);
-    
+        
         setIsActive(prev => ({
             ...prev,
             isFileActive: title === 'kartoteka-pracownika',
@@ -79,11 +75,7 @@ const Nav: React.FC = () => {
             isHolidayActive: title === 'urlopy'
         }));
     }
-
-    useEffect(() => {
-        handleIsActivePane()
-    }, [])
-
+    
     const handleOnMouseOver = (paneName: string) => {
         setSelectedPane(paneName);
     }
@@ -100,11 +92,21 @@ const Nav: React.FC = () => {
         })
     }
 
+    useEffect(() => {
+        fetchIsAdmin();
+      
+    }, []);
+    
+    useEffect(() => {
+        handleIsActivePane()
+    }, [])
+
+
     return (
         <section className={classes['app']}>
             <aside className={classes['sidebar']}>
                 <header>
-                    Menu <span>{ selectedPane !== '' ?  `⇒ ${selectedPane}` : '' }</span>
+                    Menu <span>{ (selectedPane !== '') ?  `⇒ ${selectedPane}` : `⇒ ${currentRoute.charAt(0).toUpperCase() + currentRoute.slice(1)}` }</span>
                 </header>
                 <nav className={classes['sidebar-nav']}>
                     <ul>
