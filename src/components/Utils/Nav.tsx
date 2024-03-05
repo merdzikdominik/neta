@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { useLocation } from "react-router-dom"
 import ReactDOM from 'react-dom'
 import UserDataChange from "../Reports/UserDataChange"
 import LogoutButton from "../Logout/LogoutButton"
@@ -6,9 +7,19 @@ import { Link } from 'react-router-dom'
 import { InlineIcon  } from '@iconify/react'
 import classes from './Nav.module.scss'
 
+interface IActive {
+    isFileActive: boolean
+    isReportsActive: boolean
+    isHolidayActive: boolean
+}
+
 const Nav: React.FC = () => {
+    const [isActive, setIsActive] = useState<IActive>({isFileActive: false, isReportsActive: false, isHolidayActive: false})
     const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
     const [selectedPane, setSelectedPane] = useState<string>('')
+    const [currentRoute, setCurrentRoute] = useState<string>('')
+
+    const location = useLocation()
 
     const fetchIsAdmin = async () => {
       const token = localStorage.getItem('authToken');
@@ -57,12 +68,36 @@ const Nav: React.FC = () => {
         }
     }
 
+    const handleIsActivePane = () => {
+        const title = location.pathname.split('/')[1];
+        setCurrentRoute(title);
+    
+        setIsActive(prev => ({
+            ...prev,
+            isFileActive: title === 'kartoteka-pracownika',
+            isReportsActive: title === 'raportowanie',
+            isHolidayActive: title === 'urlopy'
+        }));
+    }
+
+    useEffect(() => {
+        handleIsActivePane()
+    }, [])
+
     const handleOnMouseOver = (paneName: string) => {
         setSelectedPane(paneName);
     }
 
     const handleOnMouseOut = () => {
         setSelectedPane('')
+
+        if (isActive.isFileActive === false && isActive.isHolidayActive === false && isActive.isReportsActive === false) return
+
+        setIsActive({
+            isFileActive: false,
+            isReportsActive: false,
+            isHolidayActive: false
+        })
     }
 
     return (
@@ -87,7 +122,7 @@ const Nav: React.FC = () => {
                             <a href="#" onMouseOver={() => handleOnMouseOver('Kartoteka')} onMouseOut={handleOnMouseOut}>
                                 <InlineIcon style={{ fontSize: '16px' }} icon="solar:folder-with-files-bold" /> <span>Kartoteka</span>
                             </a>
-                            <ul className={classes['nav-flyout']} onMouseOver={() => handleOnMouseOver('Kartoteka')} onMouseOut={handleOnMouseOut}>
+                            <ul className={`${classes['nav-flyout']} ${isActive.isFileActive ? classes['active'] : ''}`} onMouseOver={() => handleOnMouseOver('Kartoteka')} onMouseOut={handleOnMouseOut}>
                                 <li>
                                     <Link to='/kartoteka-pracownika/dane-pracownika'><i className="ion-ios-color-filter-outline"></i>Twoje Dane</Link>
                                 </li>
@@ -98,7 +133,7 @@ const Nav: React.FC = () => {
                         </li>
                         <li>
                             <a href="#" onMouseOver={() => handleOnMouseOver('Raportowanie')}  onMouseOut={handleOnMouseOut}><InlineIcon style={{ fontSize: '18px' }} icon="ic:sharp-insert-drive-file"></InlineIcon> <span className="">Raportowanie</span></a>
-                            <ul className={classes['nav-flyout']} onMouseOver={() => handleOnMouseOver('Raportowanie')}  onMouseOut={handleOnMouseOut}>
+                            <ul className={`${classes['nav-flyout']} ${isActive.isReportsActive ? classes['active'] : ''}`} onMouseOver={() => handleOnMouseOver('Raportowanie')}  onMouseOut={handleOnMouseOut}>
                                 <Link to='#' onClick={handleOpenNewWindow.bind(null, UserDataChange)}>
                                     Nazwa Firmy - zmiana danych
                                 </Link>
@@ -109,7 +144,7 @@ const Nav: React.FC = () => {
                         </li>
                         <li>
                             <a href="#" onMouseOver={() => handleOnMouseOver('Urlopy')} onMouseOut={handleOnMouseOut}><InlineIcon style={{ fontSize: '18px' }} icon="ic:baseline-holiday-village"></InlineIcon> <span className="">Urlopy</span></a>
-                            <ul className={classes['nav-flyout']} onMouseOver={() => handleOnMouseOver('Urlopy')} onMouseOut={handleOnMouseOut}>
+                            <ul className={`${classes['nav-flyout']} ${isActive.isHolidayActive ? classes['active'] : ''}`} onMouseOver={() => handleOnMouseOver('Urlopy')} onMouseOut={handleOnMouseOut}>
                                 <li>
                                     <Link to='/urlopy/wnioski-urlopowe'><i className="ion-ios-color-filter-outline"></i>Dodaj wniosek urlopowy</Link>
                                 </li>
