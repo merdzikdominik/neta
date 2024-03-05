@@ -106,7 +106,7 @@ const Nav: React.FC = () => {
         <section className={classes['app']}>
             <aside className={classes['sidebar']}>
                 <header>
-                    Menu <span>{ (selectedPane !== '') ?  `⇒ ${selectedPane}` : `⇒ ${currentRoute.charAt(0).toUpperCase() + currentRoute.slice(1)}` }</span>
+                    Menu <span>{ (selectedPane !== '') ?  `⇒ ${selectedPane}` : `⇒ ${(currentRoute.charAt(0).toUpperCase() + currentRoute.slice(1)).split('-').join(' ')}` }</span>
                 </header>
                 <nav className={classes['sidebar-nav']}>
                     <ul>
