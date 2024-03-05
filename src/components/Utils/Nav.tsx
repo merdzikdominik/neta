@@ -121,9 +121,9 @@ const Nav: React.FC = () => {
                             : '' 
                         }
                         <li>
-                            <a href="#" onMouseOver={() => handleOnMouseOver('Kartoteka pracownika')} onMouseOut={handleOnMouseOut}>
+                            <Link to='/kartoteka-pracownika' onMouseOver={() => handleOnMouseOver('Kartoteka pracownika')} onMouseOut={handleOnMouseOut}>
                                 <InlineIcon style={{ fontSize: '16px' }} icon="solar:folder-with-files-bold" /> <span>Kartoteka</span>
-                            </a>
+                            </Link>
                             <ul className={`${classes['nav-flyout']} ${isActive.isFileActive ? classes['active'] : ''}`} onMouseOver={() => handleOnMouseOver('Kartoteka pracownika')} onMouseOut={handleOnMouseOut}>
                                 <li>
                                     <Link to='/kartoteka-pracownika/dane-pracownika'><i className="ion-ios-color-filter-outline"></i>Twoje Dane</Link>
@@ -134,7 +134,7 @@ const Nav: React.FC = () => {
                             </ul>
                         </li>
                         <li>
-                            <a href="#" onMouseOver={() => handleOnMouseOver('Raportowanie')}  onMouseOut={handleOnMouseOut}><InlineIcon style={{ fontSize: '18px' }} icon="ic:sharp-insert-drive-file"></InlineIcon> <span className="">Raportowanie</span></a>
+                            <Link to='/raportowanie' onMouseOver={() => handleOnMouseOver('Raportowanie')}  onMouseOut={handleOnMouseOut}><InlineIcon style={{ fontSize: '18px' }} icon="ic:sharp-insert-drive-file"></InlineIcon> <span className="">Raportowanie</span></Link>
                             <ul className={`${classes['nav-flyout']} ${isActive.isReportsActive ? classes['active'] : ''}`} onMouseOver={() => handleOnMouseOver('Raportowanie')}  onMouseOut={handleOnMouseOut}>
                                 <Link to='#' onClick={handleOpenNewWindow.bind(null, UserDataChange)}>
                                     Nazwa Firmy - zmiana danych
@@ -145,7 +145,7 @@ const Nav: React.FC = () => {
                             </ul>
                         </li>
                         <li>
-                            <a href="#" onMouseOver={() => handleOnMouseOver('Urlopy')} onMouseOut={handleOnMouseOut}><InlineIcon style={{ fontSize: '18px' }} icon="ic:baseline-holiday-village"></InlineIcon> <span className="">Urlopy</span></a>
+                            <Link to='/urlopy' onMouseOver={() => handleOnMouseOver('Urlopy')} onMouseOut={handleOnMouseOut}><InlineIcon style={{ fontSize: '18px' }} icon="ic:baseline-holiday-village"></InlineIcon> <span className="">Urlopy</span></Link>
                             <ul className={`${classes['nav-flyout']} ${isActive.isHolidayActive ? classes['active'] : ''}`} onMouseOver={() => handleOnMouseOver('Urlopy')} onMouseOut={handleOnMouseOut}>
                                 <li>
                                     <Link to='/urlopy/wnioski-urlopowe'><i className="ion-ios-color-filter-outline"></i>Dodaj wniosek urlopowy</Link>
