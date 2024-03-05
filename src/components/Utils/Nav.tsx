@@ -121,10 +121,10 @@ const Nav: React.FC = () => {
                             : '' 
                         }
                         <li>
-                            <a href="#" onMouseOver={() => handleOnMouseOver('Kartoteka')} onMouseOut={handleOnMouseOut}>
+                            <a href="#" onMouseOver={() => handleOnMouseOver('Kartoteka pracownika')} onMouseOut={handleOnMouseOut}>
                                 <InlineIcon style={{ fontSize: '16px' }} icon="solar:folder-with-files-bold" /> <span>Kartoteka</span>
                             </a>
-                            <ul className={`${classes['nav-flyout']} ${isActive.isFileActive ? classes['active'] : ''}`} onMouseOver={() => handleOnMouseOver('Kartoteka')} onMouseOut={handleOnMouseOut}>
+                            <ul className={`${classes['nav-flyout']} ${isActive.isFileActive ? classes['active'] : ''}`} onMouseOver={() => handleOnMouseOver('Kartoteka pracownika')} onMouseOut={handleOnMouseOut}>
                                 <li>
                                     <Link to='/kartoteka-pracownika/dane-pracownika'><i className="ion-ios-color-filter-outline"></i>Twoje Dane</Link>
                                 </li>
