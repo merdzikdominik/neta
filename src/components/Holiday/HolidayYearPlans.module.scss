@@ -4,3 +4,25 @@
     height: 100%;
     min-height: 100vh;
 }
+
+.holidayYearPlans__header {
+    border: 1px solid #e4f1fe;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 0 20px;
+    background-color: #005689; 
+}
+
+.holidayYearPlans__container {
+    width: 70%;
+    padding: 40px;
+    color: #fff;
+}
+
+.holidayYearPlans__data_container {
+    border: 1px solid #e4f1fe;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 20px;
+    background-color: #007cb9;
+}

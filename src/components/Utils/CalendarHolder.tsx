@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { IDates } from '../Reports/HolidaySchedule';
 import { Calendar } from 'react-calendar';
 import { isWithinInterval } from 'date-fns'
-import InteractiveBackground from './InteractiveBackground';
 import styled from 'styled-components';
 
 const CalendarContainer = styled.section`
@@ -70,47 +70,31 @@ type ValuePiece = Date | string | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-interface CalendarDate {
+export interface IHolidayRequest{
   id: number;
   dateFrom: string;
   dateTo: string;
 }
 
-const CalendarHolder: React.FC = () => {
+interface ICalendarHolder {
+  holidayDataProp?: IHolidayRequest[] | IDates[]
+}
+
+const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp }) => {
   const [value, setValue] = useState<Value>(new Date());
-  const [calendarDates, setCalendarDates] = useState<CalendarDate[]>([]);
-
-  useEffect(() => {
-    // Pobierz daty z API przy ładowaniu komponentu
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch('http://127.0.0.1:8000/api/all_dates');
-      if (response.ok) {
-        const data = await response.json();
-        setCalendarDates(data);
-      } else {
-        console.error('Błąd podczas pobierania dat');
-      }
-    } catch (error) {
-      console.error('Błąd podczas pobierania dat', error);
-    }
-  };
 
   const handleDateChange = (newValue: Value) => {
     setValue(newValue);
   };
 
   const isDateInRange = (date: Date) => {
-        return calendarDates.some((item) => {
-            const startDate = new Date(item.dateFrom);
-            const endDate = new Date(item.dateTo);
-            const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-            
-            return +date === +startOfDay(startDate) || isWithinInterval(date, { start: startOfDay(startDate), end: endDate });
-          });
+    return holidayDataProp!.some((item) => {
+      const startDate = new Date(item.dateFrom);
+      const endDate = new Date(item.dateTo);
+      const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      
+      return +date === +startOfDay(startDate) || isWithinInterval(date, { start: startOfDay(startDate), end: endDate });
+    });
   };
 
   const tileClassName = ({ date }: any) => {
@@ -120,18 +104,19 @@ const CalendarHolder: React.FC = () => {
     return '';
   };
 
+  useEffect(() => {
+    console.log(holidayDataProp)
+  }, [])
+
   return (
-    <>
-      <CalendarContainer>
-        <Calendar
-          onChange={handleDateChange}
-          value={value}
-          showNeighboringMonth={false}
-          tileClassName={tileClassName}
-        />
-      </CalendarContainer>
-      <InteractiveBackground />
-    </>
+    <CalendarContainer>
+      <Calendar
+        onChange={handleDateChange}
+        value={value}
+        showNeighboringMonth={false}
+        tileClassName={tileClassName}
+      />
+    </CalendarContainer>
   );
 };
 

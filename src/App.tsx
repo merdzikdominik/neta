@@ -18,6 +18,7 @@ import AccountManagement from './components/EmployeeFile/AccountManagement'
 import CalendarHolder from './components/Utils/CalendarHolder'
 import HolidayRequest from './components/Admin/HolidayRequest'
 import ProtectedRoute from './components/Utils/ProtectedRoute'
+import HolidayApprovedRequests from './components/Holiday/HolidayApprovedRequests'
 
 const hasToken = (): boolean => {
   const token = localStorage.getItem('authToken');
