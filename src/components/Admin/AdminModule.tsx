@@ -45,7 +45,8 @@ export interface IHolidayRequest {
     end_date: string
     message: string
     selected_holiday_type: string
-    user: IRequestUser
+    user: IRequestUser,
+    color_hex: string
 }
 
 export interface IHolidayType {

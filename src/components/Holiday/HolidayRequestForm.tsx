@@ -8,6 +8,15 @@ import InteractiveBackground from "../Utils/InteractiveBackground";
 import Button from "../Utils/Button";
 import classes from './HolidayRequestForm.module.scss';
 
+const generateRandomColor = () => {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
 const HolidayRequestForm: React.FC = () => {
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
@@ -151,6 +160,7 @@ const HolidayRequestForm: React.FC = () => {
                         end_date: endDate,
                         difference_in_days: differenceInDays,
                         selected_holiday_type: selectedHolidayType,
+                        color_hex: generateRandomColor()
                     }),
                 });
 

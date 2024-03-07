@@ -7,10 +7,11 @@ export interface IHoliday {
     dateFrom: string,
     dateTo: string,
     user: IRequestUser,
+    color_hex: string
 }
 
 const HolidayApprovedRequests: React.FC = () => {
-    const [approvedDates, setApprovedDates] = useState<IHoliday[]>([{ dateFrom: '', dateTo: '', user: { first_name: '', last_name: '', email: '' } }])
+    const [approvedDates, setApprovedDates] = useState<IHoliday[]>([{ dateFrom: '', dateTo: '', user: { first_name: '', last_name: '', email: '' }, color_hex: '' }])
 
     useEffect(() => {
         const fetchHolidayPlans = async () => {
@@ -27,13 +28,13 @@ const HolidayApprovedRequests: React.FC = () => {
                     });
 
                     if (response.ok) {
-                        console.log('Wczytano zatwierdzone wnioski urlopowe');
                         const data = await response.json();
+                        // console.log(data)
 
                         const approvedDates = data.map((holiday: IHolidayRequest) => {
-                            const { start_date, end_date, user } = holiday
+                            const { start_date, end_date, user, color_hex } = holiday
 
-                            return {dateFrom: start_date, dateTo: end_date, user}
+                            return {dateFrom: start_date, dateTo: end_date, user, color_hex}
                         });
 
                         setApprovedDates(approvedDates)
@@ -50,6 +51,10 @@ const HolidayApprovedRequests: React.FC = () => {
 
         fetchHolidayPlans();
     }, []);
+
+    useEffect(() => {
+        console.log(approvedDates)
+    }, [approvedDates])
 
     return (        
         <div className={classes['main']}>

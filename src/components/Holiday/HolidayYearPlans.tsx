@@ -23,7 +23,6 @@ const HolidayYearPlans: React.FC = () => {
                   });
             
                   if (response.ok) {
-                    console.log('Wczytano plany urlopowe');
                     const data = await response.json()
             
                     setHolidayPlans(data)

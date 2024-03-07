@@ -29,7 +29,6 @@ const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
     const [isExpanded, setIsExpanded] = useState<boolean>(false)
     const [isApproved, setIsApproved] = useState<boolean>(false)
     const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
-    const [approvedRequests, setApprovedRequests] = useState<IHolidayRequest[]>([])
 
     const {
         id,
@@ -77,33 +76,6 @@ const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
         fetchIsAdmin();
     
     }, []);
-
-    // const handleAddHoliday = async (datesFrom: string, datesTo: string) => {
-    //     try {
-    //       const response = await fetch('http://127.0.0.1:8000/api/add_holiday', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json', },
-    //         body: JSON.stringify({
-    //           dateFrom: datesFrom,
-    //           dateTo: datesTo
-    //         }),
-    //       });
-    //       //TODO: WYKORZYSTAC DATY Z HOLIDAY REQUESTS
-    
-    //       if (response.ok) {
-    //         console.log('Urlop dodany pomyślnie');
-    //         const data = await response.json()
-    
-    //         console.log(data)
-    
-    //       } else {
-    //         const errorData = await response.json();
-    //         console.error('Błąd przy dodawaniu urlopu:', errorData);
-    //       }
-    //     } catch (error) {
-    //       console.error('Błąd przy wysyłaniu żądania', error);
-    //     }
-    // };
 
     const handleApprove = async (id: string) => {
         const token = localStorage.getItem('authToken')
