@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { IDates } from '../Reports/HolidaySchedule';
+import { IHoliday } from '../Holiday/HolidayApprovedRequests';
 import { Calendar } from 'react-calendar';
 import { isWithinInterval } from 'date-fns'
 import styled from 'styled-components';
 
-const CalendarContainer = styled.section`
+const CalendarContainer = styled.div`
   .react-calendar {
-    width: 70%;
+    width: 100%;
     margin: 20px auto auto;
   }
 
@@ -77,7 +78,7 @@ export interface IHolidayRequest{
 }
 
 interface ICalendarHolder {
-  holidayDataProp?: IHolidayRequest[] | IDates[]
+  holidayDataProp?: IHolidayRequest[] | IHoliday[] | IDates[]
 }
 
 const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp }) => {
@@ -103,10 +104,6 @@ const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp }) => {
     }
     return '';
   };
-
-  useEffect(() => {
-    console.log(holidayDataProp)
-  }, [])
 
   return (
     <CalendarContainer>

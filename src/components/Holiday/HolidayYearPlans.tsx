@@ -41,18 +41,12 @@ const HolidayYearPlans: React.FC = () => {
         fetchHolidayPlans()
     }, [])
 
-    useEffect(() => {
-        console.log(holidayPlans)
-    }, [])
-
     return (
         <div className={classes['main']}>
             <Nav />
             <section className={classes['holidayYearPlans__container']}>
                 <CalendarHolder holidayDataProp={holidayPlans}/>
-
             </section>
-
             <InteractiveBackground />
         </div>
     )

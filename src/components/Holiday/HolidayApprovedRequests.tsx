@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react"
-import { IDates } from "../Reports/HolidaySchedule"
-import Nav from "../Utils/Nav"
-import InteractiveBackground from "../Utils/InteractiveBackground"
 import CalendarHolder from "../Utils/CalendarHolder"
-import classes from './HolidayRequestList.module.scss'
+import classes from './HolidayApprovedRequests.module.scss'
 import { IHolidayRequest, IRequestUser } from "../Admin/AdminModule"
 
-interface IHoliday {
-    start_date: string,
-    end_date: string,
-    user: IRequestUser
+export interface IHoliday {
+    dateFrom: string,
+    dateTo: string,
+    user: IRequestUser,
 }
 
 const HolidayApprovedRequests: React.FC = () => {
-    const [approvedHoliday, setApprovedHoliday] = useState<IHolidayRequest[]>([]);
-    const [approvedDates, setApprovedDates] = useState<IHoliday[]>([{ start_date: '', end_date: '', user: { first_name: '', last_name: '', email: '' } }])
+    const [approvedDates, setApprovedDates] = useState<IHoliday[]>([{ dateFrom: '', dateTo: '', user: { first_name: '', last_name: '', email: '' } }])
 
     useEffect(() => {
         const fetchHolidayPlans = async () => {
@@ -33,7 +29,15 @@ const HolidayApprovedRequests: React.FC = () => {
                     if (response.ok) {
                         console.log('Wczytano zatwierdzone wnioski urlopowe');
                         const data = await response.json();
-                        setApprovedHoliday(data);
+
+                        const approvedDates = data.map((holiday: IHolidayRequest) => {
+                            const { start_date, end_date, user } = holiday
+
+                            return {dateFrom: start_date, dateTo: end_date, user}
+                        });
+
+                        setApprovedDates(approvedDates)
+
                     } else {
                         const errorData = await response.json();
                         console.error('Nie wczytano zatwierdzonych wnioskow urlopowych:', errorData);
@@ -47,19 +51,13 @@ const HolidayApprovedRequests: React.FC = () => {
         fetchHolidayPlans();
     }, []);
 
-    useEffect(() => {
-        const approvedDates = approvedHoliday.map((holiday) => {
-            const { start_date, end_date, user } = holiday
-
-            return {start_date, end_date, user}
-        });
-
-        setApprovedDates(approvedDates);
-    }, [approvedHoliday]);
-
-    console.log(approvedDates)
-
-    return <></>;
+    return (        
+        <div className={classes['main']}>
+            <section className={classes['holidayApprovedRequests__container']}>
+                <CalendarHolder holidayDataProp={approvedDates}/>
+            </section>
+        </div>
+    )
 };
 
 export default HolidayApprovedRequests;

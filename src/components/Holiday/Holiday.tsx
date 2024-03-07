@@ -13,9 +13,9 @@ const Holiday: React.FC = () => {
                     <h1>Urlopy</h1>
                 </div>
                 <div className={classes['holiday__content-container']}>
-                    <HolidayApprovedRequests />
                     <span>Sekcja urlopów przeznaczona jest wykorzystywana w celu zaplanowania rocznego urlopu, zabookowania urlopu, wyświetlenia informacji o wolnych terminach urlopowych i wystawionych wnioskach.</span>
                 </div>
+                <HolidayApprovedRequests />
             </section>
             <InteractiveBackground />
         </div>
