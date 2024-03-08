@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import CalendarUserInfo from './CalendarUserInfo';
 import { IDates } from '../Reports/HolidaySchedule';
 import { IHoliday } from '../Holiday/HolidayApprovedRequests';
 import { Calendar } from 'react-calendar';
@@ -32,7 +33,8 @@ const CustomTileContent: React.FC<any> = ({ date, hoveredDate, holidayDataProp, 
     }) as IHoliday | undefined;
 
     if (currentUser && 'user' in currentUser) {
-      return <p style={{ position: 'absolute', top: position.y, left: position.x }}>{`User: ${currentUser.user.first_name}, Email: ${currentUser.user.email}`}</p>;
+      // return <p style={{ position: 'absolute', top: position.y, left: position.x }}>{`Imię: ${currentUser.user.first_name}, Nazwisko: ${currentUser.user.last_name}, Email: ${currentUser.user.email}`}</p>;
+      return <CalendarUserInfo firstName={currentUser.user.first_name} lastName={currentUser.user.last_name} email={currentUser.user.email} position={position} />
     }
   }
   return null;
