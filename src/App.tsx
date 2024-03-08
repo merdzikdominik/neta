@@ -13,12 +13,10 @@ import EmployeeFileData from './components/EmployeeFile/EmployeeFileData'
 import HolidayRequestForm from './components/Holiday/HolidayRequestForm'
 import HolidayRequestList from './components/Holiday/HolidayRequestList'
 import HolidayYearPlans from './components/Holiday/HolidayYearPlans'
-import HolidayPlanningStatus from './components/Holiday/HolidayPlanningStatus'
 import AccountManagement from './components/EmployeeFile/AccountManagement'
 import CalendarHolder from './components/Utils/CalendarHolder'
 import HolidayRequest from './components/Admin/HolidayRequest'
 import ProtectedRoute from './components/Utils/ProtectedRoute'
-import HolidayApprovedRequests from './components/Holiday/HolidayApprovedRequests'
 
 const hasToken = (): boolean => {
   const token = localStorage.getItem('authToken');
@@ -54,7 +52,6 @@ function App() {
         <Route path='/urlopy/wnioski-urlopowe' element={<ProtectedRoute element={<HolidayRequestForm />} authenticated={hasValidToken} />} />
         <Route path='/urlopy/lista-wnioskow' element={<ProtectedRoute element={<HolidayRequestList />} authenticated={hasValidToken} />} />
         <Route path='/urlopy/roczne-plany-urlopowe' element={<ProtectedRoute element={<HolidayYearPlans />} authenticated={hasValidToken} />} />
-        <Route path='/urlopy/stan-rozplanowywania-urlopow' element={<ProtectedRoute element={<HolidayPlanningStatus />} authenticated={hasValidToken} />} />
         <Route path='/rejestracja' element={<ProtectedRoute element={<Register />} authenticated={hasValidToken} />} />
         <Route path='/raportowanie' element={<ProtectedRoute element={<Reports />} authenticated={hasValidToken} />} />
         <Route path='/raportowanie/data-urlopu' element={<ProtectedRoute element={<HolidaySchedule />} authenticated={hasValidToken} />} />

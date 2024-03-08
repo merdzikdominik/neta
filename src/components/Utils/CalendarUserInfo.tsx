@@ -1,5 +1,4 @@
 import React from 'react'
-import { IRequestUser } from '../Admin/AdminModule'
 import classes from './CalendarUserInfo.module.scss'
 
 interface ICalendarUserInfo {
