@@ -9,10 +9,6 @@ interface ICalendarHolder {
   holidayDataProp?: IHolidayRequest[] | IHoliday[] | IDates[];
 }
 
-interface IHoverInfo {
-  position: { x: number; y: number };
-}
-
 export interface IHolidayRequest {
   id: number;
   dateFrom: string;
@@ -23,17 +19,6 @@ interface IPosition {
   x: number;
   y: number;
 }
-
-const HoverText: React.FC<IHoverInfo> = ({ position }) => {
-  return (
-    <div style={{ position: 'absolute', top: position.y, left: position.x }}>
-      Hovering right meow!
-      <span role="img" aria-label="cat">
-        🐱
-      </span>
-    </div>
-  );
-};
 
 const CustomTileContent: React.FC<any> = ({ date, hoveredDate, holidayDataProp, position }) => {
   if (hoveredDate && isWithinInterval(hoveredDate, { start: date, end: date })) {
@@ -223,17 +208,17 @@ const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp }) => {
         tileClassName={tileClassName}
         tileContent={({ activeStartDate, date, view }: any) => {
           if (view === 'month') {
-            const classes = isDateInRange(date) ? 'custom-tile custom-tile-colored' : 'custom-tile';
             return (
-              <div
-                className={classes}
-                onMouseOver={() => handleOnMouseOver(date)}
-                onMouseOut={handleOnMouseOut}
-              >
+              <>
+                <div
+                  style={{ height: "100%", width: "100%", position: 'relative', top: '-28px', pointerEvents: 'all' }}
+                  onMouseOver={() => handleOnMouseOver(date)}
+                  onMouseOut={handleOnMouseOut}
+                ></div>
                 {hoveredDate && hoveredDate.getTime() === date.getTime() && (
                   <CustomTileContent date={date} hoveredDate={hoveredDate} holidayDataProp={holidayDataProp} position={mousePosition} />
                 )}
-              </div>
+              </>
             );
           }
         }}
