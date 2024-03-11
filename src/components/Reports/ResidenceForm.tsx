@@ -46,7 +46,6 @@ const ResidenceForm: React.FC<IUserResidenceFunction> = ({ onChange }) => {
     }
 
     return (
-
         <div className={classes['reports-data-change__second-position']}>
             <div className={classes['grid']}>
                 <div className={classes['input-wrapper']}>

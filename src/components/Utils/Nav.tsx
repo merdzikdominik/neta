@@ -5,6 +5,7 @@ import UserDataChange from "../Reports/UserDataChange"
 import LogoutButton from "../Logout/LogoutButton"
 import { Link } from 'react-router-dom'
 import { InlineIcon  } from '@iconify/react'
+import Modal from "./Modal"
 import classes from './Nav.module.scss'
 
 interface IActive {
@@ -48,21 +49,21 @@ const Nav: React.FC = () => {
     }
   
     
-    const handleOpenNewWindow = (content: React.ComponentType) => {
-        const newWindow = window.open('', '_blank', 'popup')
+    // const handleOpenNewWindow = (content: React.ComponentType) => {
+    //     const newWindow = window.open('', '_blank', 'popup')
         
-        if (newWindow) {
-            newWindow.document.write('<html><body><div id="root"></div></body></html>')
-            newWindow.document.close();
+    //     if (newWindow) {
+    //         newWindow.document.write('<html><body><div id="root"></div></body></html>')
+    //         newWindow.document.close();
             
-            const rootDiv = newWindow.document.getElementById('root')
+    //         const rootDiv = newWindow.document.getElementById('root')
             
-            if (rootDiv) {
-                const App = () => React.createElement(content)
-                ReactDOM.render(<App />, rootDiv)
-            }
-        }
-    }
+    //         if (rootDiv) {
+    //             const App = () => React.createElement(content)
+    //             ReactDOM.render(<App />, rootDiv)
+    //         }
+    //     }
+    // }
     
     const handleIsActivePane = () => {
         const title = location.pathname.split('/')[1];
@@ -145,7 +146,7 @@ const Nav: React.FC = () => {
                         <li>
                             <Link to='/raportowanie' onMouseOver={() => handleOnMouseOver('Raportowanie')}  onMouseOut={handleOnMouseOut}><InlineIcon style={{ fontSize: '18px' }} icon="ic:sharp-insert-drive-file"></InlineIcon> <span className="">Raportowanie</span></Link>
                             <ul className={`${classes['nav-flyout']} ${isActive.isReportsActive ? classes['active'] : ''}`} onMouseOver={() => handleOnMouseOver('Raportowanie')}  onMouseOut={handleOnMouseOut}>
-                                <Link to='#' onClick={handleOpenNewWindow.bind(null, UserDataChange)}>
+                                <Link to='/raportowanie/zmiana-danych'>
                                     Nazwa Firmy - zmiana danych
                                 </Link>
                                 <li>

@@ -17,6 +17,7 @@ import AccountManagement from './components/EmployeeFile/AccountManagement'
 import CalendarHolder from './components/Utils/CalendarHolder'
 import HolidayRequest from './components/Admin/HolidayRequest'
 import ProtectedRoute from './components/Utils/ProtectedRoute'
+import UserDataChange from './components/Reports/UserDataChange'
 
 const hasToken = (): boolean => {
   const token = localStorage.getItem('authToken');
@@ -54,6 +55,7 @@ function App() {
         <Route path='/urlopy/roczne-plany-urlopowe' element={<ProtectedRoute element={<HolidayYearPlans />} authenticated={hasValidToken} />} />
         <Route path='/rejestracja' element={<ProtectedRoute element={<Register />} authenticated={hasValidToken} />} />
         <Route path='/raportowanie' element={<ProtectedRoute element={<Reports />} authenticated={hasValidToken} />} />
+        <Route path='/raportowanie/zmiana-danych' element={<ProtectedRoute element={<UserDataChange />} authenticated={hasValidToken} />} />
         <Route path='/raportowanie/data-urlopu' element={<ProtectedRoute element={<HolidaySchedule />} authenticated={hasValidToken} />} />
         <Route path='/raportowanie/data-urlopu/raport-urlopowy' element={<ProtectedRoute element={<HolidayReport />} authenticated={hasValidToken} />} />
         <Route path='/kalendarz' element={<ProtectedRoute element={<CalendarHolder />} authenticated={hasValidToken} />} />

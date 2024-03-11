@@ -3,7 +3,7 @@ import Nav from '../Utils/Nav'
 import InteractiveBackground from '../Utils/InteractiveBackground'
 import classes from './EmployeeFileData.module.scss'
 
-interface IUserInfo {
+export interface IUserInfo {
     user: {
       first_name: string,
       second_name: string,
@@ -17,7 +17,7 @@ interface IUserInfo {
       role: string,
       education: string
     }
-  }
+}
 
 const EmployeeFileData: React.FC = () => {
     const [userInfo, setUserInfo] = useState<IUserInfo>({

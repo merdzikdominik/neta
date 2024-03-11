@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import InteractiveBackground from './Utils/InteractiveBackground';
-import HoverExample from './Utils/Test';
 import classes from './MainPage.module.css';
 
 const MainPage: React.FC = () => {
@@ -44,7 +43,6 @@ const MainPage: React.FC = () => {
       <Link to='/raportowanie'>Raportowanie</Link>
       <Link to='/kartoteka-pracownika'>Kartoteka Pracownika</Link>
       <Link to='/urlopy'>Urlopy</Link>
-      <HoverExample/>
       <InteractiveBackground />
     </main>
   );

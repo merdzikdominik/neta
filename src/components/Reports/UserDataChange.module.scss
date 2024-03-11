@@ -1,0 +1,99 @@
+.main {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    // min-height: 100vh;
+}
+
+.userDataChange__container {
+    width: 50%;
+    height: 100%;
+    padding: 40px;
+    color: #fff;
+}
+
+.userDataChange__header {
+    border: 1px solid #e4f1fe;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 0 20px;
+    background-color: #005689; 
+}
+
+.userDataChange__content {
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+}
+
+.userDataChange__container-data {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e4f1fe;
+    border-bottom: none;
+    padding: 20px 5%;
+    background-color: #007cb9;
+}
+
+.userDataChange__button_container {
+    display: flex;
+    justify-content: end;
+    border: 1px solid #e4f1fe;
+    background-color: #007cb9;
+    border-top: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 20px;
+    gap: 50px;
+    
+}
+
+.userDataChange__checkbox-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.userDataChange__checkbox-field-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.reports-data-change__form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 10px;
+}
+
+.userDataChange__nfz, .userDataChange__tax-office {
+    input {
+        min-width: 200px;
+    }
+}
+
+.userDataChange__text-input-wrap {
+    input {
+        min-width: 250px;
+    }
+}
+
+input {
+    margin: 0 0.5em;
+}
+
+button {
+    margin: 0;
+    padding: 0;
+    max-width: 500px;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-wrapper input {
+    margin-right: 8px;
+}
