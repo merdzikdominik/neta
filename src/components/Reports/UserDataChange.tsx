@@ -66,19 +66,52 @@ const UserDataChange: React.FC = () => {
 
     const [userInfo, setUserInfo] = useState<IUserInfo>({
         user: {
-            first_name: '',
-            second_name: '',
-            last_name: '',
-            birth_date: '',
-            mobile_number: '',
+            firstName: '',
+            secondName: '',
+            lastName: '',
+            birthDate: '',
+            mobileNumber: '',
             email: '',
             age: 0,
-            employment_start_date: '',
-            employment_end_date: '',
+            employmentStartDate: '',
+            employmentEndDate: '',
             role: '',
-            education: ''
-        }
-    })
+            education: '',
+            userResidenceData: {
+                permanentResidence: {
+                    city: '',
+                    postalCode: '',
+                    post: '',
+                    municipalCommune: '',
+                    voivodeship: '',
+                    county: '',
+                    street: '',
+                    houseNumber: '',
+                    flatNumber: '',
+                    mobileNumber: '',
+                },
+                secondResidence: {
+                    city: '',
+                    postalCode: '',
+                    post: '',
+                    municipalCommune: '',
+                    voivodeship: '',
+                    county: '',
+                    street: '',
+                    houseNumber: '',
+                    flatNumber: '',
+                    mobileNumber: '',
+                },
+            },
+            correspondenceAddress: null,
+            taxOffice: '',
+            annualSettlementAddress: '',
+            nfzBranch: '',
+            idData: '',
+            idGivenBy: '',
+            date: '',
+        },
+    });
     
     const [formData, setFormData] = useState<IFormFill>({
         surname: '',
@@ -86,7 +119,7 @@ const UserDataChange: React.FC = () => {
             permanentResidence: permanentResidenceData,
             secondResidence: secondResidenceData
         },
-        correspondenceAddress: null,
+        correspondenceAddress: correspondenceAddress,
         taxOffice: '',
         annualSettlementAddress: '',
         nfzBranch: '',
@@ -117,19 +150,52 @@ const UserDataChange: React.FC = () => {
                 setUserInfo(prev => ({
                     ...prev,
                     user: {
-                        first_name: userData.first_name,
-                        second_name: userData.second_name,
-                        last_name: userData.last_name,
-                        birth_date: userData.birth_date,
-                        mobile_number: userData.mobile_number,
+                        firstName: userData.first_name,
+                        secondName: userData.second_name,
+                        lastName: userData.last_name,
+                        birthDate: userData.birth_date,
+                        mobileNumber: userData.mobile_number,
                         email: userData.email,
                         age: userData.age,
-                        employment_start_date: userData.employment_start_date,
-                        employment_end_date: userData.employment_end_date,
+                        employmentStartDate: userData.employment_start_date,
+                        employmentEndDate: userData.employment_end_date,
                         role: userData.role,
                         education: userData.education,
-                    }
-                }))
+                        userResidenceData: {
+                            permanentResidence: {
+                                city: userData.user_residence_data?.permanentResidence?.city || '',
+                                postalCode: userData.user_residence_data?.permanentResidence?.postalCode || '',
+                                post: userData.user_residence_data?.permanentResidence?.post || '',
+                                municipalCommune: userData.user_residence_data?.permanentResidence?.municipalCommune || '',
+                                voivodeship: userData.user_residence_data?.permanentResidence?.voivodeship || '',
+                                county: userData.user_residence_data?.permanentResidence?.county || '',
+                                street: userData.user_residence_data?.permanentResidence?.street || '',
+                                houseNumber: userData.user_residence_data?.permanentResidence?.houseNumber || '',
+                                flatNumber: userData.user_residence_data?.permanentResidence?.flatNumber || '',
+                                mobileNumber: userData.user_residence_data?.permanentResidence?.mobileNumber || '',
+                            },
+                            secondResidence: {
+                                city: userData.user_residence_data?.secondResidence?.city || '',
+                                postalCode: userData.user_residence_data?.secondResidence?.postalCode || '',
+                                post: userData.user_residence_data?.secondResidence?.post || '',
+                                municipalCommune: userData.user_residence_data?.secondResidence?.municipalCommune || '',
+                                voivodeship: userData.user_residence_data?.secondResidence?.voivodeship || '',
+                                county: userData.user_residence_data?.secondResidence?.county || '',
+                                street: userData.user_residence_data?.secondResidence?.street || '',
+                                houseNumber: userData.user_residence_data?.secondResidence?.houseNumber || '',
+                                flatNumber: userData.user_residence_data?.secondResidence?.flatNumber || '',
+                                mobileNumber: userData.user_residence_data?.secondResidence?.mobileNumber || '',
+                            },
+                        },
+                        correspondenceAddress: userData.user_residence_data?.correspondenceAddress || '',
+                        taxOffice: userData.user_residence_data?.taxOffice || '',
+                        annualSettlementAddress: userData.user_residence_data?.annualSettlementAddress || '',
+                        nfzBranch: userData.user_residence_data?.nfzBranch || '',
+                        idData: userData.user_residence_data?.idData || '',
+                        idGivenBy: userData.user_residence_data?.idGivenBy || '',
+                        date: userData.user_residence_data?.date || '',
+                    }                    
+                }));
 
                 console.log(userData)
     
@@ -149,18 +215,16 @@ const UserDataChange: React.FC = () => {
     }, [])
 
     const handleOverallForm = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData(prev => {
-            return {
-                ...prev,
-                userResidenceData: {
-                    permanentResidence: permanentResidenceData,
-                    secondResidence: secondResidenceData
-                },
-                correspondenceAddress: isCheckedCorrespondenceAddressAnother ? correspondenceAddress : checkboxRadioCorrespondenceRef.current?.textContent,
-                annualSettlementAddress: checkboxRadioAnnualRef.current?.textContent,
-                [event.target.name]: event?.target.value
-            }
-        })
+        setFormData(prev => ({
+            ...prev,
+            userResidenceData: {
+                permanentResidence: permanentResidenceData,
+                secondResidence: secondResidenceData
+            },
+            correspondenceAddress: isCheckedCorrespondenceAddressAnother ? correspondenceAddress : checkboxRadioCorrespondenceRef.current?.textContent,
+            annualSettlementAddress: checkboxRadioAnnualRef.current?.textContent,
+            [event.target.name]: event.target.value
+        }))
     }
 
     const handlePermanentUserResidence = (userData: IUserResidenceData) => {
@@ -211,13 +275,44 @@ const UserDataChange: React.FC = () => {
     }
 
     const handleSubmit = () => {
-        // event.preventDefault()
-
         console.log(formData)
 
-        setPermanentResidenceData(userInitial)
-        setSecondResidenceData(userInitial)
-        setCorrespondenceAddress(userInitial)
+        setFormData({
+            surname: '',
+            userResidenceData: {
+                permanentResidence: {
+                    city: '',
+                    postalCode: '',
+                    post: '',
+                    municipalCommune: '',
+                    voivodeship: '',
+                    county: '',
+                    street: '',
+                    houseNumber: '',
+                    flatNumber: '',
+                    mobileNumber: ''
+                },
+                secondResidence: {
+                    city: '',
+                    postalCode: '',
+                    post: '',
+                    municipalCommune: '',
+                    voivodeship: '',
+                    county: '',
+                    street: '',
+                    houseNumber: '',
+                    flatNumber: '',
+                    mobileNumber: ''
+                }
+            },
+            correspondenceAddress: '',
+            taxOffice: '',
+            annualSettlementAddress: '',
+            nfzBranch: '',
+            idData: '',
+            idGivenBy: '',
+            date: ''
+        })
     }
 
     return (
@@ -229,8 +324,8 @@ const UserDataChange: React.FC = () => {
                         <h1>WNIOSEK ZMIANY DANYCH IDENTYFIKACYJNYCH I/LUB EWIDENCYJNYCH</h1>
                     </div>
                     <div className={classes['userDataChange__container-data']}>
-                        <span>Imię: { userInfo.user.first_name }</span>
-                        <span>Nazwisko: { userInfo.user.last_name }</span>
+                        <span>Imię: { userInfo.user.firstName }</span>
+                        <span>Nazwisko: { userInfo.user.lastName }</span>
                         <span>Stanowisko pracy: { userInfo.user.role }</span>
 
                         <span>Proszę dokonać zmian następujących danych ewidencyjnych/identyfikacyjnych (wypełnić tylko pola które ulegają zmianie):</span> 
