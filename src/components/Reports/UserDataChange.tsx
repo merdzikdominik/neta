@@ -110,8 +110,11 @@ const UserDataChange: React.FC = () => {
             idData: '',
             idGivenBy: '',
             date: '',
+            is_superuser: null,
+            last_login: ''
         },
     });
+    
     
     const [formData, setFormData] = useState<IFormFill>({
         surname: '',
@@ -194,8 +197,14 @@ const UserDataChange: React.FC = () => {
                         idData: userData.user_residence_data?.idData || '',
                         idGivenBy: userData.user_residence_data?.idGivenBy || '',
                         date: userData.user_residence_data?.date || '',
+                        // is_active: prev.user.is_active,
+                        // is_staff: prev.user.is_staff,
+                        is_superuser: prev.user.is_superuser,
+                        last_login: prev.user.last_login,
+                        // password: prev.user.password,
                     }                    
                 }));
+                
 
                 console.log(userData)
     

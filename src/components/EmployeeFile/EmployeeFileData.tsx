@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import Nav from '../Utils/Nav'
-import InteractiveBackground from '../Utils/InteractiveBackground'
-import classes from './EmployeeFileData.module.scss'
+import React, { useEffect, useState } from 'react';
+import Nav from '../Utils/Nav';
+import InteractiveBackground from '../Utils/InteractiveBackground';
+import classes from './EmployeeFileData.module.scss';
 
 export interface IUserInfo {
     user: {
@@ -16,7 +16,7 @@ export interface IUserInfo {
         employmentEndDate: string;
         role: string;
         education: string;
-        userResidenceData: {
+        userResidenceData?: {
             permanentResidence: {
                 city: string;
                 postalCode: string;
@@ -49,9 +49,38 @@ export interface IUserInfo {
         idData: string;
         idGivenBy: string;
         date: string;
+        is_superuser: string | null;
+        last_login: string;
     };
 }
 
+
+interface IUserResidenceData {
+    permanentResidence: {
+        city: string;
+        postalCode: string;
+        post: string;
+        municipalCommune: string;
+        voivodeship: string;
+        county: string;
+        street: string;
+        houseNumber: string;
+        flatNumber: string;
+        mobileNumber: string;
+    };
+    secondResidence: {
+        city: string;
+        postalCode: string;
+        post: string;
+        municipalCommune: string;
+        voivodeship: string;
+        county: string;
+        street: string;
+        houseNumber: string;
+        flatNumber: string;
+        mobileNumber: string;
+    };
+}
 
 const EmployeeFileData: React.FC = () => {
     const [userInfo, setUserInfo] = useState<IUserInfo>({
@@ -100,6 +129,8 @@ const EmployeeFileData: React.FC = () => {
             idData: '',
             idGivenBy: '',
             date: '',
+            is_superuser: null,
+            last_login: ''
         },
     });
 
@@ -115,14 +146,16 @@ const EmployeeFileData: React.FC = () => {
         employmentEndDate: 'Data zakończenia pracy',
         role: 'Stanowisko',
         education: 'Wykształcenie',
-        userResidenceData: '', // zmieniono na pusty ciąg znaków
+        userResidenceData: '',
         correspondenceAddress: 'Adres do korespondencji',
         taxOffice: 'Urząd skarbowy',
         annualSettlementAddress: 'Adres rozliczenia rocznego',
         nfzBranch: 'Oddział NFZ',
         idData: 'Seria i numer dowodu osobistego',
         idGivenBy: 'Wydany przez',
-        date: 'Data',
+        date: 'Data wydania dokumentu',
+        is_superuser: 'Administrator',
+        last_login: 'Ostatnie logowanie'
     };
 
     const fetchUserData = async () => {
@@ -136,7 +169,7 @@ const EmployeeFileData: React.FC = () => {
                         'Content-Type': 'application/json',
                         'Authorization': `Token ${token}`,
                     }
-                })
+                });
     
                 if (!response.ok) {
                     throw new Error(`Błąd pobierania danych użytkownika: ${response.statusText}`);
@@ -158,20 +191,18 @@ const EmployeeFileData: React.FC = () => {
                         employmentEndDate: userData.employment_end_date,
                         role: userData.role,
                         education: userData.education,
-                        userResidenceData: userData.user_residence_data,
                         correspondenceAddress: userData.correspondence_address,
                         taxOffice: userData.tax_office,
-                        annualSettlementAddress: userData.annualSettlement_address,
+                        annualSettlementAddress: userData.annual_settlement_address,
                         nfzBranch: userData.nfz_branch,
                         idData: userData.id_data,
                         idGivenBy: userData.id_given_by,
                         date: userData.id_date,
+                        is_superuser: userData.is_superuser ? 'Tak' : 'Nie',
+                        last_login: userData.last_login
                     }                    
                 }));
                 
-
-                console.log(userData)
-    
             } catch (error) {
                 if (error instanceof Error) {
                     console.error('Błąd:', error.message);
@@ -181,11 +212,11 @@ const EmployeeFileData: React.FC = () => {
             } 
         }
 
-    }
+    };
 
     useEffect(() => {
-        fetchUserData()
-    }, [])
+        fetchUserData();
+    }, []);
 
     return (
         <div className={classes['main']}>
@@ -201,39 +232,38 @@ const EmployeeFileData: React.FC = () => {
                         {typeof content === 'string' || typeof content === 'number' ? (
                             <span>{content}</span>
                         ) : (
-                            content && content.permanentResidence && content.secondResidence && (
+                            content && typeof content !== 'boolean' && (content as IUserResidenceData).permanentResidence && (content as IUserResidenceData).secondResidence && (
                                 <div>
-                                    <span>{content.permanentResidence.city}</span>
-                                    <span>{content.permanentResidence.postalCode}</span>
-                                    <span>{content.permanentResidence.post}</span>
-                                    <span>{content.permanentResidence.municipalCommune}</span>
-                                    <span>{content.permanentResidence.voivodeship}</span>
-                                    <span>{content.permanentResidence.county}</span>
-                                    <span>{content.permanentResidence.street}</span>
-                                    <span>{content.permanentResidence.houseNumber}</span>
-                                    <span>{content.permanentResidence.flatNumber}</span>
-                                    <span>{content.permanentResidence.mobileNumber}</span>
-                                    <span>{content.secondResidence.city}</span>
-                                    <span>{content.secondResidence.postalCode}</span>
-                                    <span>{content.secondResidence.post}</span>
-                                    <span>{content.secondResidence.municipalCommune}</span>
-                                    <span>{content.secondResidence.voivodeship}</span>
-                                    <span>{content.secondResidence.county}</span>
-                                    <span>{content.secondResidence.street}</span>
-                                    <span>{content.secondResidence.houseNumber}</span>
-                                    <span>{content.secondResidence.flatNumber}</span>
-                                    <span>{content.secondResidence.mobileNumber}</span>
+                                    <span>{(content as IUserResidenceData).permanentResidence.city}</span>
+                                    <span>{(content as IUserResidenceData).permanentResidence.postalCode}</span>
+                                    <span>{(content as IUserResidenceData).permanentResidence.post}</span>
+                                    <span>{(content as IUserResidenceData).permanentResidence.municipalCommune}</span>
+                                    <span>{(content as IUserResidenceData).permanentResidence.voivodeship}</span>
+                                    <span>{(content as IUserResidenceData).permanentResidence.county}</span>
+                                    <span>{(content as IUserResidenceData).permanentResidence.street}</span>
+                                    <span>{(content as IUserResidenceData).permanentResidence.houseNumber}</span>
+                                    <span>{(content as IUserResidenceData).permanentResidence.flatNumber}</span>
+                                    <span>{(content as IUserResidenceData).permanentResidence.mobileNumber}</span>
+                                    <span>{(content as IUserResidenceData).secondResidence.city}</span>
+                                    <span>{(content as IUserResidenceData).secondResidence.postalCode}</span>
+                                    <span>{(content as IUserResidenceData).secondResidence.post}</span>
+                                    <span>{(content as IUserResidenceData).secondResidence.municipalCommune}</span>
+                                    <span>{(content as IUserResidenceData).secondResidence.voivodeship}</span>
+                                    <span>{(content as IUserResidenceData).secondResidence.county}</span>
+                                    <span>{(content as IUserResidenceData).secondResidence.street}</span>
+                                    <span>{(content as IUserResidenceData).secondResidence.houseNumber}</span>
+                                    <span>{(content as IUserResidenceData).secondResidence.flatNumber}</span>
+                                    <span>{(content as IUserResidenceData).secondResidence.mobileNumber}</span>
                                 </div>
                             )
                         )}
                     </div>
                 ))}
-
                 </div>
             </section>
             <InteractiveBackground />
         </div>
-    )
-}
+    );
+};
 
-export default EmployeeFileData
+export default EmployeeFileData;
