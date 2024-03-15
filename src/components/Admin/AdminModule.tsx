@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Chart } from "react-google-charts"
 import { toast } from "react-toastify"
 import { INotification } from "../../store/types"
+import { IUserInfo } from "../EmployeeFile/EmployeeFileData"
 import * as ExcelJS from 'exceljs'
 import Nav from "../Utils/Nav"
 import InteractiveBackground from "../Utils/InteractiveBackground"
@@ -90,7 +91,7 @@ const MONTHS = [
 
 const AdminModule: React.FC = () => {
     const [requestsList, setRequestsList] = useState<IHolidayRequest[] | []>([])
-    const [users, setUsers] = useState<IUser[] | []>([])
+    const [users, setUsers] = useState<IUserInfo[] | []>([])
     const [holidayRequestData, setHolidayRequestData] = useState<(string | number)[][]>([])
     const [mostOccupiedMonths, setMostOccupiedMonths] = useState<[string, number, string, null][]>([])
     const [holidayTypes, setHolidayTypes] = useState<IHolidayType[]>([])
@@ -148,7 +149,58 @@ const AdminModule: React.FC = () => {
               if (response.ok) {
                 const data = await response.json();
 
+                console.log(data)
+
                 setUsers(data)
+                // setUsers(prev => ({
+                //     ...prev,
+                //     firstName: data.first_name,
+                //     secondName: data.second_name,
+                //     lastName: data.last_name,
+                //     birthDate: data.birth_date,
+                //     mobileNumber: data.mobile_number,
+                //     email: data.email,
+                //     age: data.age,
+                //     employmentStartDate: data.employment_start_date,
+                //     employmentEndDate: data.employment_end_date,
+                //     role: data.role,
+                //     education: data.education,
+                //     userResidenceData: {
+                //         permanentResidence: {
+                //             city: data.city,
+                //             postalCode: data.postal_code,
+                //             post: data.post,
+                //             municipalCommune: data.municipal_commune,
+                //             voivodeship: data.voivodeship,
+                //             county: data.country,
+                //             street: data.street,
+                //             houseNumber: data.house_number,
+                //             flatNumber: data.flat_number,
+                //             mobileNumber: data.mobile_number
+                //         },
+                //         secondResidence: {
+                //             city: data.city,
+                //             postalCode: data.postal_code,
+                //             post: data.post,
+                //             municipalCommune: data.municipal_commune,
+                //             voivodeship: data.voivodeship,
+                //             county: data.country,
+                //             street: data.street,
+                //             houseNumber: data.house_number,
+                //             flatNumber: data.flat_number,
+                //             mobileNumber: data.mobile_number
+                //         },
+                //     },
+                //     correspondenceAddress: data.correspondence_address,
+                //     taxOffice: data.tax_office,
+                //     annualSettlementAddress: data.annual_settlement_address,
+                //     nfzBranch: data.nfz_branch,
+                //     idData: data.id_data,
+                //     idGivenBy: data.id_given_by,
+                //     date: data.id_date,
+                //     is_superuser: data.is_superuser,
+                //     last_login: data.last_login
+                // }))
 
               } else {
                 console.error('Błąd podczas pobierania uzytkowników');
@@ -364,6 +416,10 @@ const AdminModule: React.FC = () => {
         ["Urlop", "Częstość", { role: "style" }, { sourceColumn: 0, role: "annotation", type: "string", calc: "stringify" }],
         ...mostOccupiedMonths
     ]
+
+    useEffect(() => {
+        console.log(users)
+    }, [users])
 
     return (
         <div className={classes['main']}>

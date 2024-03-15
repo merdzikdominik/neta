@@ -4,56 +4,53 @@ import InteractiveBackground from '../Utils/InteractiveBackground';
 import classes from './EmployeeFileData.module.scss';
 
 export interface IUserInfo {
-    user: {
-        firstName: string;
-        secondName: string;
-        lastName: string;
-        birthDate: string;
-        mobileNumber: string;
-        email: string;
-        age: number;
-        employmentStartDate: string;
-        employmentEndDate: string;
-        role: string;
-        education: string;
-        userResidenceData?: {
-            permanentResidence: {
-                city: string;
-                postalCode: string;
-                post: string;
-                municipalCommune: string;
-                voivodeship: string;
-                county: string;
-                street: string;
-                houseNumber: string;
-                flatNumber: string;
-                mobileNumber: string;
-            };
-            secondResidence: {
-                city: string;
-                postalCode: string;
-                post: string;
-                municipalCommune: string;
-                voivodeship: string;
-                county: string;
-                street: string;
-                houseNumber: string;
-                flatNumber: string;
-                mobileNumber: string;
-            };
+    first_name: string;
+    second_name: string;
+    last_name: string;
+    birth_date: string;
+    mobile_number: string;
+    email: string;
+    age: number;
+    employment_start_date: string;
+    employment_end_date: string;
+    role: string;
+    education: string;
+    user_residence_data?: {
+        permanent_residence: {
+            city: string;
+            postal_code: string;
+            post: string;
+            municipal_commune: string;
+            voivodeship: string;
+            county: string;
+            street: string;
+            house_number: string;
+            flat_number: string;
+            mobile_number: string;
         };
-        correspondenceAddress: string | null;
-        taxOffice: string;
-        annualSettlementAddress: string;
-        nfzBranch: string;
-        idData: string;
-        idGivenBy: string;
-        date: string;
-        is_superuser: string | null;
-        last_login: string;
+        second_residence: {
+            city: string;
+            postal_code: string;
+            post: string;
+            municipal_commune: string;
+            voivodeship: string;
+            county: string;
+            street: string;
+            house_number: string;
+            flat_number: string;
+            mobile_number: string;
+        };
     };
+    correspondence_address: string | null;
+    tax_office: string;
+    annual_settlement_address: string;
+    nfz_branch: string;
+    id_data: string;
+    id_given_by: string;
+    date: string;
+    is_superuser: string | null;
+    last_login: string;
 }
-
 
 interface IUserResidenceData {
     permanentResidence: {
@@ -84,75 +81,73 @@ interface IUserResidenceData {
 
 const EmployeeFileData: React.FC = () => {
     const [userInfo, setUserInfo] = useState<IUserInfo>({
-        user: {
-            firstName: '',
-            secondName: '',
-            lastName: '',
-            birthDate: '',
-            mobileNumber: '',
-            email: '',
-            age: 0,
-            employmentStartDate: '',
-            employmentEndDate: '',
-            role: '',
-            education: '',
-            userResidenceData: {
-                permanentResidence: {
-                    city: '',
-                    postalCode: '',
-                    post: '',
-                    municipalCommune: '',
-                    voivodeship: '',
-                    county: '',
-                    street: '',
-                    houseNumber: '',
-                    flatNumber: '',
-                    mobileNumber: '',
-                },
-                secondResidence: {
-                    city: '',
-                    postalCode: '',
-                    post: '',
-                    municipalCommune: '',
-                    voivodeship: '',
-                    county: '',
-                    street: '',
-                    houseNumber: '',
-                    flatNumber: '',
-                    mobileNumber: '',
-                },
+        first_name: '',
+        second_name: '',
+        last_name: '',
+        birth_date: '',
+        mobile_number: '',
+        email: '',
+        age: 0,
+        employment_start_date: '',
+        employment_end_date: '',
+        role: '',
+        education: '',
+        user_residence_data: {
+            permanent_residence: {
+                city: '',
+                postal_code: '',
+                post: '',
+                municipal_commune: '',
+                voivodeship: '',
+                county: '',
+                street: '',
+                house_number: '',
+                flat_number: '',
+                mobile_number: '',
             },
-            correspondenceAddress: null,
-            taxOffice: '',
-            annualSettlementAddress: '',
-            nfzBranch: '',
-            idData: '',
-            idGivenBy: '',
-            date: '',
-            is_superuser: null,
-            last_login: ''
+            second_residence: {
+                city: '',
+                postal_code: '',
+                post: '',
+                municipal_commune: '',
+                voivodeship: '',
+                county: '',
+                street: '',
+                house_number: '',
+                flat_number: '',
+                mobile_number: '',
+            },
         },
+        correspondence_address: null,
+        tax_office: '',
+        annual_settlement_address: '',
+        nfz_branch: '',
+        id_data: '',
+        id_given_by: '',
+        date: '',
+        is_superuser: null,
+        last_login: ''
     });
 
-    const fieldsMap: Record<keyof IUserInfo['user'], string> = {
-        firstName: 'Imię',
-        secondName: 'Drugie imię',
-        lastName: 'Nazwisko',
-        birthDate: 'Data urodzenia',
-        mobileNumber: 'Nr telefonu',
+    const fieldsMap: Record<keyof IUserInfo, string> = {
+        first_name: 'Imię',
+        second_name: 'Drugie imię',
+        last_name: 'Nazwisko',
+        birth_date: 'Data urodzenia',
+        mobile_number: 'Nr telefonu',
         email: 'Adres email',
         age: 'Wiek',
-        employmentStartDate: 'Data rozpoczęcia pracy',
-        employmentEndDate: 'Data zakończenia pracy',
+        employment_start_date: 'Data rozpoczęcia pracy',
+        employment_end_date: 'Data zakończenia pracy',
         role: 'Stanowisko',
         education: 'Wykształcenie',
-        userResidenceData: '',
-        correspondenceAddress: 'Adres do korespondencji',
-        taxOffice: 'Urząd skarbowy',
-        annualSettlementAddress: 'Adres rozliczenia rocznego',
-        nfzBranch: 'Oddział NFZ',
-        idData: 'Seria i numer dowodu osobistego',
-        idGivenBy: 'Wydany przez',
+        user_residence_data: '',
+        correspondence_address: 'Adres do korespondencji',
+        tax_office: 'Urząd skarbowy',
+        annual_settlement_address: 'Adres rozliczenia rocznego',
+        nfz_branch: 'Oddział NFZ',
+        id_data: 'Seria i numer dowodu osobistego',
+        id_given_by: 'Wydany przez',
         date: 'Data wydania dokumentu',
         is_superuser: 'Administrator',
         last_login: 'Ostatnie logowanie'
@@ -179,28 +174,27 @@ const EmployeeFileData: React.FC = () => {
 
                 setUserInfo(prev => ({
                     ...prev,
-                    user: {
-                        firstName: userData.first_name,
-                        secondName: userData.second_name,
-                        lastName: userData.last_name,
-                        birthDate: userData.birth_date,
-                        mobileNumber: userData.mobile_number,
-                        email: userData.email,
-                        age: userData.age,
-                        employmentStartDate: userData.employment_start_date,
-                        employmentEndDate: userData.employment_end_date,
-                        role: userData.role,
-                        education: userData.education,
-                        correspondenceAddress: userData.correspondence_address,
-                        taxOffice: userData.tax_office,
-                        annualSettlementAddress: userData.annual_settlement_address,
-                        nfzBranch: userData.nfz_branch,
-                        idData: userData.id_data,
-                        idGivenBy: userData.id_given_by,
-                        date: userData.id_date,
-                        is_superuser: userData.is_superuser ? 'Tak' : 'Nie',
-                        last_login: userData.last_login
-                    }                    
+                    first_name: userData.first_name,
+                    second_name: userData.second_name,
+                    last_name: userData.last_name,
+                    birth_date: userData.birth_date,
+                    mobile_number: userData.mobile_number,
+                    email: userData.email,
+                    age: userData.age,
+                    employment_start_date: userData.employment_start_date,
+                    employment_end_date: userData.employment_end_date,
+                    role: userData.role,
+                    education: userData.education,
+                    user_residence_data: userData.user_residence_data ? userData.user_residence_data.permanent_residence : userData.user_residence_data.second_residence,
+                    correspondence_address: userData.correspondence_address,
+                    tax_office: userData.tax_office,
+                    annual_settlement_address: userData.annual_settlement_address,
+                    nfz_branch: userData.nfz_branch,
+                    id_data: userData.id_data,
+                    id_given_by: userData.id_given_by,
+                    date: userData.id_date,
+                    is_superuser: userData.is_superuser ? 'Tak' : 'Nie',
+                    last_login: userData.last_login               
                 }));
                 
             } catch (error) {
@@ -226,9 +220,9 @@ const EmployeeFileData: React.FC = () => {
                     <h1>Kartoteka Pracownika</h1>
                 </div>
                 <div className={classes['employeeFileData__data_container']}>
-                {Object.entries(userInfo.user).map(([field, content]) => (
+                {Object.entries(userInfo).map(([field, content]) => (
                     <div key={field}>
-                        <span>{fieldsMap[field as keyof IUserInfo['user']]}: </span>
+                        <span>{fieldsMap[field as keyof IUserInfo]}: </span>
                         {typeof content === 'string' || typeof content === 'number' ? (
                             <span>{content}</span>
                         ) : (

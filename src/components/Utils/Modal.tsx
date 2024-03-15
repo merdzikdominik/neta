@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { IHolidayRequest, IUser, IHolidayType } from "../Admin/AdminModule";
+import { IUserInfo } from "../EmployeeFile/EmployeeFileData";
 import { INotification } from "../../store/types";
 import { toast } from "react-toastify";
 import UserRequestRow from "./UserRequestRow";
@@ -11,7 +12,7 @@ import classes from './Modal.module.scss';
 interface IModal {
     toggleModal: () => void;
     modalTitle: string;
-    modalContent: IHolidayRequest[] | IUser[] | IHolidayType[] | INotification[];
+    modalContent: IHolidayRequest[] | IUserInfo[] | IHolidayType[] | INotification[];
     handleExcel?: (data: IHolidayRequest[]) => void;
 }
 
@@ -53,9 +54,9 @@ const modalMode = (
             if (Array.isArray(modalContent)) {
                 return (
                     <>
-                        {(modalContent as IUser[]).map((user: IUser) => (
+                        {(modalContent as IUserInfo[]).map((user: IUserInfo, index: number) => (
                             <UserRequestRow
-                                key={user.id}
+                                key={index}
                                 user={user}
                             />
                         ))}

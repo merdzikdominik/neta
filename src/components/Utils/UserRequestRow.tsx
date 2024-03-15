@@ -1,9 +1,10 @@
 import React, { useState } from "react"
-import { IUser } from "../Admin/AdminModule"
+// import { IUser } from "../Admin/AdminModule"
+import { IUserInfo } from "../EmployeeFile/EmployeeFileData"
 import classes from './UserRequestRow.module.scss'
 
 interface IUserProps {
-    user: IUser
+    user: IUserInfo
 }
 
 
@@ -36,7 +37,15 @@ const UserRequestRow: React.FC<IUserProps> = ({ user }) => {
                     <span>Data rozpoczęcia pracy: <i>{ user.employment_start_date }</i></span>
                     <span>Data zakończenia pracy: <i>{ user.employment_end_date }</i></span>
                     <span>Ostatnio zalogowany: <i>{ user.last_login }</i></span>
+                    <span>Adres do korespondencji: <i>{ user.correspondence_address }</i> </span>
+                    <span>Urząd skarbowy: <i>{ user.tax_office }</i> </span>
+                    <span>Adres rozliczenia rocznego: <i>{ user.annual_settlement_address }</i> </span>
+                    <span>Oddział NFZ: <i>{ user.nfz_branch }</i> </span>
+                    <span>Seria i numer dowodu osobistego: <i>{ user.id_data }</i> </span>
+                    <span>Wydany przez: <i>{ user.id_given_by }</i> </span>
+                    <span>Data wydania dokumentu: <i>{ user.date }</i> </span>
                     <span>Administrator: <i>{ user.is_superuser ? 'Tak' : 'Nie' }</i> </span>
+                    <span>Ostatnie logowanie: <i>{ user.last_login }</i> </span>
                 </div>
             </div>
         )

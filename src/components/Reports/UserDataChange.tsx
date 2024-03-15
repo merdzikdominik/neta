@@ -65,54 +65,52 @@ const UserDataChange: React.FC = () => {
     const checkboxRadioAnnualRef = useRef<HTMLInputElement | null>(null)
 
     const [userInfo, setUserInfo] = useState<IUserInfo>({
-        user: {
-            firstName: '',
-            secondName: '',
-            lastName: '',
-            birthDate: '',
-            mobileNumber: '',
-            email: '',
-            age: 0,
-            employmentStartDate: '',
-            employmentEndDate: '',
-            role: '',
-            education: '',
-            userResidenceData: {
-                permanentResidence: {
-                    city: '',
-                    postalCode: '',
-                    post: '',
-                    municipalCommune: '',
-                    voivodeship: '',
-                    county: '',
-                    street: '',
-                    houseNumber: '',
-                    flatNumber: '',
-                    mobileNumber: '',
-                },
-                secondResidence: {
-                    city: '',
-                    postalCode: '',
-                    post: '',
-                    municipalCommune: '',
-                    voivodeship: '',
-                    county: '',
-                    street: '',
-                    houseNumber: '',
-                    flatNumber: '',
-                    mobileNumber: '',
-                },
+        first_name: '',
+        second_name: '',
+        last_name: '',
+        birth_date: '',
+        mobile_number: '',
+        email: '',
+        age: 0,
+        employment_start_date: '',
+        employment_end_date: '',
+        role: '',
+        education: '',
+        user_residence_data: {
+            permanent_residence: {
+                city: '',
+                postal_code: '',
+                post: '',
+                municipal_commune: '',
+                voivodeship: '',
+                county: '',
+                street: '',
+                house_number: '',
+                flat_number: '',
+                mobile_number: '',
             },
-            correspondenceAddress: null,
-            taxOffice: '',
-            annualSettlementAddress: '',
-            nfzBranch: '',
-            idData: '',
-            idGivenBy: '',
-            date: '',
-            is_superuser: null,
-            last_login: ''
+            second_residence: {
+                city: '',
+                postal_code: '',
+                post: '',
+                municipal_commune: '',
+                voivodeship: '',
+                county: '',
+                street: '',
+                house_number: '',
+                flat_number: '',
+                mobile_number: '',
+            },
         },
+        correspondence_address: null,
+        tax_office: '',
+        annual_settlement_address: '',
+        nfz_branch: '',
+        id_data: '',
+        id_given_by: '',
+        date: '',
+        is_superuser: null,
+        last_login: ''
     });
     
     
@@ -152,57 +150,52 @@ const UserDataChange: React.FC = () => {
 
                 setUserInfo(prev => ({
                     ...prev,
-                    user: {
-                        firstName: userData.first_name,
-                        secondName: userData.second_name,
-                        lastName: userData.last_name,
-                        birthDate: userData.birth_date,
-                        mobileNumber: userData.mobile_number,
-                        email: userData.email,
-                        age: userData.age,
-                        employmentStartDate: userData.employment_start_date,
-                        employmentEndDate: userData.employment_end_date,
-                        role: userData.role,
-                        education: userData.education,
-                        userResidenceData: {
-                            permanentResidence: {
-                                city: userData.user_residence_data?.permanentResidence?.city || '',
-                                postalCode: userData.user_residence_data?.permanentResidence?.postalCode || '',
-                                post: userData.user_residence_data?.permanentResidence?.post || '',
-                                municipalCommune: userData.user_residence_data?.permanentResidence?.municipalCommune || '',
-                                voivodeship: userData.user_residence_data?.permanentResidence?.voivodeship || '',
-                                county: userData.user_residence_data?.permanentResidence?.county || '',
-                                street: userData.user_residence_data?.permanentResidence?.street || '',
-                                houseNumber: userData.user_residence_data?.permanentResidence?.houseNumber || '',
-                                flatNumber: userData.user_residence_data?.permanentResidence?.flatNumber || '',
-                                mobileNumber: userData.user_residence_data?.permanentResidence?.mobileNumber || '',
-                            },
-                            secondResidence: {
-                                city: userData.user_residence_data?.secondResidence?.city || '',
-                                postalCode: userData.user_residence_data?.secondResidence?.postalCode || '',
-                                post: userData.user_residence_data?.secondResidence?.post || '',
-                                municipalCommune: userData.user_residence_data?.secondResidence?.municipalCommune || '',
-                                voivodeship: userData.user_residence_data?.secondResidence?.voivodeship || '',
-                                county: userData.user_residence_data?.secondResidence?.county || '',
-                                street: userData.user_residence_data?.secondResidence?.street || '',
-                                houseNumber: userData.user_residence_data?.secondResidence?.houseNumber || '',
-                                flatNumber: userData.user_residence_data?.secondResidence?.flatNumber || '',
-                                mobileNumber: userData.user_residence_data?.secondResidence?.mobileNumber || '',
-                            },
+                    first_name: userData.first_name,
+                    second_name: userData.second_name,
+                    last_name: userData.last_name,
+                    birth_date: userData.birth_date,
+                    mobile_number: userData.mobile_number,
+                    email: userData.email,
+                    age: userData.age,
+                    employment_start_date: userData.employment_start_date,
+                    employment_end_date: userData.employment_end_date,
+                    role: userData.role,
+                    education: userData.education,
+                    user_residence_data: {
+                        permanent_residence: {
+                            city: userData.user_residence_data?.permanent_residence?.city,
+                            postal_code: userData.user_residence_data?.permanent_residence?.postal_code,
+                            post: userData.user_residence_data?.permanent_residence?.post,
+                            municipal_commune: userData.user_residence_data?.permanent_residence?.municipal_commune,
+                            voivodeship: userData.user_residence_data?.permanent_residence?.voivodeship,
+                            county: userData.user_residence_data?.permanent_residence.city?.country,
+                            street: userData.user_residence_data?.permanent_residence?.street,
+                            house_number: userData.user_residence_data?.permanent_residence?.house_number,
+                            flat_number: userData.user_residence_data?.permanent_residence?.flat_number,
+                            mobile_number: userData.user_residence_data?.permanent_residence?.mobile_number,
                         },
-                        correspondenceAddress: userData.user_residence_data?.correspondenceAddress || '',
-                        taxOffice: userData.user_residence_data?.taxOffice || '',
-                        annualSettlementAddress: userData.user_residence_data?.annualSettlementAddress || '',
-                        nfzBranch: userData.user_residence_data?.nfzBranch || '',
-                        idData: userData.user_residence_data?.idData || '',
-                        idGivenBy: userData.user_residence_data?.idGivenBy || '',
-                        date: userData.user_residence_data?.date || '',
-                        // is_active: prev.user.is_active,
-                        // is_staff: prev.user.is_staff,
-                        is_superuser: prev.user.is_superuser,
-                        last_login: prev.user.last_login,
-                        // password: prev.user.password,
-                    }                    
+                        second_residence: {
+                            city: userData.user_residence_data?.second_residence?.city,
+                            postal_code: userData.user_residence_data?.second_residence?.postal_code,
+                            post: userData.user_residence_data?.second_residence?.post,
+                            municipal_commune: userData.user_residence_data?.second_residence?.municipal_commune,
+                            voivodeship: userData.user_residence_data?.second_residence?.voivodeship,
+                            county: userData.user_residence_data?.second_residence?.country,
+                            street: userData.user_residence_data?.second_residence?.street,
+                            house_number: userData.user_residence_data?.second_residence?.house_number,
+                            flat_number: userData.user_residence_data?.second_residence?.flat_number,
+                            mobile_number: userData.user_residence_data?.second_residence?.mobile_number,
+                        },
+                    },
+                    correspondence_address: userData.user_residence_data?.correspondence_address || '' || null,
+                    tax_office: userData.user_residence_data?.tax_office,
+                    annual_settlement_address: userData.user_residence_data?.annual_settlement_address,
+                    nfz_branch: userData.user_residence_data?.nfz_branch,
+                    id_data: userData.user_residence_data?.id_data,
+                    id_given_by: userData.user_residence_data?.id_given_by,
+                    date: userData.user_residence_data?.id_date,
+                    is_superuser: prev.is_superuser,
+                    last_login: prev.last_login      
                 }));
                 
 
@@ -333,9 +326,9 @@ const UserDataChange: React.FC = () => {
                         <h1>WNIOSEK ZMIANY DANYCH IDENTYFIKACYJNYCH I/LUB EWIDENCYJNYCH</h1>
                     </div>
                     <div className={classes['userDataChange__container-data']}>
-                        <span>Imię: { userInfo.user.firstName }</span>
-                        <span>Nazwisko: { userInfo.user.lastName }</span>
-                        <span>Stanowisko pracy: { userInfo.user.role }</span>
+                        <span>Imię: { userInfo.first_name }</span>
+                        <span>Nazwisko: { userInfo.last_name }</span>
+                        <span>Stanowisko pracy: { userInfo.role }</span>
 
                         <span>Proszę dokonać zmian następujących danych ewidencyjnych/identyfikacyjnych (wypełnić tylko pola które ulegają zmianie):</span> 
 
