@@ -3,45 +3,40 @@ import Nav from '../Utils/Nav';
 import InteractiveBackground from '../Utils/InteractiveBackground';
 import classes from './EmployeeFileData.module.scss';
 
+export interface IResidenceData {
+    city: string;
+    postal_code: string;
+    post: string;
+    municipal_commune: string;
+    voivodeship: string;
+    country: string;
+    street: string;
+    house_number: string;
+    flat_number: string;
+    mobile_number: string;
+}
+
+interface IUserResidenceData {
+    permanent_residence: IResidenceData;
+    second_residence: IResidenceData;
+}
+
 export interface IUserInfo {
     first_name: string;
     second_name: string;
     last_name: string;
     birth_date: string;
-    mobile_number: string;
+    // mobile_number: string;
     email: string;
     age: number;
     employment_start_date: string;
     employment_end_date: string;
     role: string;
     education: string;
-    user_residence_data?: {
-        permanent_residence: {
-            city: string;
-            postal_code: string;
-            post: string;
-            municipal_commune: string;
-            voivodeship: string;
-            county: string;
-            street: string;
-            house_number: string;
-            flat_number: string;
-            mobile_number: string;
-        };
-        second_residence: {
-            city: string;
-            postal_code: string;
-            post: string;
-            municipal_commune: string;
-            voivodeship: string;
-            county: string;
-            street: string;
-            house_number: string;
-            flat_number: string;
-            mobile_number: string;
-        };
-    };
-    correspondence_address: string | null;
+    permanent_residence: string;
+    second_residence: string;
+    // user_residence_data?: IUserResidenceData;
+    correspondence_address: string;
     tax_office: string;
     annual_settlement_address: string;
     nfz_branch: string;
@@ -52,73 +47,22 @@ export interface IUserInfo {
     last_login: string;
 }
 
-interface IUserResidenceData {
-    permanentResidence: {
-        city: string;
-        postalCode: string;
-        post: string;
-        municipalCommune: string;
-        voivodeship: string;
-        county: string;
-        street: string;
-        houseNumber: string;
-        flatNumber: string;
-        mobileNumber: string;
-    };
-    secondResidence: {
-        city: string;
-        postalCode: string;
-        post: string;
-        municipalCommune: string;
-        voivodeship: string;
-        county: string;
-        street: string;
-        houseNumber: string;
-        flatNumber: string;
-        mobileNumber: string;
-    };
-}
-
 const EmployeeFileData: React.FC = () => {
     const [userInfo, setUserInfo] = useState<IUserInfo>({
         first_name: '',
         second_name: '',
         last_name: '',
         birth_date: '',
-        mobile_number: '',
+        // mobile_number: '',
         email: '',
         age: 0,
         employment_start_date: '',
         employment_end_date: '',
         role: '',
         education: '',
-        user_residence_data: {
-            permanent_residence: {
-                city: '',
-                postal_code: '',
-                post: '',
-                municipal_commune: '',
-                voivodeship: '',
-                county: '',
-                street: '',
-                house_number: '',
-                flat_number: '',
-                mobile_number: '',
-            },
-            second_residence: {
-                city: '',
-                postal_code: '',
-                post: '',
-                municipal_commune: '',
-                voivodeship: '',
-                county: '',
-                street: '',
-                house_number: '',
-                flat_number: '',
-                mobile_number: '',
-            },
-        },
-        correspondence_address: null,
+        permanent_residence: '',
+        second_residence: '',
+        correspondence_address: '',
         tax_office: '',
         annual_settlement_address: '',
         nfz_branch: '',
@@ -134,14 +78,16 @@ const EmployeeFileData: React.FC = () => {
         second_name: 'Drugie imię',
         last_name: 'Nazwisko',
         birth_date: 'Data urodzenia',
-        mobile_number: 'Nr telefonu',
+        // mobile_number: 'Nr telefonu',
         email: 'Adres email',
         age: 'Wiek',
         employment_start_date: 'Data rozpoczęcia pracy',
         employment_end_date: 'Data zakończenia pracy',
         role: 'Stanowisko',
         education: 'Wykształcenie',
-        user_residence_data: '',
+        // user_residence_data: 'Dane zamieszkania',
+        permanent_residence: 'Adres zamieszkania',
+        second_residence: 'Adres zameldowania',
         correspondence_address: 'Adres do korespondencji',
         tax_office: 'Urząd skarbowy',
         annual_settlement_address: 'Adres rozliczenia rocznego',
@@ -172,21 +118,69 @@ const EmployeeFileData: React.FC = () => {
         
                 const userData = await response.json();
 
+                console.log(userData)
+
+                const permanentResidence: IResidenceData = {
+                    ...userData,
+                    city: userData.city_permanent_residence,
+                    postal_code: userData.postal_code_permanent_residence,
+                    post: userData.post_permanent_residence,
+                    municipal_commune: userData.municipal_commune_permanent_residence,
+                    voivodeship: userData.voivodeship_permanent_residence,
+                    country: userData.country_permanent_residence,
+                    street: userData.street_permanent_residence,
+                    house_number: userData.house_number_permanent_residence,
+                    flat_number: userData.flat_number_permanent_residence,
+                    mobile_number: userData.mobile_number_permanent_residence
+                }
+
+                const secondResidence: IResidenceData = {
+                    ...userData,
+                    city: userData.city_second_residence,
+                    postal_code: userData.postal_code_second_residence,
+                    post: userData.post_second_residence,
+                    municipal_commune: userData.municipal_commune_second_residence,
+                    voivodeship: userData.voivodeship_second_residence,
+                    country: userData.country_second_residence,
+                    street: userData.street_second_residence,
+                    house_number: userData.house_number_second_residence,
+                    flat_number: userData.flat_number_second_residence,
+                    mobile_number: userData.mobile_number_second_residence
+                }
+
+                const correspondenceData: IResidenceData = {
+                    ...userData,
+                    city: userData.city_correspondence,
+                    postal_code: userData.postal_code_correspondence,
+                    post: userData.post_correspondence,
+                    municipal_commune: userData.municipal_commune_correspondence,
+                    voivodeship: userData.voivodeship_correspondence,
+                    country: userData.country_correspondence,
+                    street: userData.street_correspondence,
+                    house_number: userData.house_number_correspondence,
+                    flat_number: userData.flat_number_correspondence,
+                    mobile_number: userData.mobile_number_correspondence
+                }
+
+                const permanentResidenceFormatted = `${permanentResidence.street} ${permanentResidence.house_number} ${permanentResidence.flat_number} | ${permanentResidence.postal_code} | ${permanentResidence.post} | ${permanentResidence.country} | ${permanentResidence.voivodeship} | ${permanentResidence.municipal_commune} | ${permanentResidence.mobile_number}`
+                const secondResidenceFormatted = `${secondResidence.street} ${secondResidence.house_number} ${secondResidence.flat_number} | ${secondResidence.postal_code} | ${secondResidence.post} | ${secondResidence.country} | ${secondResidence.voivodeship} | ${secondResidence.municipal_commune} | ${secondResidence.mobile_number}`
+                const correspondenceDataFormatted = `${correspondenceData.street} ${correspondenceData.house_number} ${correspondenceData.flat_number} | ${correspondenceData.postal_code} | ${correspondenceData.post} | ${correspondenceData.country} | ${correspondenceData.voivodeship} | ${correspondenceData.municipal_commune} | ${correspondenceData.mobile_number}`
+
                 setUserInfo(prev => ({
                     ...prev,
                     first_name: userData.first_name,
                     second_name: userData.second_name,
                     last_name: userData.last_name,
                     birth_date: userData.birth_date,
-                    mobile_number: userData.mobile_number,
                     email: userData.email,
                     age: userData.age,
                     employment_start_date: userData.employment_start_date,
                     employment_end_date: userData.employment_end_date,
                     role: userData.role,
                     education: userData.education,
-                    user_residence_data: userData.user_residence_data ? userData.user_residence_data.permanent_residence : userData.user_residence_data.second_residence,
-                    correspondence_address: userData.correspondence_address,
+                    permanent_residence: permanentResidenceFormatted.includes('null') ? 'Nie wypełniono' : permanentResidenceFormatted,
+                    second_residence: secondResidenceFormatted.includes('null') ? 'Nie wypełniono' : secondResidenceFormatted,
+                    correspondence_address: userData.correspondence_address !== null ? userData.correspondence_address : correspondenceDataFormatted.includes('null') ? 'Nie wypełniono' : correspondenceDataFormatted,
                     tax_office: userData.tax_office,
                     annual_settlement_address: userData.annual_settlement_address,
                     nfz_branch: userData.nfz_branch,
@@ -194,7 +188,7 @@ const EmployeeFileData: React.FC = () => {
                     id_given_by: userData.id_given_by,
                     date: userData.id_date,
                     is_superuser: userData.is_superuser ? 'Tak' : 'Nie',
-                    last_login: userData.last_login               
+                    last_login: userData.last_login       
                 }));
                 
             } catch (error) {
@@ -212,6 +206,10 @@ const EmployeeFileData: React.FC = () => {
         fetchUserData();
     }, []);
 
+    // useEffect(() => {
+    //     console.log(userInfo)
+    // }, [userInfo])
+
     return (
         <div className={classes['main']}>
             <Nav />
@@ -220,39 +218,13 @@ const EmployeeFileData: React.FC = () => {
                     <h1>Kartoteka Pracownika</h1>
                 </div>
                 <div className={classes['employeeFileData__data_container']}>
-                {Object.entries(userInfo).map(([field, content]) => (
-                    <div key={field}>
-                        <span>{fieldsMap[field as keyof IUserInfo]}: </span>
-                        {typeof content === 'string' || typeof content === 'number' ? (
+                    {Object.entries(userInfo).map(([field, content]) => (
+                        <div key={field}>
+                            <span>{fieldsMap[field as keyof IUserInfo]}: </span>
                             <span>{content}</span>
-                        ) : (
-                            content && typeof content !== 'boolean' && (content as IUserResidenceData).permanentResidence && (content as IUserResidenceData).secondResidence && (
-                                <div>
-                                    <span>{(content as IUserResidenceData).permanentResidence.city}</span>
-                                    <span>{(content as IUserResidenceData).permanentResidence.postalCode}</span>
-                                    <span>{(content as IUserResidenceData).permanentResidence.post}</span>
-                                    <span>{(content as IUserResidenceData).permanentResidence.municipalCommune}</span>
-                                    <span>{(content as IUserResidenceData).permanentResidence.voivodeship}</span>
-                                    <span>{(content as IUserResidenceData).permanentResidence.county}</span>
-                                    <span>{(content as IUserResidenceData).permanentResidence.street}</span>
-                                    <span>{(content as IUserResidenceData).permanentResidence.houseNumber}</span>
-                                    <span>{(content as IUserResidenceData).permanentResidence.flatNumber}</span>
-                                    <span>{(content as IUserResidenceData).permanentResidence.mobileNumber}</span>
-                                    <span>{(content as IUserResidenceData).secondResidence.city}</span>
-                                    <span>{(content as IUserResidenceData).secondResidence.postalCode}</span>
-                                    <span>{(content as IUserResidenceData).secondResidence.post}</span>
-                                    <span>{(content as IUserResidenceData).secondResidence.municipalCommune}</span>
-                                    <span>{(content as IUserResidenceData).secondResidence.voivodeship}</span>
-                                    <span>{(content as IUserResidenceData).secondResidence.county}</span>
-                                    <span>{(content as IUserResidenceData).secondResidence.street}</span>
-                                    <span>{(content as IUserResidenceData).secondResidence.houseNumber}</span>
-                                    <span>{(content as IUserResidenceData).secondResidence.flatNumber}</span>
-                                    <span>{(content as IUserResidenceData).secondResidence.mobileNumber}</span>
-                                </div>
-                            )
-                        )}
-                    </div>
-                ))}
+                        </div>
+                    ))}
+
                 </div>
             </section>
             <InteractiveBackground />

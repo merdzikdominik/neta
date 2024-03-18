@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { IUserInfo } from '../EmployeeFile/EmployeeFileData'
+import { toast } from 'react-toastify'
 import ResidenceForm from './ResidenceForm'
 import Nav from '../Utils/Nav'
 import InteractiveBackground from '../Utils/InteractiveBackground'
@@ -19,24 +20,45 @@ interface IUserResidenceData {
     mobileNumber: string
 }
 
-interface IUserData {
+interface IForm {
     surname: string,
-    correspondenceAddress: null | string | IUserResidenceData | undefined,
+    city_permanent_residence: string,
+    postal_code_permanent_residence: string,
+    post_permanent_residence: string,
+    municipal_commune_permanent_residence: string,
+    voivodeship_permanent_residence: string,
+    country_permanent_residence: string,
+    street_permanent_residence: string,
+    house_number_permanent_residence: string,
+    flat_number_permanent_residence: string,
+    mobile_number_permanent_residence: string
+    city_second_residence: string,
+    postal_code_second_residence: string,
+    post_second_residence: string,
+    municipal_commune_second_residence: string,
+    voivodeship_second_residence: string,
+    country_second_residence: string,
+    street_second_residence: string,
+    house_number_second_residence: string,
+    flat_number_second_residence: string,
+    mobile_number_second_residence: string
+    city_correspondence_residence: string,
+    postal_code_correspondence_residence: string,
+    post_correspondence_residence: string,
+    municipal_commune_correspondence_residence: string,
+    voivodeship_correspondence_residence: string,
+    country_correspondence_residence: string,
+    street_correspondence_residence: string,
+    house_number_correspondence_residence: string,
+    flat_number_correspondence_residence: string,
+    mobile_number_correspondence_residence: string
     taxOffice: string,
-    annualSettlementAddress: null | string | undefined,
+    correspondence_address: null | string | undefined
+    annual_settlement_address: null | string | undefined,
     nfzBranch: string,
     idData: string,
     idGivenBy: string,
     date: string
-}
-
-interface IUserResidenceGroup {
-    permanentResidence: IUserResidenceData,
-    secondResidence: IUserResidenceData
-}
-
-interface IFormFill extends IUserData {
-    userResidenceData: IUserResidenceGroup
 }
 
 const userInitial: IUserResidenceData = {
@@ -69,40 +91,15 @@ const UserDataChange: React.FC = () => {
         second_name: '',
         last_name: '',
         birth_date: '',
-        mobile_number: '',
         email: '',
         age: 0,
         employment_start_date: '',
         employment_end_date: '',
         role: '',
         education: '',
-        user_residence_data: {
-            permanent_residence: {
-                city: '',
-                postal_code: '',
-                post: '',
-                municipal_commune: '',
-                voivodeship: '',
-                county: '',
-                street: '',
-                house_number: '',
-                flat_number: '',
-                mobile_number: '',
-            },
-            second_residence: {
-                city: '',
-                postal_code: '',
-                post: '',
-                municipal_commune: '',
-                voivodeship: '',
-                county: '',
-                street: '',
-                house_number: '',
-                flat_number: '',
-                mobile_number: '',
-            },
-        },
-        correspondence_address: null,
+        permanent_residence: '',
+        second_residence: '',
+        correspondence_address: '',
         tax_office: '',
         annual_settlement_address: '',
         nfz_branch: '',
@@ -114,15 +111,41 @@ const UserDataChange: React.FC = () => {
     });
     
     
-    const [formData, setFormData] = useState<IFormFill>({
+    const [formData, setFormData] = useState<IForm>({
         surname: '',
-        userResidenceData: {
-            permanentResidence: permanentResidenceData,
-            secondResidence: secondResidenceData
-        },
-        correspondenceAddress: correspondenceAddress,
+        city_permanent_residence: '',
+        postal_code_permanent_residence: '',
+        post_permanent_residence: '',
+        municipal_commune_permanent_residence: '',
+        voivodeship_permanent_residence: '',
+        country_permanent_residence: '',
+        street_permanent_residence: '',
+        house_number_permanent_residence: '',
+        flat_number_permanent_residence: '',
+        mobile_number_permanent_residence: '',
+        city_second_residence: '',
+        postal_code_second_residence: '',
+        post_second_residence: '',
+        municipal_commune_second_residence: '',
+        voivodeship_second_residence: '',
+        country_second_residence: '',
+        street_second_residence: '',
+        house_number_second_residence: '',
+        flat_number_second_residence: '',
+        mobile_number_second_residence: '',
+        city_correspondence_residence: '',
+        postal_code_correspondence_residence: '',
+        post_correspondence_residence: '',
+        municipal_commune_correspondence_residence: '',
+        voivodeship_correspondence_residence: '',
+        country_correspondence_residence: '',
+        street_correspondence_residence: '',
+        house_number_correspondence_residence: '',
+        flat_number_correspondence_residence: '',
+        mobile_number_correspondence_residence: '',
         taxOffice: '',
-        annualSettlementAddress: '',
+        correspondence_address: '',
+        annual_settlement_address: '',
         nfzBranch: '',
         idData: '',
         idGivenBy: '',
@@ -148,58 +171,7 @@ const UserDataChange: React.FC = () => {
         
                 const userData = await response.json();
 
-                setUserInfo(prev => ({
-                    ...prev,
-                    first_name: userData.first_name,
-                    second_name: userData.second_name,
-                    last_name: userData.last_name,
-                    birth_date: userData.birth_date,
-                    mobile_number: userData.mobile_number,
-                    email: userData.email,
-                    age: userData.age,
-                    employment_start_date: userData.employment_start_date,
-                    employment_end_date: userData.employment_end_date,
-                    role: userData.role,
-                    education: userData.education,
-                    user_residence_data: {
-                        permanent_residence: {
-                            city: userData.user_residence_data?.permanent_residence?.city,
-                            postal_code: userData.user_residence_data?.permanent_residence?.postal_code,
-                            post: userData.user_residence_data?.permanent_residence?.post,
-                            municipal_commune: userData.user_residence_data?.permanent_residence?.municipal_commune,
-                            voivodeship: userData.user_residence_data?.permanent_residence?.voivodeship,
-                            county: userData.user_residence_data?.permanent_residence.city?.country,
-                            street: userData.user_residence_data?.permanent_residence?.street,
-                            house_number: userData.user_residence_data?.permanent_residence?.house_number,
-                            flat_number: userData.user_residence_data?.permanent_residence?.flat_number,
-                            mobile_number: userData.user_residence_data?.permanent_residence?.mobile_number,
-                        },
-                        second_residence: {
-                            city: userData.user_residence_data?.second_residence?.city,
-                            postal_code: userData.user_residence_data?.second_residence?.postal_code,
-                            post: userData.user_residence_data?.second_residence?.post,
-                            municipal_commune: userData.user_residence_data?.second_residence?.municipal_commune,
-                            voivodeship: userData.user_residence_data?.second_residence?.voivodeship,
-                            county: userData.user_residence_data?.second_residence?.country,
-                            street: userData.user_residence_data?.second_residence?.street,
-                            house_number: userData.user_residence_data?.second_residence?.house_number,
-                            flat_number: userData.user_residence_data?.second_residence?.flat_number,
-                            mobile_number: userData.user_residence_data?.second_residence?.mobile_number,
-                        },
-                    },
-                    correspondence_address: userData.user_residence_data?.correspondence_address || '' || null,
-                    tax_office: userData.user_residence_data?.tax_office,
-                    annual_settlement_address: userData.user_residence_data?.annual_settlement_address,
-                    nfz_branch: userData.user_residence_data?.nfz_branch,
-                    id_data: userData.user_residence_data?.id_data,
-                    id_given_by: userData.user_residence_data?.id_given_by,
-                    date: userData.user_residence_data?.id_date,
-                    is_superuser: prev.is_superuser,
-                    last_login: prev.last_login      
-                }));
-                
-
-                console.log(userData)
+                setUserInfo(userData)
     
             } catch (error) {
                 if (error instanceof Error) {
@@ -219,13 +191,39 @@ const UserDataChange: React.FC = () => {
     const handleOverallForm = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormData(prev => ({
             ...prev,
-            userResidenceData: {
-                permanentResidence: permanentResidenceData,
-                secondResidence: secondResidenceData
-            },
-            correspondenceAddress: isCheckedCorrespondenceAddressAnother ? correspondenceAddress : checkboxRadioCorrespondenceRef.current?.textContent,
-            annualSettlementAddress: checkboxRadioAnnualRef.current?.textContent,
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
+            correspondence_address: checkboxRadioCorrespondenceRef.current?.textContent,
+            annual_settlement_address: checkboxRadioAnnualRef.current?.textContent,
+            city_permanent_residence: permanentResidenceData.city,
+            postal_code_permanent_residence: permanentResidenceData.postalCode,
+            post_permanent_residence: permanentResidenceData.post,
+            municipal_commune_permanent_residence: permanentResidenceData.municipalCommune,
+            voivodeship_permanent_residence: permanentResidenceData.voivodeship,
+            country_permanent_residence: permanentResidenceData.county,
+            street_permanent_residence: permanentResidenceData.street,
+            house_number_permanent_residence: permanentResidenceData.houseNumber,
+            flat_number_permanent_residence: permanentResidenceData.flatNumber,
+            mobile_number_permanent_residence: permanentResidenceData.mobileNumber,
+            city_second_residence: secondResidenceData.city,
+            postal_code_second_residence: secondResidenceData.postalCode,
+            post_second_residence: secondResidenceData.post,
+            municipal_commune_second_residence: secondResidenceData.municipalCommune,
+            voivodeship_second_residence: secondResidenceData.voivodeship,
+            country_second_residence: secondResidenceData.county,
+            street_second_residence: secondResidenceData.street,
+            house_number_second_residence: secondResidenceData.houseNumber,
+            flat_number_second_residence: secondResidenceData.flatNumber,
+            mobile_number_second_residence: secondResidenceData.mobileNumber,
+            city_correspondence_residence: correspondenceAddress.city,
+            postal_code_correspondence_residence: correspondenceAddress.postalCode,
+            post_correspondence_residence: correspondenceAddress.post,
+            municipal_commune_correspondence_residence: correspondenceAddress.municipalCommune,
+            voivodeship_correspondence_residence: correspondenceAddress.voivodeship,
+            country_correspondence_residence: correspondenceAddress.county,
+            street_correspondence_residence: correspondenceAddress.street,
+            house_number_correspondence_residence: correspondenceAddress.houseNumber,
+            flat_number_correspondence_residence: correspondenceAddress.flatNumber,
+            mobile_number_correspondence_residence: correspondenceAddress.mobileNumber
         }))
     }
 
@@ -262,7 +260,7 @@ const UserDataChange: React.FC = () => {
     }
 
     const handleCheckboxRadioCorrespondenceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        handleCheckboxRadioChange(event, checkboxRadioCorrespondenceRef, setIsCheckedCorrespondenceAddressAnother)
+        handleCheckboxRadioChange(event, checkboxRadioCorrespondenceRef)
 
         setIsCheckedCorrespondenceAddressAnother(false)
 
@@ -270,10 +268,20 @@ const UserDataChange: React.FC = () => {
             setIsCheckedCorrespondenceAddressAnother(true)
             console.log('przeszlo')
         }
+
+        setFormData(prev => ({
+            ...prev,
+            correspondence_address: checkboxRadioCorrespondenceRef.current!.textContent,
+        }))
     }
 
     const handleCheckboxRadioAnnualChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         handleCheckboxRadioChange(event, checkboxRadioAnnualRef)
+
+        setFormData(prev => ({
+            ...prev,
+            annual_settlement_address: checkboxRadioAnnualRef.current!.textContent,
+        }))
     }
 
     const handleSubmit = () => {
@@ -281,40 +289,46 @@ const UserDataChange: React.FC = () => {
 
         setFormData({
             surname: '',
-            userResidenceData: {
-                permanentResidence: {
-                    city: '',
-                    postalCode: '',
-                    post: '',
-                    municipalCommune: '',
-                    voivodeship: '',
-                    county: '',
-                    street: '',
-                    houseNumber: '',
-                    flatNumber: '',
-                    mobileNumber: ''
-                },
-                secondResidence: {
-                    city: '',
-                    postalCode: '',
-                    post: '',
-                    municipalCommune: '',
-                    voivodeship: '',
-                    county: '',
-                    street: '',
-                    houseNumber: '',
-                    flatNumber: '',
-                    mobileNumber: ''
-                }
-            },
-            correspondenceAddress: '',
+            city_permanent_residence: '',
+            postal_code_permanent_residence: '',
+            post_permanent_residence: '',
+            municipal_commune_permanent_residence: '',
+            voivodeship_permanent_residence: '',
+            country_permanent_residence: '',
+            street_permanent_residence: '',
+            house_number_permanent_residence: '',
+            flat_number_permanent_residence: '',
+            mobile_number_permanent_residence: '',
+            city_second_residence: '',
+            postal_code_second_residence: '',
+            post_second_residence: '',
+            municipal_commune_second_residence: '',
+            voivodeship_second_residence: '',
+            country_second_residence: '',
+            street_second_residence: '',
+            house_number_second_residence: '',
+            flat_number_second_residence: '',
+            mobile_number_second_residence: '',
+            city_correspondence_residence: '',
+            postal_code_correspondence_residence: '',
+            post_correspondence_residence: '',
+            municipal_commune_correspondence_residence: '',
+            voivodeship_correspondence_residence: '',
+            country_correspondence_residence: '',
+            street_correspondence_residence: '',
+            house_number_correspondence_residence: '',
+            flat_number_correspondence_residence: '',
+            mobile_number_correspondence_residence: '',
+            correspondence_address: '',
             taxOffice: '',
-            annualSettlementAddress: '',
+            annual_settlement_address: '',
             nfzBranch: '',
             idData: '',
             idGivenBy: '',
             date: ''
         })
+
+        toast.info('Wniosek zmiany danych został wystawiony.')
     }
 
     return (

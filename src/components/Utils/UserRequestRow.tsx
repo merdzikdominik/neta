@@ -31,13 +31,13 @@ const UserRequestRow: React.FC<IUserProps> = ({ user }) => {
                     <span>Email uzytkownika: <i>{ user.email }</i></span>
                     <span>Stanowisko: <i>{ user.role }</i></span>
                     <span>Wiek uzytkownika: <i>{ user.age }</i></span>
-                    <span>Nr telefonu: <i>{ user.mobile_number }</i></span>
+                    {/* <span>Nr telefonu: <i>{ user.mobile_number }</i></span> */}
                     <span>Wykształcenie: <i>{ user.education }</i></span>
                     <span>Data urodzenia: <i>{ user.birth_date }</i></span>
                     <span>Data rozpoczęcia pracy: <i>{ user.employment_start_date }</i></span>
                     <span>Data zakończenia pracy: <i>{ user.employment_end_date }</i></span>
                     <span>Ostatnio zalogowany: <i>{ user.last_login }</i></span>
-                    <span>Adres do korespondencji: <i>{ user.correspondence_address }</i> </span>
+                    {/* <span>Adres do korespondencji: <i>{ user.correspondence_address }</i> </span> */}
                     <span>Urząd skarbowy: <i>{ user.tax_office }</i> </span>
                     <span>Adres rozliczenia rocznego: <i>{ user.annual_settlement_address }</i> </span>
                     <span>Oddział NFZ: <i>{ user.nfz_branch }</i> </span>
