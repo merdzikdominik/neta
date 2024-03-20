@@ -389,7 +389,8 @@ const AdminModule: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className={classes['adminModule__excel-button']} onClick={() => setIsExportModalOpen(true)}><span>Eksport Danych dla HR</span></div>
+                <div className={classes['adminModule__excel-button']} onClick={() => setIsExportModalOpen(true)}><span>Eksport danych dla HR</span></div>
+                <div className={classes['adminModule__excel-button']} onClick={() => setIsExportModalOpen(true)}><span>Powiadomienia o zmianie danych ewidencyjnych uzytkownikow</span></div>
                 <div className={classes['adminModule__charts-container']}>
                     <div className={classes['chart-container']}>
                         <Chart 
