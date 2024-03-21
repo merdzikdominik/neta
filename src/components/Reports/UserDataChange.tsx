@@ -322,49 +322,8 @@ const UserDataChange: React.FC = () => {
         }))
     }
 
-    // const formDataToSend = {
-    //     surname: formData.surname,
-    //     city_permanent_residence: formData.city_permanent_residence,
-    //     postal_code_permanent_residence: formData.postal_code_permanent_residence,
-    //     post_permanent_residence: formData.post_permanent_residence,
-    //     municipal_commune_permanent_residence: formData.municipal_commune_permanent_residence,
-    //     voivodeship_permanent_residence: formData.voivodeship_permanent_residence,
-    //     country_permanent_residence: formData.country_permanent_residence,
-    //     street_permanent_residence: formData.street_permanent_residence,
-    //     house_number_permanent_residence: formData.house_number_permanent_residence,
-    //     flat_number_permanent_residence: formData.flat_number_permanent_residence,
-    //     mobile_number_permanent_residence: formData.mobile_number_permanent_residence,
-    //     city_second_residence: formData.city_second_residence,
-    //     postal_code_second_residence: formData.postal_code_second_residence,
-    //     post_second_residence: formData.post_second_residence,
-    //     municipal_commune_second_residence: formData.municipal_commune_second_residence,
-    //     voivodeship_second_residence: formData.voivodeship_second_residence,
-    //     country_second_residence: formData.country_second_residence,
-    //     street_second_residence: formData.street_second_residence,
-    //     house_number_second_residence: formData.house_number_second_residence,
-    //     flat_number_second_residence: formData.flat_number_second_residence,
-    //     mobile_number_second_residence: formData.mobile_number_second_residence,
-    //     city_correspondence_residence: formData.city_correspondence_residence,
-    //     postal_code_correspondence_residence: formData.postal_code_correspondence_residence,
-    //     post_correspondence_residence: formData.post_correspondence_residence,
-    //     municipal_commune_correspondence_residence: formData.municipal_commune_correspondence_residence,
-    //     voivodeship_correspondence_residence: formData.voivodeship_correspondence_residence,
-    //     country_correspondence_residence: formData.country_correspondence_residence,
-    //     street_correspondence_residence: formData.street_correspondence_residence,
-    //     house_number_correspondence_residence: formData.house_number_correspondence_residence,
-    //     flat_number_correspondence_residence: formData.flat_number_correspondence_residence,
-    //     mobile_number_correspondence_residence: formData.mobile_number_correspondence_residence,
-    //     correspondence_address: formData.correspondence_address,
-    //     tax_office: formData.tax_office,
-    //     annual_settlement_address: formData.annual_settlement_address,
-    //     nfz_branch: formData.nfz_branch,
-    //     id_data: formData.id_data,
-    //     id_given_by: formData.id_given_by,
-    //     id_date: formData.id_date,
-    // };
-
-
     const handleSubmit = async () => {
+        // console.log(formDataToSend)
         const token = localStorage.getItem('authToken')
     
         if (token) {
@@ -398,10 +357,43 @@ const UserDataChange: React.FC = () => {
                             email
                         },
                         surname: formData.surname,
+                        city_permanent_residence: formData.city_permanent_residence,
+                        postal_code_permanent_residence: formData.postal_code_permanent_residence,
+                        post_permanent_residence: formData.post_permanent_residence,
+                        municipal_commune_permanent_residence: formData.municipal_commune_permanent_residence,
+                        voivodeship_permanent_residence: formData.voivodeship_permanent_residence,
+                        country_permanent_residence: formData.country_permanent_residence,
+                        street_permanent_residence: formData.street_permanent_residence,
+                        house_number_permanent_residence: formData.house_number_permanent_residence,
+                        flat_number_permanent_residence: formData.flat_number_permanent_residence,
+                        mobile_number_permanent_residence: formData.mobile_number_permanent_residence,
+                        city_second_residence: formData.city_second_residence,
+                        postal_code_second_residence: formData.postal_code_second_residence,
+                        post_second_residence: formData.post_second_residence,
+                        municipal_commune_second_residence: formData.municipal_commune_second_residence,
+                        voivodeship_second_residence: formData.voivodeship_second_residence,
+                        country_second_residence: formData.country_second_residence,
+                        street_second_residence: formData.street_second_residence,
+                        house_number_second_residence: formData.house_number_second_residence,
+                        flat_number_second_residence: formData.flat_number_second_residence,
+                        mobile_number_second_residence: formData.mobile_number_second_residence,
+                        city_correspondence_residence: formData.city_correspondence_residence,
+                        postal_code_correspondence_residence: formData.postal_code_correspondence_residence,
+                        post_correspondence_residence: formData.post_correspondence_residence,
+                        municipal_commune_correspondence_residence: formData.municipal_commune_correspondence_residence,
+                        voivodeship_correspondence_residence: formData.voivodeship_correspondence_residence,
+                        country_correspondence_residence: formData.country_correspondence_residence,
+                        street_correspondence_residence: formData.street_correspondence_residence,
+                        house_number_correspondence_residence: formData.house_number_correspondence_residence,
+                        flat_number_correspondence_residence: formData.flat_number_correspondence_residence,
+                        mobile_number_correspondence_residence: formData.mobile_number_correspondence_residence,
+                        correspondence_address: formData.correspondence_address,
+                        tax_office: formData.tax_office,
+                        annual_settlement_address: formData.annual_settlement_address,
                         nfz_branch: formData.nfz_branch,
                         id_data: formData.id_data,
                         id_given_by: formData.id_given_by,
-                        id_date: formData.id_date
+                        id_date: formData.id_date,
                     }),
                 });
     
@@ -416,8 +408,6 @@ const UserDataChange: React.FC = () => {
             }
         }
 
-        // console.log(formDataToSend)
-    
         setFormData({
             surname: '',
             city_permanent_residence: '',
@@ -481,7 +471,7 @@ const UserDataChange: React.FC = () => {
                             <div>
                                 <label>
                                     1. Nazwisko
-                                    <input type="text" placeholder="Wprowadź nazwisko" required name="surname" onChange={handleOverallForm} />
+                                    <input type="text" placeholder="Wprowadź nazwisko" name="surname" onChange={handleOverallForm} />
                                 </label>
                             </div>
 
@@ -536,7 +526,7 @@ const UserDataChange: React.FC = () => {
                             
                             <div className={classes['userDataChange__tax-office']}>
                                 5. Urząd skarbowy (nazwa i adres)
-                                <input type="text" required name="taxOffice" placeholder="Wprowadź nazwę urzędu" onChange={handleOverallForm} />
+                                <input type="text" required name="tax_office" placeholder="Wprowadź nazwę urzędu" onChange={handleOverallForm} />
                             </div>
                             <div>
                                 6. Adres, który ma być uwzględniony w rozliczeniu rocznym to:
@@ -569,15 +559,15 @@ const UserDataChange: React.FC = () => {
                             </div>
                             <div className={classes['userDataChange__nfz']}>
                                 7. Oddział NFZ
-                                <input type="text" name="nfz_branch" required placeholder="Wprowadź oddział" onChange={handleOverallForm}/>
+                                <input type="text" name="nfz_branch" placeholder="Wprowadź oddział" onChange={handleOverallForm}/>
                             </div>
                             <div className={classes['userDataChange__text-input-wrap']}>
                                 8. Seria i numer dowodu osobistego
-                                <input type="text" name="id_data" required placeholder="Wprowadź serię dowodu" onChange={handleOverallForm}/>
+                                <input type="text" name="id_data" placeholder="Wprowadź serię dowodu" onChange={handleOverallForm}/>
                                 Wydany przez
-                                <input type="text" name="id_given_by" required placeholder="Wprowadź organ" onChange={handleOverallForm}/>
+                                <input type="text" name="id_given_by" placeholder="Wprowadź organ" onChange={handleOverallForm}/>
                                 w dniu
-                                <input type="date" name="id_date" required onChange={handleOverallForm} />
+                                <input type="date" name="id_date" onChange={handleOverallForm} />
                             </div>
                         </div>
                     </div>
