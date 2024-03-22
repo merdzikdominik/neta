@@ -204,7 +204,7 @@ const UserDataChangeRequestRow: React.FC<IUserDataChangeRequestRow> = ({ notific
             ?
             (<div className={classes['listRow__button-container']}>
                 <Button type='button' text='Zatwierdzony' onClick={() => handleApprove(id)} disabled={isApproved ? true : false} background='white' />
-                <Button type='button' text='Odrzuć' onClick={() => handleReject(notification.id)} disabled={isApproved ? false : true} background='white' />
+                <Button type='button' text='Odrzuć' onClick={() => handleReject(id)} disabled={isApproved ? false : true} background='white' />
             </div>)
             : ''
             }
