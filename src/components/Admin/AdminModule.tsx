@@ -413,9 +413,9 @@ const AdminModule: React.FC = () => {
         ...mostOccupiedMonths
     ]
 
-    useEffect(() => {
-        console.log(users)
-    }, [users])
+    // useEffect(() => {
+    //     console.log(users)
+    // }, [users])
 
     return (
         <div className={classes['main']}>

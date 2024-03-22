@@ -16,7 +16,8 @@ export interface IUserDataChangeNotification {
         last_name: string,
         email: string
     }
-    id?: string,
+    id: string,
+    approved: boolean,
     surname: string,
     city_permanent_residence: string,
     postal_code_permanent_residence: string,
