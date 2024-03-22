@@ -3,7 +3,7 @@ import { IHolidayRequest, IRequestUser } from "../Admin/AdminModule"
 import { toast } from "react-toastify"
 import Button from "./Button"
 import 'react-toastify/dist/ReactToastify.css'
-import classes from './RequestListRow.module.scss'
+import classes from './HolidayRequestListRow.module.scss'
 
 interface IListRow {
     userInfo: IRequestUser,
@@ -90,7 +90,6 @@ const ListRow: React.FC<IListRow> = ({ userInfo, requestInfo }) => {
             });
 
             if (response.ok) {
-                //TODO: apply function which adds holiday to db here
                 setIsApproved(true)
                 console.log('Pomyslnie zatwierdzono wniosek')
 

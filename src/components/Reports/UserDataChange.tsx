@@ -20,7 +20,8 @@ interface IUserResidenceData {
     mobileNumber: string
 }
 
-interface IForm {
+export interface IForm {
+    id?: string,
     surname: string,
     city_permanent_residence: string,
     postal_code_permanent_residence: string,
@@ -82,8 +83,6 @@ const UserDataChange: React.FC = () => {
     const [permanentResidenceData, setPermanentResidenceData] = useState<IUserResidenceData>(userInitial)
     const [secondResidenceData, setSecondResidenceData] = useState<IUserResidenceData>(userInitial)
     const [correspondenceAddress, setCorrespondenceAddress] = useState<IUserResidenceData>(userInitial)
-
-    const [dataChangeRequests, setDataChangeRequests] = useState([])
 
     const checkboxRadioCorrespondenceRef = useRef<HTMLInputElement | null>(null)
     const checkboxRadioAnnualRef = useRef<HTMLInputElement | null>(null)
@@ -186,45 +185,9 @@ const UserDataChange: React.FC = () => {
 
     }
 
-    const fetchUserDataChangeRequests = async () => {
-        const token = localStorage.getItem('authToken')
-
-        if (token) {
-            try {
-                const response = await fetch('http://127.0.0.1:8000/api/all_data_change_requests', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Token ${token}`,
-                    }
-                });
-    
-                if (!response.ok) {
-                    toast.error('Wystąpił bład podczas pobierania Twoich danych.')
-                    throw new Error(`Błąd pobierania danych użytkownika: ${response.statusText}`);
-                }
-
-                const dataChangeRequests = await response.json()
-
-                setDataChangeRequests(dataChangeRequests)
-
-            } catch(e) {
-                console.error(`wystapil blad ${e}`)
-            }
-        }
-    }
-
     useEffect(() => {
         fetchUserData()
     }, [])
-
-    useEffect(() => {
-        fetchUserDataChangeRequests()
-    }, [])
-
-    useEffect(() => {
-        console.log(dataChangeRequests)
-    }, [dataChangeRequests])
 
     const handleOverallForm = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormData(prev => ({

@@ -3,16 +3,64 @@ import { IHolidayRequest, IUser, IHolidayType } from "../Admin/AdminModule";
 import { IUserInfo } from "../EmployeeFile/EmployeeFileData";
 import { INotification } from "../../store/types";
 import { toast } from "react-toastify";
+import UserDataChangeRequestRow from "./UserDataChangeRequestRow";
 import UserRequestRow from "./UserRequestRow";
-import RequestListRow from "./RequestListRow";
+import RequestListRow from "./HolidayRequestListRow";
 import HolidayTypeRow from "./HolidayTypeRow";
 import Button from "./Button";
 import classes from './Modal.module.scss';
 
+export interface IUserDataChangeNotification {
+    user: {
+        first_name: string,
+        last_name: string,
+        email: string
+    }
+    id?: string,
+    surname: string,
+    city_permanent_residence: string,
+    postal_code_permanent_residence: string,
+    post_permanent_residence: string,
+    municipal_commune_permanent_residence: string,
+    voivodeship_permanent_residence: string,
+    country_permanent_residence: string,
+    street_permanent_residence: string,
+    house_number_permanent_residence: string,
+    flat_number_permanent_residence: string,
+    mobile_number_permanent_residence: string
+    city_second_residence: string,
+    postal_code_second_residence: string,
+    post_second_residence: string,
+    municipal_commune_second_residence: string,
+    voivodeship_second_residence: string,
+    country_second_residence: string,
+    street_second_residence: string,
+    house_number_second_residence: string,
+    flat_number_second_residence: string,
+    mobile_number_second_residence: string
+    city_correspondence_residence: string,
+    postal_code_correspondence_residence: string,
+    post_correspondence_residence: string,
+    municipal_commune_correspondence_residence: string,
+    voivodeship_correspondence_residence: string,
+    country_correspondence_residence: string,
+    street_correspondence_residence: string,
+    house_number_correspondence_residence: string,
+    flat_number_correspondence_residence: string,
+    mobile_number_correspondence_residence: string
+    tax_office: string,
+    correspondence_address: null | string | undefined
+    annual_settlement_address: null | string | undefined,
+    nfz_branch: string,
+    id_data: string,
+    id_given_by: string,
+    id_date: string
+}
+
 interface IModal {
     toggleModal: () => void;
     modalTitle: string;
-    modalContent: IHolidayRequest[] | IUserInfo[] | IHolidayType[] | INotification[];
+    modalContent: IHolidayRequest[] | IUserInfo[] | IHolidayType[] | INotification[] | IUserDataChangeNotification[]
     handleExcel?: (data: IHolidayRequest[]) => void;
 }
 
@@ -28,13 +76,16 @@ const modalMode = (
             if (Array.isArray(modalContent) && modalContent.length > 0 && "user" in modalContent[0]) {
                 return (
                     <>
-                        {(modalContent as IHolidayRequest[]).map((request: IHolidayRequest) => (
-                            <RequestListRow
-                                key={request.id}
-                                userInfo={request.user}
-                                requestInfo={request}
-                            />
-                        ))}
+                        {modalContent.length > 0 
+                            ?
+                                (modalContent as IHolidayRequest[]).map((request: IHolidayRequest) => (
+                                    <RequestListRow
+                                        key={request.id}
+                                        userInfo={request.user}
+                                        requestInfo={request}
+                                    />
+                                ))
+                            : 'Brak wniosków'}
                     </>
                 );
             } else {
@@ -91,7 +142,7 @@ const modalMode = (
         case 'Powiadomienia':
             if (Array.isArray(modalContent)) {
                 return (
-                    <div>
+                    <>
                         {modalContent.length > 0
                             ? 
                                 (modalContent as INotification[]).map((notification: INotification) => (
@@ -100,6 +151,25 @@ const modalMode = (
                                 </div>
                                 ))
                             : 'Nie ma zadnych powiadomień.'
+                        }
+                    </>
+                )
+            } else {
+                return null
+            }
+
+        case 'Wnioski uzytkowników o zmianę danych ewidencyjnych':
+            if (Array.isArray(modalContent)) {
+                return (
+                    <div>
+                        {modalContent.length > 0
+                            ?
+                                (modalContent as IUserDataChangeNotification[]).map((notification: IUserDataChangeNotification) => (
+                                    <div key={notification.id}>
+                                        <UserDataChangeRequestRow notification={notification} />
+                                    </div>
+                                ))
+                            : 'Brak wniosków'
                         }
                     </div>
                 )

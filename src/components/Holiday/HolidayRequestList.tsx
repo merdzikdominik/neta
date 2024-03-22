@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Nav from "../Utils/Nav"
 import InteractiveBackground from "../Utils/InteractiveBackground"
-import ListRow from "../Utils/RequestListRow"
+import ListRow from "../Utils/HolidayRequestListRow"
 import classes from './HolidayRequestList.module.scss'
 import { IHolidayRequest } from "../Admin/AdminModule"
 

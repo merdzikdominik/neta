@@ -3,6 +3,8 @@ import { Chart } from "react-google-charts"
 import { toast } from "react-toastify"
 import { INotification } from "../../store/types"
 import { IUserInfo } from "../EmployeeFile/EmployeeFileData"
+import { IForm } from "../Reports/UserDataChange"
+import { IUserDataChangeNotification } from "../Utils/Modal"
 import { IResidenceData } from "../EmployeeFile/EmployeeFileData"
 import * as ExcelJS from 'exceljs'
 import Nav from "../Utils/Nav"
@@ -97,11 +99,13 @@ const AdminModule: React.FC = () => {
     const [mostOccupiedMonths, setMostOccupiedMonths] = useState<[string, number, string, null][]>([])
     const [holidayTypes, setHolidayTypes] = useState<IHolidayType[]>([])
     const [notifications, setNotifications] = useState<INotification[]>([])
+    const [userDataChangeRequests, setIsUserDataChangeRequests] = useState<IUserDataChangeNotification[]>([])
     const [isRequestsModalOpen, setIsRequestModalOpen] = useState<boolean>(false)
     const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false)
     const [isUsersModalOpen, setIsUsersModalOpen] = useState<boolean>(false)
     const [isHolidayTypeModalOpen, setIsHolidayTypeModalOpen] = useState<boolean>(false)
-    const [isNotificationModalOpen, setIsNotificationModalOpen] = useState<boolean>(false)
+    const [isHolidayNotificationModalOpen, setIsHolidayNotificationModalOpen] = useState<boolean>(false)
+    const [isUserDataChangeNotificationModalOpen, setIsUserDataChangeNotificationModalOpen] = useState<boolean>(false)
 
     const fetchRequests = async () => {
         const token = localStorage.getItem('authToken')
@@ -213,7 +217,35 @@ const AdminModule: React.FC = () => {
         }
     };
 
-    const clearNotifications = async () => {
+    const fetchUserDataChangeRequests = async () => {
+        const token = localStorage.getItem('authToken')
+
+        if (token) {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/all_data_change_requests', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${token}`,
+                    }
+                });
+    
+                if (!response.ok) {
+                    toast.error('Wystąpił bład podczas pobierania Twoich danych.')
+                    throw new Error(`Błąd pobierania danych użytkownika: ${response.statusText}`);
+                }
+
+                const dataChangeRequests = await response.json()
+
+                setIsUserDataChangeRequests(dataChangeRequests)
+
+            } catch(e) {
+                console.error(`wystapil blad ${e}`)
+            }
+        }
+    }
+
+    const clearHolidayNotifications = async () => {
         const token = localStorage.getItem('authToken')
 
         if (token) {
@@ -239,16 +271,28 @@ const AdminModule: React.FC = () => {
         }
     }
 
-    const handleNotificationsModal = () => {
-        setIsNotificationModalOpen(!isNotificationModalOpen)
+    const handleHolidayNotificationsModal = () => {
+        setIsHolidayNotificationModalOpen(!isHolidayNotificationModalOpen)
 
-        if (notifications.length > 0) clearNotifications()
+        if (notifications.length > 0) clearHolidayNotifications()
 
     }
+
+    const handleUserDataChangeNotificationsModal = () => {
+        setIsUserDataChangeNotificationModalOpen(!isUserDataChangeNotificationModalOpen)
+    }
+
+    useEffect(() => {
+        fetchUserDataChangeRequests()
+    }, [])
 
     useEffect(() => {
         console.log(users)
     }, [users])
+
+    useEffect(() => {
+        console.log(userDataChangeRequests)
+    }, [userDataChangeRequests])
 
     const exportToExcel = async (data: IHolidayRequest[]) => {
         const workbook = new ExcelJS.Workbook();
@@ -384,13 +428,13 @@ const AdminModule: React.FC = () => {
                     </div>
                     <div className={classes['adminModule__right-grid-column']}>
                         <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsHolidayTypeModalOpen(true)}><span>Zarządzanie rodzajami urlopów</span></div>
-                        <div className={`${classes['adminModule__exmaple-blocks-notifications']} ${notifications.length > 0 ? classes['visible'] : classes['hidden'] }`} onClick={() => setIsNotificationModalOpen(true)}>
+                        <div className={`${classes['adminModule__exmaple-blocks-notifications']} ${notifications.length > 0 ? classes['visible'] : classes['hidden'] }`} onClick={() => setIsHolidayNotificationModalOpen(true)}>
                             <span>Powiadomienia</span>
                         </div>
                     </div>
                 </div>
                 <div className={classes['adminModule__excel-button']} onClick={() => setIsExportModalOpen(true)}><span>Eksport danych dla HR</span></div>
-                <div className={classes['adminModule__excel-button']} onClick={() => setIsExportModalOpen(true)}><span>Powiadomienia o zmianie danych ewidencyjnych uzytkownikow</span></div>
+                <div className={classes['adminModule__excel-button']} onClick={() => setIsUserDataChangeNotificationModalOpen(true)}><span>Powiadomienia o zmianie danych ewidencyjnych uzytkownikow</span></div>
                 <div className={classes['adminModule__charts-container']}>
                     <div className={classes['chart-container']}>
                         <Chart 
@@ -429,8 +473,11 @@ const AdminModule: React.FC = () => {
             {isHolidayTypeModalOpen && (
                 <Modal modalTitle={'Rodzaje urlopów'} modalContent={holidayTypes} toggleModal={() => handleToggleModal(setIsHolidayTypeModalOpen)} />
             )}
-            {isNotificationModalOpen && (
-                <Modal modalTitle={'Powiadomienia'} modalContent={notifications} toggleModal={handleNotificationsModal} />
+            {isHolidayNotificationModalOpen && (
+                <Modal modalTitle={'Powiadomienia'} modalContent={notifications} toggleModal={handleHolidayNotificationsModal} />
+            )}
+            {isUserDataChangeNotificationModalOpen && (
+                <Modal modalTitle={'Wnioski uzytkowników o zmianę danych ewidencyjnych'} modalContent={userDataChangeRequests} toggleModal={handleUserDataChangeNotificationsModal} />
             )}
         </div>
     )

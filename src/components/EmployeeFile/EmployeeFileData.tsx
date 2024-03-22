@@ -16,11 +16,6 @@ export interface IResidenceData {
     mobile_number: string;
 }
 
-interface IUserResidenceData {
-    permanent_residence: IResidenceData;
-    second_residence: IResidenceData;
-}
-
 export interface IUserInfo {
     first_name: string;
     second_name: string;

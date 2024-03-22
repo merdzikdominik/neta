@@ -14,7 +14,6 @@ const UserRequestRow: React.FC<IUserProps> = ({ user }) => {
     const handleExpandToggle = () => {
         setIsExpanded(prev => !prev);
     };
-
     
     return (
     <article className={`${classes['userRow__main']} ${isExpanded ? classes['expanded'] : ''}`}>
