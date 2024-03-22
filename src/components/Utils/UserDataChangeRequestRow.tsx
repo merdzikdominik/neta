@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from "react"
 import { IUserDataChangeNotification } from "./Modal"
 import { notify } from "./HolidayRequestListRow"
+import { toast } from "react-toastify"
 import Button from "./Button"
 import classes from './UserDataChangeRequestRow.module.scss'
 
@@ -92,6 +93,29 @@ const UserDataChangeRequestRow: React.FC<IUserDataChangeRequestRow> = ({ notific
         setIsApproved(approved)
     }, [approved])
 
+    const handleUpdateUserData = async () => {
+        const token = localStorage.getItem('authToken')
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/update_user_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${token}`,
+                },
+            })
+
+            if (!response.ok) {
+                toast.error('Nie udało się zaktualizować danych uzytkownika.')
+            }
+
+            toast.success('Pomyślnie zaktualizowano dane uzytkownika.')
+        } catch (e) {
+            console.error(`Wystapil blad podczas aktualizacji danych uzytkownika ${e}`)
+        }
+
+    }
+
     const handleApprove = async (id: string) => {
         const token = localStorage.getItem('authToken')
 
@@ -105,11 +129,11 @@ const UserDataChangeRequestRow: React.FC<IUserDataChangeRequestRow> = ({ notific
             });
 
             if (response.ok) {
-                //TODO: apply function which adds holiday to db here
                 setIsApproved(true)
                 console.log('Pomyslnie zatwierdzono wniosek')
 
                 notify('accept', 'Pomyslnie zatwierdzono wniosek')
+                handleUpdateUserData()
 
             } else {
                 console.error('Failed to approve holiday request');
@@ -144,7 +168,6 @@ const UserDataChangeRequestRow: React.FC<IUserDataChangeRequestRow> = ({ notific
             console.error('Error while processing the request', error);
         }
     };
-
 
     const handleExpandToggle = () => {
         setIsExpanded(prev => !prev);
