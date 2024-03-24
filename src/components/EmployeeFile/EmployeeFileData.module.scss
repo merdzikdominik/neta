@@ -7,24 +7,44 @@
 
 .employeeFileData__container {
     width: 50%;
-    padding: 40px;
-    color: #fff;
+    margin-top: 40px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    color: #000;
+    -webkit-box-shadow: 8px 8px 24px -9px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 8px 8px 24px -9px rgba(66, 68, 90, 1);
+    box-shadow: 8px 8px 24px -9px rgba(66, 68, 90, 1);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .employeeFileData__header {
-    border: 1px solid #e4f1fe;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    padding: 0 20px;
-    background-color: #005689; 
+    border-bottom: none;
+    padding: 20px;
+    background-color: #fff;
 }
 
 .employeeFileData__data_container {
-    border: 1px solid #e4f1fe;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    border-top: none;
     padding: 20px;
-    background-color: #007cb9;
+    background-color: #fff;
+}
+
+.employeeFileData__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    gap: 25px;
+
+    &:last-child {
+        border: none;
+    }
 }
 
 .employeeFileData__field {
@@ -32,6 +52,14 @@
     padding: 30px 0;
 }
 
+.employeeFileData__field-title {
+    font-weight: bold;
+}
+
 .employeeFileData__element {
     padding: 5px 0;
+}
+
+.employeeFileData__element-content {
+    overflow-wrap: anywhere;
 }

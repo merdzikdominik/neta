@@ -157,9 +157,11 @@ const EmployeeFileData: React.FC = () => {
                     mobile_number: userData.mobile_number_correspondence
                 }
 
-                const permanentResidenceFormatted = `${permanentResidence.street} ${permanentResidence.house_number} ${permanentResidence.flat_number} | ${permanentResidence.postal_code} | ${permanentResidence.post} | ${permanentResidence.country} | ${permanentResidence.voivodeship} | ${permanentResidence.municipal_commune} | ${permanentResidence.mobile_number}`
-                const secondResidenceFormatted = `${secondResidence.street} ${secondResidence.house_number} ${secondResidence.flat_number} | ${secondResidence.postal_code} | ${secondResidence.post} | ${secondResidence.country} | ${secondResidence.voivodeship} | ${secondResidence.municipal_commune} | ${secondResidence.mobile_number}`
-                const correspondenceDataFormatted = `${correspondenceData.street} ${correspondenceData.house_number} ${correspondenceData.flat_number} | ${correspondenceData.postal_code} | ${correspondenceData.post} | ${correspondenceData.country} | ${correspondenceData.voivodeship} | ${correspondenceData.municipal_commune} | ${correspondenceData.mobile_number}`
+                const permanentResidenceFormatted = `${permanentResidence.street} ${permanentResidence.house_number}${permanentResidence.flat_number ? `/${permanentResidence.flat_number}` : ''} ${permanentResidence.postal_code} | ${permanentResidence.country} | ${permanentResidence.voivodeship} | ${permanentResidence.mobile_number}`
+
+                const secondResidenceFormatted = `${secondResidence.street} ${secondResidence.house_number}${secondResidence.flat_number ? `/${secondResidence.flat_number}` : ''} ${secondResidence.postal_code} | ${secondResidence.country} | ${secondResidence.voivodeship} | ${secondResidence.mobile_number}`
+
+                const correspondenceDataFormatted = `${correspondenceData.street} ${correspondenceData.house_number} ${correspondenceData.flat_number ? `/${correspondenceData.flat_number}` : ''} ${correspondenceData.postal_code} | ${correspondenceData.country} | ${correspondenceData.voivodeship} | ${correspondenceData.mobile_number}`
 
                 setUserInfo(prev => ({
                     ...prev,
@@ -201,10 +203,6 @@ const EmployeeFileData: React.FC = () => {
         fetchUserData();
     }, []);
 
-    // useEffect(() => {
-    //     console.log(userInfo)
-    // }, [userInfo])
-
     return (
         <div className={classes['main']}>
             <Nav />
@@ -214,12 +212,11 @@ const EmployeeFileData: React.FC = () => {
                 </div>
                 <div className={classes['employeeFileData__data_container']}>
                     {Object.entries(userInfo).map(([field, content]) => (
-                        <div key={field}>
-                            <span>{fieldsMap[field as keyof IUserInfo]}: </span>
-                            <span>{content}</span>
+                        <div className={classes['employeeFileData__content']} key={field}>
+                            <span className={classes['employeeFileData__field-title']}>{fieldsMap[field as keyof IUserInfo]}: </span>
+                            <span className={classes['employeeFileData__element-content']}>{content}</span>
                         </div>
                     ))}
-
                 </div>
             </section>
             <InteractiveBackground />
