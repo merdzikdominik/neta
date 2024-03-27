@@ -239,9 +239,9 @@ const HolidayRequestForm: React.FC = () => {
                             ))}
                         </select>
                     </div>
-                    <div className={classes['holidayRequest__button_container']}>
-                        <Button type="submit" onClick={handleSubmit} text="Wykonaj" />
-                    </div>
+                </div>
+                <div className={classes['holidayRequest__button_container']}>
+                    <Button type="submit" onClick={handleSubmit} text="Wykonaj" />
                 </div>
             </section>
             <InteractiveBackground />

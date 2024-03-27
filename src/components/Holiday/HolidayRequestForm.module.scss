@@ -6,17 +6,24 @@
 }
 
 .holidayRequest__header {
-    border: 1px solid #e4f1fe;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    padding: 0 20px;
-    background-color: #005689; 
+    padding: 20px;
+    background-color: #fff;
+    color: #000;
 }
 
 .holidayRequest__container {
     width: 50%;
-    padding: 40px;
+    height: 100%;
+    margin-top: 40px;
+    margin-right: 40px;
     color: #fff;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    -webkit-box-shadow: 8px 8px 24px -9px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 8px 8px 24px -9px rgba(66, 68, 90, 1);
+    box-shadow: 8px 8px 24px -9px rgba(66, 68, 90, 1);
 }
 
 .holidayRequest__input {
@@ -24,11 +31,14 @@
 }
 
 .holidayRequest__data_container {
-    border: 1px solid #e4f1fe;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    padding: 20px;
-    background-color: #007cb9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-top: 1px solid #e4f1fe;
+    border-bottom: 1px solid #e4f1fe;
+    padding: 20px 5%;
+    color: #000;
+    background-color: #fff;
 }
 
 .holidayRequest__field_container {
@@ -49,5 +59,9 @@
 .holidayRequest__button_container {
     display: flex;
     justify-content: end;
-    background-color: #007cb9;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 20px;
+    gap: 50px;
+    background-color: #fff;
 }

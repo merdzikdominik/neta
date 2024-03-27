@@ -95,7 +95,6 @@ const HolidaySchedule: React.FC = () => {
   const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleAddHoliday();
-    // console.log(dates)
   };
 
   return (
@@ -125,7 +124,7 @@ const HolidaySchedule: React.FC = () => {
               <Button type="submit" text="Wykonaj" />
             </div>
           </form>
-          {isCalendarOpened && <CalendarHolder holidayDataProp={holidayRequests}/>}
+          {isCalendarOpened && <CalendarHolder holidayDataProp={holidayRequests} backgroundColor="none"/>}
         </section>
         <InteractiveBackground />
       </div>

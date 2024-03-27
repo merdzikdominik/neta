@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 interface ICalendarHolder {
   holidayDataProp?: IHolidayRequest[] | IHoliday[] | IDates[];
+  backgroundColor?: string;
 }
 
 export interface IHolidayRequest {
@@ -33,7 +34,6 @@ const CustomTileContent: React.FC<any> = ({ date, hoveredDate, holidayDataProp, 
     }) as IHoliday | undefined;
 
     if (currentUser && 'user' in currentUser) {
-      // return <p style={{ position: 'absolute', top: position.y, left: position.x }}>{`Imię: ${currentUser.user.first_name}, Nazwisko: ${currentUser.user.last_name}, Email: ${currentUser.user.email}`}</p>;
       return <CalendarUserInfo firstName={currentUser.user.first_name} lastName={currentUser.user.last_name} email={currentUser.user.email} position={position} />
     }
   }
@@ -42,10 +42,13 @@ const CustomTileContent: React.FC<any> = ({ date, hoveredDate, holidayDataProp, 
 
 
 const CalendarContainer = styled.div<ICalendarHolder>`
-  .react-calendar {
-    width: 100%;
-    margin: 20px auto auto;
-  }
+.react-calendar {
+  width: 100%;
+  margin: 20px auto auto;
+  background-color: ${props => props.backgroundColor ? props.backgroundColor : '#fafafa'};
+  padding: 20px;
+  border-radius: 10px;
+}
 
   .react-calendar__navigation {
     display: flex;
@@ -78,6 +81,7 @@ const CalendarContainer = styled.div<ICalendarHolder>`
     line-height: 2;
     pointer-events: none;
     height: 40px;
+    // background-color: #e4e4e4;
   }
 
   .react-calendar__tile--custom {
@@ -133,7 +137,7 @@ const CalendarContainer = styled.div<ICalendarHolder>`
 type ValuePiece = Date | string | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp }) => {
+const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp, backgroundColor }) => {
   const [value, setValue] = useState<Value>(new Date());
   const [hoveredDate, setHoveredDate] = useState<Date | null>(null);
   const [mousePosition, setMousePosition] = useState<IPosition>({ x: 0, y: 0 });
@@ -202,7 +206,7 @@ const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp }) => {
   }, [hoveredDate])
 
   return (
-    <CalendarContainer holidayDataProp={holidayDataProp}>
+    <CalendarContainer holidayDataProp={holidayDataProp}  backgroundColor={backgroundColor}>
       <Calendar
         onChange={handleDateChange}
         value={value}

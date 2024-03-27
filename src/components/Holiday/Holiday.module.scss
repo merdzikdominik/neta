@@ -5,29 +5,32 @@
     min-height: 100vh;
 }
 
-.holiday__container {
-    width: 50%;
-    padding: 40px;
-    color: #fff;
-}
-
 .holiday__header {
-    border: 1px solid #e4f1fe;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    padding: 0 20px;
-    background-color: #005689; 
+    padding: 20px;
+    background-color: #fff;
+}
+
+.holiday__container {
+    width: 50%;
+    margin-top: 40px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    background-color: #fff;
+    color: #000;
+    -webkit-box-shadow: 8px 8px 24px -9px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 8px 8px 24px -9px rgba(66, 68, 90, 1);
+    box-shadow: 8px 8px 24px -9px rgba(66, 68, 90, 1);
+    border-radius: 10px;
 }
 
 .holiday__content-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    border: 1px solid #e4f1fe;
-    padding: 20px 5%;
-    background-color: #007cb9;
-    height: 100%;
-    max-height: 150px;
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #e4f1fe;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
