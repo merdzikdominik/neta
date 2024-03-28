@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-// import { IUser } from "../Admin/AdminModule"
 import { IUserInfo } from "../EmployeeFile/EmployeeFileData"
 import classes from './UserRequestRow.module.scss'
 

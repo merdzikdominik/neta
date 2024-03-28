@@ -1,6 +1,6 @@
 import React from "react"
 import Nav from "../Utils/Nav"
-import InteractiveBackground from "../Utils/InteractiveBackground"
+import Background from "../Utils/Background"
 import classes from './EmployeeFile.module.scss'
 
 const EmployeeFile: React.FC = () => {
@@ -16,7 +16,7 @@ const EmployeeFile: React.FC = () => {
                     <span>Sekcja kartoteki uzytkownika przeznaczona jest dla wyświetlenia informacji systemowych o uzytkowniku lub zmiany jego biezacego hasła.</span>
                 </div>
             </section>
-            <InteractiveBackground />
+            <Background />
         </div>
     )
 }

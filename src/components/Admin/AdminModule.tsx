@@ -3,12 +3,10 @@ import { Chart } from "react-google-charts"
 import { toast } from "react-toastify"
 import { INotification } from "../../store/types"
 import { IUserInfo } from "../EmployeeFile/EmployeeFileData"
-import { IForm } from "../Reports/UserDataChange"
 import { IUserDataChangeNotification } from "../Utils/Modal"
-import { IResidenceData } from "../EmployeeFile/EmployeeFileData"
 import * as ExcelJS from 'exceljs'
 import Nav from "../Utils/Nav"
-import InteractiveBackground from "../Utils/InteractiveBackground"
+import Background from "../Utils/Background"
 import Spinner from "../Utils/Loader"
 import Modal from "../Utils/Modal"
 import classes from './AdminModule.module.scss'
@@ -488,7 +486,7 @@ const AdminModule: React.FC = () => {
                     </div>
                 </div>
             </section>
-            <InteractiveBackground />
+            <Background />
             {isRequestsModalOpen && (
                 <Modal modalTitle={'Lista wniosków urlopowych'} modalContent={requestsList} toggleModal={() => handleToggleModal(setIsRequestModalOpen)} />
             )}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import Nav from "../Utils/Nav"
-import InteractiveBackground from "../Utils/InteractiveBackground"
+import Background from "../Utils/Background"
 import ListRow from "../Utils/HolidayRequestListRow"
 import classes from './HolidayRequestList.module.scss'
 import { IHolidayRequest } from "../Admin/AdminModule"
@@ -58,7 +58,7 @@ const HolidayRequestList: React.FC = () => {
                     </div>
                 </div>
             </section>
-            <InteractiveBackground />
+            <Background />
         </div>
     )
 }

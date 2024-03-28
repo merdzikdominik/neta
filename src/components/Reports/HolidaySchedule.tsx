@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IHolidayRequest } from "../Utils/CalendarHolder";
 import Nav from "../Utils/Nav";
 import Button from "../Utils/Button";
-import InteractiveBackground from "../Utils/InteractiveBackground";
+import Background from "../Utils/Background";
 import CalendarHolder from "../Utils/CalendarHolder";
 import classes from "./HolidaySchedule.module.css";
 
@@ -126,7 +126,7 @@ const HolidaySchedule: React.FC = () => {
           </form>
           {isCalendarOpened && <CalendarHolder holidayDataProp={holidayRequests} backgroundColor="none"/>}
         </section>
-        <InteractiveBackground />
+        <Background />
       </div>
     </>
   );

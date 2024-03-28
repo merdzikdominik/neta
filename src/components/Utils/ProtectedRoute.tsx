@@ -1,4 +1,3 @@
-// Komponent ProtectedRoute
 import React from 'react';
 import { RouteProps as ReactRouteProps, Navigate } from 'react-router-dom';
 

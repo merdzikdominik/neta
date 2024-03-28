@@ -1,7 +1,7 @@
 import React from 'react'
-import classes from './InteractiveBackground.module.scss'
+import classes from './Background.module.scss'
 
-const InteractiveBackground: React.FC = () => {
+const Background: React.FC = () => {
     return (
         <div className={classes['hero']}>
             <div className={classes['stroke']}></div> 
@@ -9,4 +9,4 @@ const InteractiveBackground: React.FC = () => {
     )
 }
 
-export default InteractiveBackground
+export default Background

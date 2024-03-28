@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { IHolidayType } from "../Admin/AdminModule";
 import uuid from "react-uuid";
 import Nav from "../Utils/Nav";
-import InteractiveBackground from "../Utils/InteractiveBackground";
+import Background from "../Utils/Background";
 import Button from "../Utils/Button";
 import classes from './HolidayRequestForm.module.scss';
 
@@ -244,7 +244,7 @@ const HolidayRequestForm: React.FC = () => {
                     <Button type="submit" background="white" onClick={handleSubmit} text="Wykonaj" />
                 </div>
             </section>
-            <InteractiveBackground />
+            <Background />
         </div>
     )
 }

@@ -116,16 +116,3 @@ const Login: React.FC = () => {
 };
 
 export default Login;
-
-// {
-//   "username": "damian.gowno@onet.pl",
-//   "password": "123"
-// }
-
-// amokebio1234@gmail.com
-//zaq1@WSX
-
-// {
-//   "username": "amokebio1234@gmail.com",
-//   "password": "zaq1@WSX"
-// }

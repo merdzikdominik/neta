@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { IDates } from '../Reports/HolidaySchedule';
 import Nav from "../Utils/Nav";
-import InteractiveBackground from '../Utils/InteractiveBackground';
+import Background from '../Utils/Background';
 import CalendarHolder from '../Utils/CalendarHolder';
 import classes from './HolidayYearPlans.module.scss'
 
@@ -46,7 +46,7 @@ const HolidayYearPlans: React.FC = () => {
             <section className={classes['holidayYearPlans__container']}>
                 <CalendarHolder holidayDataProp={holidayPlans}/>
             </section>
-            <InteractiveBackground />
+            <Background />
         </div>
     )
 }

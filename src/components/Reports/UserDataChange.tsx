@@ -3,7 +3,7 @@ import { IUserInfo } from '../EmployeeFile/EmployeeFileData'
 import { toast } from 'react-toastify'
 import ResidenceForm from './ResidenceForm'
 import Nav from '../Utils/Nav'
-import InteractiveBackground from '../Utils/InteractiveBackground'
+import Background from '../Utils/Background'
 import classes from './UserDataChange.module.scss'
 import Button from '../Utils/Button'
 
@@ -539,7 +539,7 @@ const UserDataChange: React.FC = () => {
                     <Button type="button" background="white" text="Zatwierdź zmiany" onClick={() => handleSubmit()}/>
                 </div>
             </section>
-            <InteractiveBackground />
+            <Background />
         </div>
     )
 }

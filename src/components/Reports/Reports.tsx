@@ -1,6 +1,6 @@
 import React from 'react'
 import Nav from '../Utils/Nav'
-import InteractiveBackground from '../Utils/InteractiveBackground'
+import Background from '../Utils/Background'
 import classes from './Reports.module.scss'
 
 const Reports: React.FC = () => {
@@ -15,7 +15,7 @@ const Reports: React.FC = () => {
                     <span>Sekcja raportowania przeznaczona jest dla potrzeb wystawiania wniosków dotyczących zmiany informacji o uzytkowniku.</span>
                 </div>
             </section>
-            <InteractiveBackground />
+            <Background />
         </div>
     )
 }

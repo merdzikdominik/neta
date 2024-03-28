@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Nav from '../Utils/Nav';
-import InteractiveBackground from '../Utils/InteractiveBackground';
+import Background from '../Utils/Background';
 import classes from './EmployeeFileData.module.scss';
 
 export interface IResidenceData {
@@ -219,7 +219,7 @@ const EmployeeFileData: React.FC = () => {
                     ))}
                 </div>
             </section>
-            <InteractiveBackground />
+            <Background />
         </div>
     );
 };

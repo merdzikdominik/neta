@@ -2,7 +2,7 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 import Nav from "../Utils/Nav"
 import Button from "../Utils/Button"
-import InteractiveBackground from "../Utils/InteractiveBackground"
+import Background from "../Utils/Background"
 import classes from './EmployeePersonalData.module.css'
 
 const EmployeePersonalData: React.FC = () => {
@@ -30,7 +30,7 @@ const EmployeePersonalData: React.FC = () => {
                     </div>
                 </form>
             </section>
-            <InteractiveBackground />
+            <Background />
         </div>
     )
 }

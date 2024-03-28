@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Nav from '../Utils/Nav'
-import InteractiveBackground from '../Utils/InteractiveBackground'
+import Background from '../Utils/Background'
 import PasswordStrengthBar from 'react-password-strength-bar'
 import Button from '../Utils/Button'
 import classes from './AccountManagement.module.scss'
@@ -205,7 +205,7 @@ const AccountManagement: React.FC = () => {
                     <Button type="submit" background="white" onClick ={handleClearForm} text="Wyczyść"/>
                 </div>
             </section>
-            <InteractiveBackground />
+            <Background />
         </div>
     )
 }
