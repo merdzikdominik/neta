@@ -536,7 +536,7 @@ const UserDataChange: React.FC = () => {
                     </div>
                 </div>
                 <div className={classes['userDataChange__button_container']}>
-                    <Button type="button" text="Zatwierdź zmiany" onClick={() => handleSubmit()}/>
+                    <Button type="button" background="white" text="Zatwierdź zmiany" onClick={() => handleSubmit()}/>
                 </div>
             </section>
             <InteractiveBackground />

@@ -201,8 +201,8 @@ const AccountManagement: React.FC = () => {
                     </div>
                 </div>
                 <div className={classes['accountManagement__button_container']}>
-                    <Button type="submit" onClick={handleSubmit} text="Zapisz"/>
-                    <Button type="submit" onClick ={handleClearForm} text="Wyczyść"/>
+                    <Button type="submit" background="white" onClick={handleSubmit} text="Zapisz"/>
+                    <Button type="submit" background="white" onClick ={handleClearForm} text="Wyczyść"/>
                 </div>
             </section>
             <InteractiveBackground />

@@ -120,8 +120,8 @@ const HolidaySchedule: React.FC = () => {
               </div>
             </div>
             <div className={classes['holiday-schedule__button_container']}>
-              <Button type="button" text="Wyświetl w kalendarzu" onClick={handleOpenCalendar} />
-              <Button type="submit" text="Wykonaj" />
+              <Button type="button" background="white" text="Wyświetl w kalendarzu" onClick={handleOpenCalendar} />
+              <Button type="submit" background="white" text="Wykonaj" />
             </div>
           </form>
           {isCalendarOpened && <CalendarHolder holidayDataProp={holidayRequests} backgroundColor="none"/>}
