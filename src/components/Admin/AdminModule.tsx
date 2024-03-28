@@ -429,7 +429,6 @@ const AdminModule: React.FC = () => {
 
                     if (response.ok) {
                         const data = await response.json();
-                        // console.log(data)
 
                     } else {
                         const errorData = await response.json();
@@ -460,8 +459,10 @@ const AdminModule: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className={classes['adminModule__excel-button']} onClick={() => setIsExportModalOpen(true)}><span>Eksport danych dla HR</span></div>
-                <div className={classes['adminModule__excel-button']} onClick={() => setIsUserDataChangeNotificationModalOpen(true)}><span>Powiadomienia o zmianie danych ewidencyjnych uzytkownikow</span></div>
+                <div className={classes['adminModule__excel-button-container']}>
+                    <div className={classes['adminModule__excel-button']} onClick={() => setIsExportModalOpen(true)}><span>Eksport danych dla HR</span></div>
+                    <div className={classes['adminModule__excel-button']} onClick={() => setIsUserDataChangeNotificationModalOpen(true)}><span>Powiadomienia o zmianie danych ewidencyjnych uzytkownikow</span></div>
+                </div>
                 <div className={classes['adminModule__charts-container']}>
                     <div className={classes['chart-container']}>
                         <Chart 
