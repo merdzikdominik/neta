@@ -446,23 +446,23 @@ const UserDataChange: React.FC = () => {
                         <h1>WNIOSEK ZMIANY DANYCH IDENTYFIKACYJNYCH I/LUB EWIDENCYJNYCH</h1>
                     </div>
                     <div className={classes['userDataChange__container-data']}>
-                        <span>Imię: { userInfo.first_name }</span>
-                        <span>Nazwisko: { userInfo.last_name }</span>
-                        <span>Stanowisko pracy: { userInfo.role }</span>
+                        <span><b>Imię: </b>{ userInfo.first_name }</span>
+                        <span><b>Nazwisko: </b>{ userInfo.last_name }</span>
+                        <span><b>Stanowisko pracy: </b>{ userInfo.role }</span>
 
-                        <span>Proszę dokonać zmian następujących danych ewidencyjnych/identyfikacyjnych (wypełnić tylko pola które ulegają zmianie):</span> 
+                        <span><b>Proszę dokonać zmian następujących danych ewidencyjnych/identyfikacyjnych (wypełnić tylko pola które ulegają zmianie): </b></span> 
 
                         <div className={classes['reports-data-change__form']}>
                             <div>
                                 <label>
-                                    1. Nazwisko
+                                    <b>1. Nazwisko</b>
                                     <input type="text" placeholder="Wprowadź nazwisko" name="surname" onChange={handleOverallForm} />
                                 </label>
                             </div>
 
                             <div className={classes['userDataChange__checkbox']}>
                                 <div className={classes['userDataChange__checkbox-field-label']}>
-                                    2. Miejsce stałego zameldowania <input type="checkbox" checked={isCheckedFirstResidence} name="firstResidenceChecked" 
+                                    <b>2. Miejsce stałego zameldowania </b><input type="checkbox" checked={isCheckedFirstResidence} name="firstResidenceChecked" 
                                     onChange={handleCheckboxFirstResidenceChange} />
                                 </div>
                                 { isCheckedFirstResidence ? <ResidenceForm onChange={handlePermanentUserResidence} /> : null }
@@ -470,13 +470,13 @@ const UserDataChange: React.FC = () => {
 
                             <div className={classes['userDataChange__checkbox']}>
                                 <div className={classes['userDataChange__checkbox-field-label']}>
-                                    3. Adres zamieszkania (jeśli jest iny niż adres stałego zameldowania) <input type="checkbox" checked={isCheckedSecondResidence} name="secondResidenceChecked" onChange={handleCheckboxSecondResidenceChange} />
+                                    <b>3. Adres zamieszkania (jeśli jest iny niż adres stałego zameldowania)</b> <input type="checkbox" checked={isCheckedSecondResidence} name="secondResidenceChecked" onChange={handleCheckboxSecondResidenceChange} />
                                 </div>
 
                                 { isCheckedSecondResidence ? <ResidenceForm onChange={handleSecondUserResidence} /> : null }
                             </div>
 
-                            4. Adres do korespondencji
+                            <b>4. Adres do korespondencji</b>
 
                             <div>
                                 <div className={classes['checkbox-wrapper']}>
@@ -510,11 +510,11 @@ const UserDataChange: React.FC = () => {
                             </div>
                             
                             <div className={classes['userDataChange__tax-office']}>
-                                5. Urząd skarbowy (nazwa i adres)
+                                <b>5. Urząd skarbowy (nazwa i adres)</b>
                                 <input type="text" required name="tax_office" placeholder="Wprowadź nazwę urzędu" onChange={handleOverallForm} />
                             </div>
                             <div>
-                                6. Adres, który ma być uwzględniony w rozliczeniu rocznym to:
+                                <b>6. Adres, który ma być uwzględniony w rozliczeniu rocznym to:</b>
                                 <div className={classes['checkbox-wrapper']}>
                                     <input 
                                         type="radio"
@@ -543,11 +543,11 @@ const UserDataChange: React.FC = () => {
                                 </div>
                             </div>
                             <div className={classes['userDataChange__nfz']}>
-                                7. Oddział NFZ
+                                7. <b>Oddział NFZ</b>
                                 <input type="text" name="nfz_branch" placeholder="Wprowadź oddział" onChange={handleOverallForm}/>
                             </div>
                             <div className={classes['userDataChange__text-input-wrap']}>
-                                8. Seria i numer dowodu osobistego
+                                8. <b>Seria i numer dowodu osobistego</b>
                                 <input type="text" name="id_data" placeholder="Wprowadź serię dowodu" onChange={handleOverallForm}/>
                                 Wydany przez
                                 <input type="text" name="id_given_by" placeholder="Wprowadź organ" onChange={handleOverallForm}/>
