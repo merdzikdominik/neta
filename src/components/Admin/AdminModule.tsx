@@ -284,10 +284,6 @@ const AdminModule: React.FC = () => {
         fetchUserDataChangeRequests()
     }, [])
 
-    // useEffect(() => {
-    //     console.log(users)
-    // }, [users])
-
     useEffect(() => {
         console.log(userDataChangeRequests)
     }, [userDataChangeRequests])
@@ -379,10 +375,6 @@ const AdminModule: React.FC = () => {
         fetchNotifications()
     }, [])
 
-    // useEffect(() => {
-    //     console.log(notifications)
-    // }, [notifications])
-
     useEffect(() => {
         const monthCounts: Record<string, number> = {};
       
@@ -410,36 +402,6 @@ const AdminModule: React.FC = () => {
         ["Urlop", "Częstość", { role: "style" }, { sourceColumn: 0, role: "annotation", type: "string", calc: "stringify" }],
         ...mostOccupiedMonths
     ]
-
-    useEffect(() => {
-        const fetchHolidayPlans = async () => {
-            const token = localStorage.getItem('authToken');
-
-            if (token) {
-                try {
-                    const response = await fetch('http://127.0.0.1:8000/api/all_approved_data_change_requests', {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Token ${token}`,
-                        },
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-
-                    } else {
-                        const errorData = await response.json();
-                        console.error('Nie wczytano zatwierdzonych wnioskow urlopowych:', errorData);
-                    }
-                } catch (error) {
-                    console.error('Błąd przy wysyłaniu żądania', error);
-                }
-            }
-        };
-
-        fetchHolidayPlans();
-    }, []);
 
     return (
         <div className={classes['main']}>

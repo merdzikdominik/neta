@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import { sendNotifications } from "../../store/actions/action-creators";
 import { toast } from "react-toastify";
 import { IHolidayType } from "../Admin/AdminModule";
+import { handleGetCurrentTime } from "../Reports/UserDataChange";
 import uuid from "react-uuid";
 import Nav from "../Utils/Nav";
 import Background from "../Utils/Background";
@@ -174,12 +175,12 @@ const HolidayRequestForm: React.FC = () => {
                 const data = await response.json()
                 console.log("Successfully created holiday request:", data)
 
-                const currentDate = new Date();
-                const currentHour = currentDate.getHours();
-                const currentMinute = currentDate.getMinutes() < 10 ? `0${currentDate.getMinutes()}` : currentDate.getMinutes()
-                const currentTime = `${currentHour}:${currentMinute}`;
+                // const currentDate = new Date();
+                // const currentHour = currentDate.getHours();
+                // const currentMinute = currentDate.getMinutes() < 10 ? `0${currentDate.getMinutes()}` : currentDate.getMinutes()
+                // const currentTime = `${currentHour}:${currentMinute}`;
 
-                sendNotifications({ id: uuid(), label: `Nowy wniosek urlopowy dla ${first_name} ${last_name} | (${currentTime})` }, token)
+                sendNotifications({ id: uuid(), label: `Nowy wniosek urlopowy (${selectedHolidayType}) dla ${first_name} ${last_name} | (${handleGetCurrentTime()})` }, token)
 
                 toast.success('Pomyślnie dodano wniosek urlopowy.')
 
