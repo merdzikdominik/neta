@@ -172,14 +172,6 @@ const HolidayRequestForm: React.FC = () => {
                     throw new Error(`HTTP error! Status: ${response.status}, Error: ${errorMessage}`);
                 }
 
-                const data = await response.json()
-                console.log("Successfully created holiday request:", data)
-
-                // const currentDate = new Date();
-                // const currentHour = currentDate.getHours();
-                // const currentMinute = currentDate.getMinutes() < 10 ? `0${currentDate.getMinutes()}` : currentDate.getMinutes()
-                // const currentTime = `${currentHour}:${currentMinute}`;
-
                 sendNotifications({ id: uuid(), label: `Nowy wniosek urlopowy (${selectedHolidayType}) dla ${first_name} ${last_name} | (${handleGetCurrentTime()})` }, token)
 
                 toast.success('Pomyślnie dodano wniosek urlopowy.')
@@ -187,7 +179,6 @@ const HolidayRequestForm: React.FC = () => {
                 clearInputs();
 
             } catch (error) {
-                console.error("Error creating holiday request:", error);
                 toast.error('Wystąpił błąd podczas wysyłania wniosku urlopowego.')
             }
         }
