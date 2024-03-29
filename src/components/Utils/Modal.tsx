@@ -217,7 +217,7 @@ const Modal: React.FC<IModal> = ({ toggleModal, modalTitle, modalContent, handle
 
                     setTimeout(() => {
                         document.location.reload()
-                    }, 2000)
+                    }, 1000)
 
                 } else {
                     const data = await response.json();
