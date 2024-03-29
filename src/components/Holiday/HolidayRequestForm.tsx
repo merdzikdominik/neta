@@ -200,6 +200,7 @@ const HolidayRequestForm: React.FC = () => {
                             className={classes['holidayRequest__input']}
                             value={startDate}
                             onChange={handleStartDateChange}
+                            max={endDate}
                         />
                     </div>
                     <div className={classes['holidayRequest__field_container']}>
@@ -209,6 +210,7 @@ const HolidayRequestForm: React.FC = () => {
                             className={classes['holidayRequest__input']}
                             value={endDate}
                             onChange={handleEndDateChange}
+                            min={startDate}
                         />
                     </div>
                     <div className={classes['holidayRequest__field_container']}>
