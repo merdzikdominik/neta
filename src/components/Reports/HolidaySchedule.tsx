@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { IHolidayRequest } from "../Utils/CalendarHolder";
+// import { IHolidayRequest } from "../Utils/CalendarHolder";
+import { IHolidayRequest } from "../Admin/AdminModule";
 import Nav from "../Utils/Nav";
 import Button from "../Utils/Button";
 import Background from "../Utils/Background";
@@ -8,7 +9,7 @@ import classes from "./HolidaySchedule.module.css";
 
 export interface IDates {
   dateFrom: string,
-  dateTo: string
+  dateTo: string,
 }
 
 const HolidaySchedule: React.FC = () => {

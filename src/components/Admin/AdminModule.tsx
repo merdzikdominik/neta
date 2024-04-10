@@ -284,9 +284,9 @@ const AdminModule: React.FC = () => {
         fetchUserDataChangeRequests()
     }, [])
 
-    useEffect(() => {
-        console.log(userDataChangeRequests)
-    }, [userDataChangeRequests])
+    // useEffect(() => {
+    //     console.log(userDataChangeRequests)
+    // }, [userDataChangeRequests])
 
     const exportToExcel = async (data: IHolidayRequest[]) => {
         const workbook = new ExcelJS.Workbook();
