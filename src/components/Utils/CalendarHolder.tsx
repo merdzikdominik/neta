@@ -150,7 +150,9 @@ const CalendarContainer = styled.div<ICalendarHolder>`
   
           colorMap[dateKey] = gradientColors;
       }
-  });
+    });
+
+    // console.log(overlappingHolidays)
   
     if (overlappingHolidays) {
       const colorStops = Object.entries(colorMap)

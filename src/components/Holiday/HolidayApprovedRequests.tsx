@@ -65,20 +65,9 @@ const HolidayApprovedRequests: React.FC = () => {
                             });
                         });
 
-                        const filteredOverlapping = overlappingDates.filter((holiday, index, array) => {
-                            const hasSameDate = array.some((obj, idx) => {
-                                if (idx !== index) {
-                                    return obj.dateFrom === holiday.dateFrom && obj.dateTo === holiday.dateTo;
-                                }
-                                return false;
-                            });
-                        
-                            return !hasSameDate;
-                        });
-
                         const mergedDates = mergeOverlappingDates(overlappingDates);
 
-                        setApprovedDates([...originalDates, ...filteredOverlapping, ...mergedDates]);
+                        setApprovedDates([...originalDates, ...overlappingDates, ...mergedDates]);
 
                     } else {
                         const errorData = await response.json();
@@ -127,47 +116,62 @@ const HolidayApprovedRequests: React.FC = () => {
     };
 
     const mergeOverlappingDates = (overlappingDates: IHoliday[]): IHoliday[] => {
-        const mergedDates: IHoliday[] = [];
-
-        overlappingDates.forEach((date1, index1) => {
-            overlappingDates.slice(index1 + 1).forEach(date2 => {
-                const startDate1 = new Date(date1.dateFrom);
-                const endDate1 = new Date(date1.dateTo);
-                const startDate2 = new Date(date2.dateFrom);
-                const endDate2 = new Date(date2.dateTo);
-
-                if (startDate1 <= endDate2 && startDate2 <= endDate1) {
-                    const overlappingStartDate = startDate1 > startDate2 ? startDate1 : startDate2;
-                    const overlappingEndDate = endDate1 < endDate2 ? endDate1 : endDate2;
-
-                    const overlappingUsers = extractUsersFromRange([date1, date2]);
-                    const overlappingColors = extractColorsFromRange([date1, date2]);
-
-                    const overlappingRange: IHoliday = {
-                        dateFrom: overlappingStartDate.toISOString().slice(0, 10),
-                        dateTo: overlappingEndDate.toISOString().slice(0, 10),
-                        user: overlappingUsers,
-                        color_hex: overlappingColors
-                    };
-
-                    const isAlreadyMerged = mergedDates.some(date => {
-                        const sameUsers = date.user.every(u => overlappingRange.user.some(ou => ou.email === u.email));
-                        if (sameUsers && date.dateFrom === overlappingRange.dateFrom && date.dateTo === overlappingRange.dateTo) {
-                            return true;
-                        }
-                        return false;
-                    });
-
-                    if (!isAlreadyMerged) {
-                        mergedDates.push(overlappingRange);
+        let merged: IHoliday[] = [];
+    
+        overlappingDates.forEach(date => {
+            if (merged.length === 0) {
+                merged.push(date);
+            } else {
+                const overlapping: IHoliday[] = [];
+    
+                merged.forEach(existingDate => {
+                    const startDate1 = new Date(date.dateFrom);
+                    const endDate1 = new Date(date.dateTo);
+                    const startDate2 = new Date(existingDate.dateFrom);
+                    const endDate2 = new Date(existingDate.dateTo);
+    
+                    if (startDate1 <= endDate2 && startDate2 <= endDate1) {
+                        const overlappingStartDate = startDate1 > startDate2 ? startDate1 : startDate2;
+                        const overlappingEndDate = endDate1 < endDate2 ? endDate1 : endDate2;
+    
+                        const overlappingUsers = extractUsersFromRange([date, existingDate]);
+                        const overlappingColors = extractColorsFromRange([date, existingDate]);
+    
+                        const overlappingRange: IHoliday = {
+                            dateFrom: overlappingStartDate.toISOString().slice(0, 10),
+                            dateTo: overlappingEndDate.toISOString().slice(0, 10),
+                            user: overlappingUsers,
+                            color_hex: overlappingColors
+                        };
+    
+                        overlapping.push(overlappingRange);
                     }
+                });
+    
+                if (overlapping.length > 0) {
+                    const combinedOverlappingUsers = overlapping.reduce((acc, curr) => {
+                        return [...acc, ...curr.user];
+                    }, [] as IRequestUser[]);
+                    const uniqueOverlappingUsers = Array.from(new Set(combinedOverlappingUsers.map(user => user.email)))
+                        .map(email => combinedOverlappingUsers.find(user => user.email === email) as IRequestUser);
+    
+                    merged = [
+                        ...merged.filter(existingDate => !overlapping.find(overlap => overlap.dateFrom === existingDate.dateFrom && overlap.dateTo === existingDate.dateTo)),
+                        {
+                            ...overlapping[0],
+                            user: uniqueOverlappingUsers
+                        }
+                    ];
+                } else {
+                    merged.push(date);
                 }
-            });
+            }
         });
-
-        return mergedDates;
+    
+        return merged;
     };
-
+    
+    
     return (        
         <div className={classes['main']}>
             <section className={classes['holidayApprovedRequests__container']}>
