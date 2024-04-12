@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CalendarUserInfo from './CalendarUserInfo';
-import { IHoliday } from '../Holiday/HolidayApprovedRequests';
+import HolidayApprovedRequests, { IHoliday } from '../Holiday/HolidayApprovedRequests';
 import { IHolidayRequest } from '../Admin/AdminModule';
 import { IDates } from '../Reports/HolidaySchedule';
 import { Calendar } from 'react-calendar';
@@ -131,38 +131,32 @@ const CalendarContainer = styled.div<ICalendarHolder>`
     overlappingHolidays?.forEach(item => {
       if (Array.isArray(item.color_hex)) {
           const dateKey = `${item.dateFrom}-${item.dateTo}`;
-          const numberOfColors = item.color_hex.length;
-          const percentStep = 100 / numberOfColors;
   
           let gradientColors = '';
   
           item.color_hex.forEach((color, index) => {
-              const startPercent = index * percentStep;
-              const endPercent = (index + 1) * percentStep;
+              const startPercent = (index / item.color_hex.length) * 100;
+              const endPercent = ((index + 1) / item.color_hex.length) * 100;
   
               gradientColors += `${color} ${startPercent.toFixed(2)}%, `;
-              gradientColors += `${color} ${endPercent.toFixed(2)}%`;
-  
-              if (index !== numberOfColors - 1) {
-                  gradientColors += ', ';
-              }
+              gradientColors += `${color} ${endPercent.toFixed(2)}%, `;
           });
   
-          colorMap[dateKey] = gradientColors;
+          colorMap[dateKey] = gradientColors.slice(0, -2); // Usuwamy ostatni przecinek i spację
       }
     });
 
-    // console.log(overlappingHolidays)
+    console.log(overlappingHolidays)
+    console.log(colorMap)
   
     if (overlappingHolidays) {
       const colorStops = Object.entries(colorMap)
       .map(([daterange, color], index) => {
         const startDate = daterange.slice(0, 10)
-        const gradients = `${color} ${(index) * (100 / [color].length + 1)}%, ${color} ${(index + 1) * (100 / [color].length + 1)}%`        
 
         return `
           .react-calendar__tile--overlapping-${startDate} {
-            background-image: linear-gradient(0deg, ${gradients})
+            background-image: linear-gradient(0deg, ${color})
           };
         `;
       })
@@ -172,8 +166,7 @@ const CalendarContainer = styled.div<ICalendarHolder>`
     }
   
     return '';
-  }}
-  
+}}
 
   .react-calendar__navigation__label {
     pointer-events: none;

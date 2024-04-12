@@ -66,8 +66,36 @@ const HolidayApprovedRequests: React.FC = () => {
                         });
 
                         const mergedDates = mergeOverlappingDates(overlappingDates);
+                        const holidayArray = [...originalDates, ...overlappingDates, ...mergedDates]
 
-                        setApprovedDates([...originalDates, ...overlappingDates, ...mergedDates]);
+                        // console.log(overlappingDates)
+                        const groupedByDateRange: Map<string, IHoliday[]> = holidayArray.reduce((acc: Map<string, IHoliday[]>, holiday: IHoliday) => {
+                            const key = `${holiday.dateFrom}-${holiday.dateTo}`;
+                            if (!acc.has(key)) {
+                                acc.set(key, []);
+                            }
+                            acc.get(key)?.push(holiday);
+                            return acc;
+                        }, new Map<string, IHoliday[]>());
+                        
+                        // Wybieranie obiektów z największą tablicą w polu color_hex dla każdego zakresu dat
+                        const final: IHoliday[] = Array.from(groupedByDateRange.values()).map(group => {
+                            let largest: IHoliday | undefined;
+                            group.forEach(holiday => {
+                                if (Array.isArray(holiday.color_hex) && (!largest || (Array.isArray(largest.color_hex) && holiday.color_hex.length > largest.color_hex.length))) {
+                                    largest = holiday;
+                                }
+                            });
+                            return largest;
+                        }).filter((obj): obj is IHoliday => !!obj && Array.isArray(obj.color_hex));
+                        
+                        // console.log(holidayArray)
+                        // console.log(final);
+
+                        const finalArray = [...originalDates, ...final]
+                        // console.log(finalArray)
+
+                        setApprovedDates(finalArray);
 
                     } else {
                         const errorData = await response.json();
