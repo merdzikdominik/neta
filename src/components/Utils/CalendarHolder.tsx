@@ -212,8 +212,6 @@ const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp, background
       overlappingHolidays.forEach((holiday) => {
         const startDate = startOfDay(new Date(holiday.dateFrom));
         const endDate = startOfDay(new Date(holiday.dateTo));
-
-        // console.log(overlappingHolidays)
   
         if (isWithinInterval(date, { start: startDate, end: endDate })) {
           const colorClass = (holiday.color_hex as string[]).map((color: string) => {
@@ -229,8 +227,6 @@ const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp, background
           classNames.push(...colorClass);
         }
       });
-
-      // console.log(classNames)
     }
   
     const holidays: IHoliday[] | undefined = holidayDataProp?.filter(

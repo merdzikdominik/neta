@@ -37,9 +37,35 @@ const HolidayApprovedRequests: React.FC = () => {
                             color_hex: holiday.color_hex
                         }));
 
+                        const uniquePairs = originalDates.reduce<IHoliday[]>((acc, curr) => {
+                            const existingPair = acc.find(pair => pair.user.every((user, index) => {
+                                return (
+                                    user.first_name === curr.user[index].first_name &&
+                                    user.email === curr.user[index].email
+                                );
+                            }));
+                            if (!existingPair) {
+                                acc.push(curr);
+                            }
+                            return acc;
+                        }, []);
+
+                        const mappedOriginalDates = originalDates.map(date => {
+                            const pairIndex = uniquePairs.findIndex(pair => pair.user.every((user, index) => {
+                                return (
+                                    user.first_name === date.user[index].first_name &&
+                                    user.email === date.user[index].email
+                                );
+                            }));
+                            if (pairIndex !== -1) {
+                                date.color_hex = uniquePairs[pairIndex].color_hex;
+                            }
+                            return date;
+                        });
+
                         const overlappingDates: IHoliday[] = [];
 
-                        originalDates.forEach((holiday1, index1) => {
+                        mappedOriginalDates.forEach((holiday1, index1) => {
                             originalDates.slice(index1 + 1).forEach((holiday2, index2) => {
                                 const startDate1 = new Date(holiday1.dateFrom);
                                 const endDate1 = new Date(holiday1.dateTo);
@@ -68,10 +94,6 @@ const HolidayApprovedRequests: React.FC = () => {
                         const mergedDates = mergeOverlappingDates(overlappingDates);
                         const holidayArray = [...originalDates, ...overlappingDates, ...mergedDates]
 
-                        console.log(originalDates)
-                        console.log(overlappingDates)
-                        console.log(mergedDates)
-
                         const groupedByDateRange: Map<string, IHoliday[]> = holidayArray.reduce((acc: Map<string, IHoliday[]>, holiday: IHoliday) => {
                             const key = `${holiday.dateFrom}-${holiday.dateTo}`;
                             if (!acc.has(key)) {
@@ -90,9 +112,6 @@ const HolidayApprovedRequests: React.FC = () => {
                             });
                             return largest;
                         }).filter((obj): obj is IHoliday => !!obj && Array.isArray(obj.color_hex));
-                        
-                        // console.log(holidayArray)
-                        // console.log(final);
 
                         const sortedFinal = final.sort((a, b) => {
                             const aTotalLength = a.user.length + a.color_hex.length;
@@ -119,11 +138,7 @@ const HolidayApprovedRequests: React.FC = () => {
 
         fetchHolidayPlans();
     }, []);
-
-    useEffect(() => {   
-        console.log(approvedDates);
-    }, [approvedDates]);
-
+    
     const extractUsersFromRange = (range: IHoliday[]): IRequestUser[] => {
         const users: IRequestUser[] = [];
         range.forEach(holiday => {
