@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CalendarUserInfo from './CalendarUserInfo';
-import HolidayApprovedRequests, { IHoliday } from '../Holiday/HolidayApprovedRequests';
+import { IHoliday } from '../Holiday/HolidayApprovedRequests';
 import { IHolidayRequest } from '../Admin/AdminModule';
 import { IDates } from '../Reports/HolidaySchedule';
 import { Calendar } from 'react-calendar';
@@ -74,10 +74,6 @@ const CalendarContainer = styled.div<ICalendarHolder>`
     height: 60px;
   }
 
-  .react-calendar__tile--custom:hover {
-    background-color: #75e6da;
-  }
-
   .react-calendar__tile--custom.react-calendar__tile--custom-colored {
     pointer-events: all; 
   }
@@ -138,26 +134,26 @@ const CalendarContainer = styled.div<ICalendarHolder>`
               const startPercent = (index / item.color_hex.length) * 100;
               const endPercent = ((index + 1) / item.color_hex.length) * 100;
   
-              gradientColors += `${color} ${startPercent.toFixed(2)}%, `;
-              gradientColors += `${color} ${endPercent.toFixed(2)}%, `;
+              gradientColors += `${color} ${startPercent.toFixed(0)}%, `;
+              gradientColors += `${color} ${endPercent.toFixed(0)}%, `;
           });
   
-          colorMap[dateKey] = gradientColors.slice(0, -2); // Usuwamy ostatni przecinek i spację
+          colorMap[dateKey] = gradientColors.slice(0, -2);
       }
     });
-
-    console.log(overlappingHolidays)
-    console.log(colorMap)
   
     if (overlappingHolidays) {
       const colorStops = Object.entries(colorMap)
       .map(([daterange, color], index) => {
         const startDate = daterange.slice(0, 10)
+        const endDate = daterange.slice(11, 21)
+
+        const date = `${startDate}-${endDate}`
 
         return `
-          .react-calendar__tile--overlapping-${startDate} {
-            background-image: linear-gradient(0deg, ${color})
-          };
+          .react-calendar__tile--overlapping-${date} {
+            background-image: linear-gradient(0deg, ${color});
+          }
         `;
       })
       .join('\n');
@@ -166,7 +162,8 @@ const CalendarContainer = styled.div<ICalendarHolder>`
     }
   
     return '';
-}}
+  }} 
+
 
   .react-calendar__navigation__label {
     pointer-events: none;
@@ -179,10 +176,6 @@ const CalendarContainer = styled.div<ICalendarHolder>`
     border-radius: 3px;
     color: #000c66;
     padding: 5px 0;
-
-    &:hover {
-      background-color: #75e6da;
-    }
   }
 `;
 
@@ -219,18 +212,25 @@ const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp, background
       overlappingHolidays.forEach((holiday) => {
         const startDate = startOfDay(new Date(holiday.dateFrom));
         const endDate = startOfDay(new Date(holiday.dateTo));
+
+        // console.log(overlappingHolidays)
   
         if (isWithinInterval(date, { start: startDate, end: endDate })) {
           const colorClass = (holiday.color_hex as string[]).map((color: string) => {
-            const month = startDate.getMonth() + 1;
-            const paddedMonth = month < 10 ? `0${month}` : month.toString();
-            const paddedDay = startDate.getDate() < 10 ? `0${startDate.getDate()}` : startDate.getDate().toString();
-            return `react-calendar__tile--overlapping-${startDate.getFullYear()}-${paddedMonth}-${paddedDay}`;
+            const startMonth = startDate.getMonth() + 1;
+            const endMonth = startDate.getMonth() + 1
+            const startPaddedMonth = startMonth < 10 ? `0${startMonth}` : startMonth.toString();
+            const startPaddedDay = startDate.getDate() < 10 ? `0${startDate.getDate()}` : startDate.getDate().toString();
+            const endPaddedMonth = endMonth < 10 ? `0${endMonth}` : endMonth.toString();
+            const endPaddedDay = endDate.getDate() < 10 ? `0${endDate.getDate()}` : endDate.getDate().toString()
+            return `react-calendar__tile--overlapping-${startDate.getFullYear()}-${startPaddedMonth}-${startPaddedDay}-${endDate.getFullYear()}-${endPaddedMonth}-${endPaddedDay}`;
           });
   
           classNames.push(...colorClass);
         }
       });
+
+      // console.log(classNames)
     }
   
     const holidays: IHoliday[] | undefined = holidayDataProp?.filter(

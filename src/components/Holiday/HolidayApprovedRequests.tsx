@@ -68,7 +68,10 @@ const HolidayApprovedRequests: React.FC = () => {
                         const mergedDates = mergeOverlappingDates(overlappingDates);
                         const holidayArray = [...originalDates, ...overlappingDates, ...mergedDates]
 
-                        // console.log(overlappingDates)
+                        console.log(originalDates)
+                        console.log(overlappingDates)
+                        console.log(mergedDates)
+
                         const groupedByDateRange: Map<string, IHoliday[]> = holidayArray.reduce((acc: Map<string, IHoliday[]>, holiday: IHoliday) => {
                             const key = `${holiday.dateFrom}-${holiday.dateTo}`;
                             if (!acc.has(key)) {
@@ -78,7 +81,6 @@ const HolidayApprovedRequests: React.FC = () => {
                             return acc;
                         }, new Map<string, IHoliday[]>());
                         
-                        // Wybieranie obiektów z największą tablicą w polu color_hex dla każdego zakresu dat
                         const final: IHoliday[] = Array.from(groupedByDateRange.values()).map(group => {
                             let largest: IHoliday | undefined;
                             group.forEach(holiday => {
@@ -92,8 +94,16 @@ const HolidayApprovedRequests: React.FC = () => {
                         // console.log(holidayArray)
                         // console.log(final);
 
-                        const finalArray = [...originalDates, ...final]
-                        // console.log(finalArray)
+                        const sortedFinal = final.sort((a, b) => {
+                            const aTotalLength = a.user.length + a.color_hex.length;
+                            const bTotalLength = b.user.length + b.color_hex.length;
+                            
+                            return aTotalLength - bTotalLength;
+                          });
+                          
+
+                        const finalArray = [...originalDates, ...sortedFinal]
+                        
 
                         setApprovedDates(finalArray);
 
