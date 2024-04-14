@@ -1,12 +1,33 @@
-.CalendarUserInfo__main {
+.calendarUserInfo__main {
     display: flex;
     flex-direction: column;
-    width: 230px;
-    height: 80px;
+    width: 350px;
+    height: 100%;
+    max-height: 180px;
     background-color: #fefefe;
     border-radius: 20px;
     padding: 10px;
     -webkit-box-shadow: 12px 11px 11px -9px rgba(66, 68, 90, 1);
     -moz-box-shadow: 12px 11px 11px -9px rgba(66, 68, 90, 1);
     box-shadow: 12px 11px 11px -9px rgba(66, 68, 90, 1);
+}
+
+.calendarUserInfo__user {
+    display: flex;
+    flex-direction: column;
+}
+
+.calendarUserInfo__user-description {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 5px;
+}
+
+.calendarUserInfo__user-holiday {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
 }

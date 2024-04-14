@@ -3,7 +3,7 @@ import CalendarUserInfo from './CalendarUserInfo';
 import { IHoliday } from '../Holiday/HolidayApprovedRequests';
 import { IHolidayRequest } from '../Admin/AdminModule';
 import { IDates } from '../Reports/HolidaySchedule';
-import { Calendar } from 'react-calendar';
+import { Calendar, OnArgs } from 'react-calendar';
 import { isWithinInterval, startOfDay } from 'date-fns';
 import styled from 'styled-components';
 
@@ -17,7 +17,22 @@ interface IPosition {
   y: number;
 }
 
-const CustomTileContent: React.FC<any> = ({ date, hoveredDate, holidayDataProp, position }) => {
+const MONTHS_MAP = {
+  '01': 'styczeń',
+  '02': 'luty',
+  '03': 'marzec',
+  '04': 'kwiecień',
+  '05': 'maj',
+  '06': 'czerwiec',
+  '07': 'lipiec',
+  '08': 'sierpień',
+  '09': 'wrzesień',
+  '10': 'październik',
+  '11': 'listopad',
+  '12': 'grudzień'
+}
+
+const CustomTileContent: React.FC<any> = ({ date, calendarNavigationMonth, hoveredDate, holidayDataProp, position }) => {
   if (hoveredDate && isWithinInterval(hoveredDate, { start: date, end: date })) {
     const currentUser = holidayDataProp!.find((item: IHoliday) => {
       return (
@@ -29,8 +44,13 @@ const CustomTileContent: React.FC<any> = ({ date, hoveredDate, holidayDataProp, 
     }) as IHoliday | undefined;
     
     if (currentUser && 'user' in currentUser) {
-      const firstUser = currentUser.user[0];
-      return <CalendarUserInfo firstName={firstUser.first_name} lastName={firstUser.last_name} email={firstUser.email} position={position} />;
+      return (
+        <CalendarUserInfo
+          holidayDataProp={holidayDataProp}
+          calendarNavigationMonth={calendarNavigationMonth}
+          position={position} 
+        />
+      );
     }
   }
   return null;
@@ -186,6 +206,7 @@ const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp, background
   const [value, setValue] = useState<Value>(new Date());
   const [hoveredDate, setHoveredDate] = useState<Date | null>(null);
   const [mousePosition, setMousePosition] = useState<IPosition>({ x: 0, y: 0 });
+  const [calendarNavigationMonth, setCalendarNavigationMonth] = useState<string | Date>(new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`);
 
   const handleMouseMove = (event: MouseEvent) => {
     setMousePosition({ x: event.clientX, y: event.clientY });
@@ -193,6 +214,14 @@ const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp, background
 
   const handleDateChange = (newValue: Value) => {
     setValue(newValue);
+  };
+
+  const handleActiveStartDateChange = ({ action, activeStartDate, value, view }: OnArgs) => {
+    const currentDate = activeStartDate as Date
+    const date = new Date(currentDate)
+    const currentMonth = date.getMonth() + 1
+    const fixedCurrentMonth = currentMonth < 10 ? `0${currentMonth}` : `${currentMonth}`
+    setCalendarNavigationMonth(fixedCurrentMonth);
   };
 
   const tileClassName = ({ date }: any) => {
@@ -267,7 +296,7 @@ const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp, background
     } else {
       window.removeEventListener('mousemove', handleMouseMove);
     }
-
+    
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
@@ -277,6 +306,7 @@ const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp, background
     <CalendarContainer holidayDataProp={holidayDataProp}  backgroundColor={backgroundColor}>
       <Calendar
         onChange={handleDateChange}
+        onActiveStartDateChange={handleActiveStartDateChange}
         value={value}
         showNeighboringMonth={false}
         tileClassName={tileClassName}
@@ -290,7 +320,7 @@ const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp, background
                   onMouseOut={handleOnMouseOut}
                 ></div>
                 {hoveredDate && hoveredDate.getTime() === date.getTime() && (
-                  <CustomTileContent date={date} hoveredDate={hoveredDate} holidayDataProp={holidayDataProp} position={mousePosition} />
+                  <CustomTileContent date={date} calendarNavigationMonth={calendarNavigationMonth} hoveredDate={hoveredDate} holidayDataProp={holidayDataProp} position={mousePosition} />
                 )}
               </>
             );

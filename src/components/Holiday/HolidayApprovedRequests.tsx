@@ -138,7 +138,7 @@ const HolidayApprovedRequests: React.FC = () => {
 
         fetchHolidayPlans();
     }, []);
-    
+
     const extractUsersFromRange = (range: IHoliday[]): IRequestUser[] => {
         const users: IRequestUser[] = [];
         range.forEach(holiday => {
@@ -223,6 +223,10 @@ const HolidayApprovedRequests: React.FC = () => {
     
         return merged;
     };
+    
+    useEffect(() => {   
+        console.log(approvedDates);
+    }, [approvedDates]);
     
     
     return (        
