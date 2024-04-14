@@ -39,10 +39,18 @@ const MainPage: React.FC = () => {
 
   return (
     <main className={classes['main-page']}>
-      { isAdmin ? <Link to='/modul-administracyjny'>Moduł administracyjny</Link> : ''}
-      <Link to='/raportowanie'>Raportowanie</Link>
-      <Link to='/kartoteka-pracownika'>Kartoteka Pracownika</Link>
-      <Link to='/urlopy'>Urlopy</Link>
+      <div className={classes['main-page__navigation-button']}>
+        { isAdmin ? <Link to='/modul-administracyjny'>Moduł administracyjny</Link> : ''}
+      </div>
+      <div className={classes['main-page__navigation-button']}>
+        <Link to='/raportowanie'>Raportowanie</Link>
+      </div>
+      <div className={classes['main-page__navigation-button']}>
+        <Link to='/kartoteka-pracownika'>Kartoteka Pracownika</Link>
+      </div>
+      <div className={classes['main-page__navigation-button']}>
+        <Link to='/urlopy'>Urlopy</Link>
+      </div>
       <Background />
     </main>
   );
