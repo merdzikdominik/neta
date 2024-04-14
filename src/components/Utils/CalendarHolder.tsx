@@ -17,21 +17,6 @@ interface IPosition {
   y: number;
 }
 
-const MONTHS_MAP = {
-  '01': 'styczeń',
-  '02': 'luty',
-  '03': 'marzec',
-  '04': 'kwiecień',
-  '05': 'maj',
-  '06': 'czerwiec',
-  '07': 'lipiec',
-  '08': 'sierpień',
-  '09': 'wrzesień',
-  '10': 'październik',
-  '11': 'listopad',
-  '12': 'grudzień'
-}
-
 const CustomTileContent: React.FC<any> = ({ date, calendarNavigationMonth, hoveredDate, holidayDataProp, position }) => {
   if (hoveredDate && isWithinInterval(hoveredDate, { start: date, end: date })) {
     const currentUser = holidayDataProp!.find((item: IHoliday) => {
@@ -206,7 +191,7 @@ const CalendarHolder: React.FC<ICalendarHolder> = ({ holidayDataProp, background
   const [value, setValue] = useState<Value>(new Date());
   const [hoveredDate, setHoveredDate] = useState<Date | null>(null);
   const [mousePosition, setMousePosition] = useState<IPosition>({ x: 0, y: 0 });
-  const [calendarNavigationMonth, setCalendarNavigationMonth] = useState<string | Date>(new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`);
+  const [calendarNavigationMonth, setCalendarNavigationMonth] = useState<string>(new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`);
 
   const handleMouseMove = (event: MouseEvent) => {
     setMousePosition({ x: event.clientX, y: event.clientY });

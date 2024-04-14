@@ -1,6 +1,6 @@
 import React from 'react'
-import classes from './CalendarUserInfo.module.scss'
 import { IHoliday } from '../Holiday/HolidayApprovedRequests'
+import classes from './CalendarUserInfo.module.scss'
 
 interface ICalendarUserInfo {
     holidayDataProp: IHoliday[]
@@ -12,26 +12,23 @@ interface ICalendarUserInfo {
 }
 
 const CalendarUserInfo: React.FC<ICalendarUserInfo> = ({ holidayDataProp, calendarNavigationMonth, position }) => {
-    const filtered = holidayDataProp.filter(holiday => !Array.isArray(holiday.color_hex))
-    const superFiltered = filtered.filter(holiday => {
-        const dateSplit = holiday.dateFrom.split('-')
+    const filtered = holidayDataProp.filter(holiday => !Array.isArray(holiday.color_hex) && (holiday.dateFrom.split('-')[1] === calendarNavigationMonth || holiday.dateTo.split('-')[1] === calendarNavigationMonth))
 
-        if (dateSplit[1] === calendarNavigationMonth) {
-            return holiday
-        }
-    })
-
-    const mapped = superFiltered.map((holiday, index) => {
+    const mapped = filtered.map((holiday, index) => {
         return (
             <div key={index} className={classes['calendarUserInfo__user']}>
-                <div className={classes['calendarUserInfo__user-description']}>
-                    <div style={{width: '15px', height: '15px', backgroundColor: (holiday.color_hex as string)}}></div>
-                    <span>{holiday.user[0].first_name}</span>
-                    <span>{holiday.user[0].last_name}</span>
-                    <span>{holiday.user[0].email}</span>
-                </div>
-                <div className={classes['calendarUserInfo__user-holiday']}>
-                    <span>Urlop od {holiday.dateFrom} do {holiday.dateTo}</span>
+                <div className={classes['calendarUserInfo__user-description-container']}>
+                    <div style={{width: '40px', height: '40px', backgroundColor: (holiday.color_hex as string)}}></div>
+                    <div className={classes['calendarUserInfo__user-description']}>
+                        <div className={classes['calendarUserInfo__user-data']}>
+                            <span>{holiday.user[0].first_name}</span>
+                            <span>{holiday.user[0].last_name} •</span>
+                            <span>{holiday.user[0].email}</span>
+                        </div>
+                        <div className={classes['calendarUserInfo__user-holiday']}>
+                            <span>Urlop od <b>{holiday.dateFrom}</b> do <b>{holiday.dateTo}</b></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
