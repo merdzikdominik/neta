@@ -605,9 +605,9 @@ const AdminModule: React.FC = () => {
 
     return (
         <motion.div
-            initial={{ scale: 1 }} // Początkowa naturalna pozycja
-            animate={shouldAnimate ? { scale: [1, 1.1, 1] } : { scale: 1 }} // Animacja skalowania
-            transition={{ duration: 0.5, ease: "easeInOut" }} // Czas trwania animacji i rodzaj interpolacji
+            initial={{ scale: 1 }}
+            animate={shouldAnimate ? { scale: [1, 1.1, 1] } : { scale: 1 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
         >
             <div className={classes['main']}>
                 <Nav />
