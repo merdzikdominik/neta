@@ -22,7 +22,6 @@ export interface IUserInfo {
     second_name: string;
     last_name: string;
     birth_date: string;
-    // mobile_number: string;
     email: string;
     age: number;
     employment_start_date: string;
@@ -31,7 +30,6 @@ export interface IUserInfo {
     education: string;
     permanent_residence: string;
     second_residence: string;
-    // user_residence_data?: IUserResidenceData;
     correspondence_address: string;
     tax_office: string;
     annual_settlement_address: string;
@@ -49,7 +47,6 @@ const EmployeeFileData: React.FC = () => {
         second_name: '',
         last_name: '',
         birth_date: '',
-        // mobile_number: '',
         email: '',
         age: 0,
         employment_start_date: '',
@@ -74,14 +71,12 @@ const EmployeeFileData: React.FC = () => {
         second_name: 'Drugie imię',
         last_name: 'Nazwisko',
         birth_date: 'Data urodzenia',
-        // mobile_number: 'Nr telefonu',
         email: 'Adres email',
         age: 'Wiek',
         employment_start_date: 'Data rozpoczęcia pracy',
         employment_end_date: 'Data zakończenia pracy',
         role: 'Stanowisko',
         education: 'Wykształcenie',
-        // user_residence_data: 'Dane zamieszkania',
         permanent_residence: 'Adres zamieszkania',
         second_residence: 'Adres zameldowania',
         correspondence_address: 'Adres do korespondencji',

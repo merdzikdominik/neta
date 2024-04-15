@@ -57,6 +57,65 @@ export interface IHolidayType {
     label: string
 }
 
+interface IUserData {
+    age: number | null;
+    annual_settlement_address: string;
+    birth_date: string | null;
+    city_correspondence: string;
+    city_permanent_residence: string;
+    city_second_residence: string;
+    correspondence_address: string;
+    country_correspondence: string;
+    country_permanent_residence: string;
+    country_second_residence: string;
+    education: string | null;
+    email: string;
+    employment_end_date: string | null;
+    employment_start_date: string | null;
+    first_name: string;
+    flat_number_correspondence: string;
+    flat_number_permanent_residence: string;
+    flat_number_second_residence: string;
+    groups?: any[];
+    house_number_correspondence: string;
+    house_number_permanent_residence: string;
+    house_number_second_residence: string;
+    id: number;
+    id_data: string;
+    id_date: string;
+    id_given_by: string;
+    is_active: boolean;
+    is_staff: boolean;
+    is_superuser: boolean;
+    last_login: string;
+    last_name: string;
+    mobile_number_correspondence: string;
+    mobile_number_permanent_residence: string;
+    mobile_number_second_residence: string;
+    municipal_commune_correspondence: string;
+    municipal_commune_permanent_residence: string;
+    municipal_commune_second_residence: string;
+    nfz_branch: string;
+    password: string;
+    post_correspondence: string;
+    post_permanent_residence: string;
+    post_second_residence: string;
+    postal_code_correspondence: string;
+    postal_code_permanent_residence: string;
+    postal_code_second_residence: string;
+    role?: string | null;
+    second_name: string | null;
+    street_correspondence: string;
+    street_permanent_residence: string;
+    street_second_residence: string;
+    tax_office: string;
+    user_permissions?: any[];
+    voivodeship_correspondence: string;
+    voivodeship_permanent_residence: string;
+    voivodeship_second_residence: string;
+}
+
+
 const OPTIONS_PIE_CHART = {
     title: "Najczęściej Wybierane Urlopy",
     is3D: true,
@@ -285,16 +344,87 @@ const AdminModule: React.FC = () => {
         fetchUserDataChangeRequests()
     }, [])
 
-    const exportToExcel = async (data: IHolidayRequest[]) => {
+    useEffect(() => {
+        console.log(requestsList)
+    }, [requestsList])
+
+    const exportToExcel = async (requests: IHolidayRequest[], users: IUserData[]) => {
         const workbook = new ExcelJS.Workbook();
-        const worksheet = workbook.addWorksheet('Wnioski_Urlopowe');
-        const headers = ['id', 'approved', 'created_at', 'difference_in_days', 'start_date', 'end_date', 'message', 'user_first_name', 'user_last_name', 'user_email'];
+        const holidayRequestsWorksheet = workbook.addWorksheet('Wnioski_Urlopowe');
+        const usersDataWorksheet = workbook.addWorksheet('Dane uzytkowników');
+        
+        // Ustaw kolumny dla arkusza wniosków urlopowych
+        const holidayRequestsColumns = [
+            'ID',
+            'Approved',
+            'Created At',
+            'Difference in Days',
+            'Start Date',
+            'End Date',
+            'Message',
+            'User First Name',
+            'User Last Name',
+            'User Email'
+        ];
     
-        worksheet.addRow(headers);
+        // Ustaw kolumny dla arkusza danych użytkowników
+        const usersDataColumns: string[] = [
+            'ID',
+            'first_name',
+            'second_name',
+            'last_name',
+            'birth_date',
+            'email',
+            'age',
+            'employment_start_date',
+            'employment_end_date',
+            'role',
+            'education',
+            'city_permanent_residence',
+            'postal_code_permanent_residence',
+            'post_permanent_residence',
+            'municipal_commune_permanent_residence',
+            'voivodeship_permanent_residence',
+            'country_permanent_residence',
+            'street_permanent_residence',
+            'house_number_permanent_residence',
+            'flat_number_permanent_residence',
+            'mobile_number_permanent_residence',
+            'city_second_residence',
+            'postal_code_second_residence',
+            'post_second_residence',
+            'municipal_commune_second_residence',
+            'voivodeship_second_residence',
+            'country_second_residence',
+            'correspondence_address',
+            'street_second_residence',
+            'house_number_second_residence',
+            'flat_number_second_residence',
+            'mobile_number_second_residence',
+            'city_correspondence',
+            'postal_code_correspondence',
+            'post_correspondence',
+            'municipal_commune_correspondence',
+            'voivodeship_correspondence',
+            'country_correspondence',
+            'street_correspondence',
+            'house_number_correspondence',
+            'flat_number_correspondence',
+            'mobile_number_correspondence',
+            'tax_office',
+            'annual_settlement_address',
+            'nfz_branch',
+            'id_data',
+            'id_given_by',
+            'id_date',
+            'is_superuser',
+            'last_login',
+        ];
+    
+        holidayRequestsWorksheet.addRow(holidayRequestsColumns);
+        usersDataWorksheet.addRow(usersDataColumns);
 
-        data.forEach((item) => {
-            const userColumns = Object.values(item.user);
-
+        requests.forEach((item) => {
             const row = [
                 item.id,
                 item.approved,
@@ -303,10 +433,70 @@ const AdminModule: React.FC = () => {
                 item.start_date,
                 item.end_date,
                 item.message,
-                ...userColumns
+                item.user.first_name,
+                item.user.last_name,
+                item.user.email
             ];
-
-            worksheet.addRow(row);
+    
+            holidayRequestsWorksheet.addRow(row);
+        });
+    
+        // Dodaj dane użytkowników
+        users.forEach((user) => {
+            const row = [
+                user.id,
+                user.first_name,
+                user.second_name,
+                user.last_name,
+                user.birth_date,
+                user.email,
+                user.age,
+                user.employment_start_date,
+                user.employment_end_date,
+                user.role,
+                user.education,
+                user.city_permanent_residence,
+                user.postal_code_permanent_residence,
+                user.post_permanent_residence,
+                user.municipal_commune_permanent_residence,
+                user.voivodeship_permanent_residence,
+                user.country_permanent_residence,
+                user.street_permanent_residence,
+                user.house_number_permanent_residence,
+                user.flat_number_permanent_residence,
+                user.mobile_number_permanent_residence,
+                user.city_second_residence,
+                user.postal_code_second_residence,
+                user.post_second_residence,
+                user.municipal_commune_second_residence,
+                user.voivodeship_second_residence,
+                user.country_second_residence,
+                user.correspondence_address,
+                user.street_second_residence,
+                user.house_number_second_residence,
+                user.flat_number_second_residence,
+                user.mobile_number_second_residence,
+                user.city_correspondence,
+                user.postal_code_correspondence,
+                user.post_correspondence,
+                user.municipal_commune_correspondence,
+                user.voivodeship_correspondence,
+                user.country_correspondence,
+                user.street_correspondence,
+                user.house_number_correspondence,
+                user.flat_number_correspondence,
+                user.mobile_number_correspondence,
+                user.tax_office,
+                user.annual_settlement_address,
+                user.nfz_branch,
+                user.id_data,
+                user.id_given_by,
+                user.id_date,
+                user.is_superuser,
+                user.last_login
+            ];
+    
+            usersDataWorksheet.addRow(row);
         });
     
         const buffer = await workbook.xlsx.writeBuffer();
@@ -314,14 +504,14 @@ const AdminModule: React.FC = () => {
         const url = URL.createObjectURL(blob);
     
         const a = document.createElement('a');
-
         a.href = url;
-        a.download = 'WnioskiUrlopowe.xlsx';
+        a.download = 'Wnioski_Urlopowe_i_Dane_Uzytkownikow.xlsx';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-    }
+    };
+    
 
     const handleToggleModal = (setter: React.Dispatch<React.SetStateAction<boolean>>) => {
         setter(prev => !prev)
@@ -334,6 +524,10 @@ const AdminModule: React.FC = () => {
     useEffect(() => {
         fetchUsers()
     }, [])
+
+    useEffect(() => {
+        console.log(users)
+    }, [users])
 
     useEffect(() => {
         fetchHolidayTypes()
@@ -451,7 +645,7 @@ const AdminModule: React.FC = () => {
                     <Modal modalTitle={'Lista wniosków urlopowych'} modalContent={requestsList} toggleModal={() => handleToggleModal(setIsRequestModalOpen)} />
                 )}
                 {isExportModalOpen && (
-                    <Modal modalTitle={'Tryb eksportu wniosków urlopowych dla HR'} modalContent={requestsList} toggleModal={() => handleToggleModal(setIsExportModalOpen)} handleExcel={() => exportToExcel(requestsList)} />
+                    <Modal modalTitle={'Tryb eksportu wniosków urlopowych dla HR'} modalContent={requestsList} toggleModal={() => handleToggleModal(setIsExportModalOpen)} handleExcel={() => exportToExcel(requestsList, users as IUserData[])} />
                 )}
                 {isUsersModalOpen && (
                     <Modal modalTitle={'Lista uzytkowników w systemie'} modalContent={users} toggleModal={() => handleToggleModal(setIsUsersModalOpen)} />
