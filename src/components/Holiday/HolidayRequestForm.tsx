@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import { sendNotifications } from "../../store/actions/action-creators";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 import { IHolidayType } from "../Admin/AdminModule";
 import { handleGetCurrentTime } from "../Reports/UserDataChange";
 import uuid from "react-uuid";
@@ -186,60 +187,62 @@ const HolidayRequestForm: React.FC = () => {
     
 
     return (
-        <div className={classes['main']}>
-            <Nav />
-            <section className={classes['holidayRequest__container']}>
-                <div className={classes['holidayRequest__header']}>
-                    <h1>Wniosek urlopowy - dodawanie rekordu</h1>
-                </div>
-                <div className={classes['holidayRequest__data_container']}>
-                    <div className={classes['holidayRequest__field_container']}>
-                        <label>Data od: </label>
-                        <input
-                            type="date"
-                            className={classes['holidayRequest__input']}
-                            value={startDate}
-                            onChange={handleStartDateChange}
-                            max={endDate}
-                        />
+        <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}>
+            <div className={classes['main']}>
+                <Nav />
+                <section className={classes['holidayRequest__container']}>
+                    <div className={classes['holidayRequest__header']}>
+                        <h1>Wniosek urlopowy - dodawanie rekordu</h1>
                     </div>
-                    <div className={classes['holidayRequest__field_container']}>
-                        <label>Data do: </label>
-                        <input
-                            type="date"
-                            className={classes['holidayRequest__input']}
-                            value={endDate}
-                            onChange={handleEndDateChange}
-                            min={startDate}
-                        />
+                    <div className={classes['holidayRequest__data_container']}>
+                        <div className={classes['holidayRequest__field_container']}>
+                            <label>Data od: </label>
+                            <input
+                                type="date"
+                                className={classes['holidayRequest__input']}
+                                value={startDate}
+                                onChange={handleStartDateChange}
+                                max={endDate}
+                            />
+                        </div>
+                        <div className={classes['holidayRequest__field_container']}>
+                            <label>Data do: </label>
+                            <input
+                                type="date"
+                                className={classes['holidayRequest__input']}
+                                value={endDate}
+                                onChange={handleEndDateChange}
+                                min={startDate}
+                            />
+                        </div>
+                        <div className={classes['holidayRequest__field_container']}>
+                            <label>Ilość dni: </label>
+                            <input
+                                type="text"
+                                disabled
+                                className={classes['holidayRequest__input']}
+                                value={differenceInDays !== null ? differenceInDays : ''}
+                            />
+                        </div>
+                        <div className={classes['holidayRequest__months-dropdown']}>
+                            <label htmlFor="months">Typ urlopu:</label>
+                            <select id="months" name="holiday_types" onChange={handleHolidayTypes} ref={selectedHolidayTypesRef}>
+                                <option value="">Wybierz typ urlopu</option>
+                                {holidayTypes.map((holidayType) => (
+                                    <option key={holidayType.id} value={holidayType.label}>
+                                        {holidayType.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
-                    <div className={classes['holidayRequest__field_container']}>
-                        <label>Ilość dni: </label>
-                        <input
-                            type="text"
-                            disabled
-                            className={classes['holidayRequest__input']}
-                            value={differenceInDays !== null ? differenceInDays : ''}
-                        />
+                    <div className={classes['holidayRequest__button_container']}>
+                        <Button type="submit" background="white" onClick={handleSubmit} text="Wykonaj" />
                     </div>
-                    <div className={classes['holidayRequest__months-dropdown']}>
-                        <label htmlFor="months">Typ urlopu:</label>
-                        <select id="months" name="holiday_types" onChange={handleHolidayTypes} ref={selectedHolidayTypesRef}>
-                            <option value="">Wybierz typ urlopu</option>
-                            {holidayTypes.map((holidayType) => (
-                                <option key={holidayType.id} value={holidayType.label}>
-                                    {holidayType.label}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                </div>
-                <div className={classes['holidayRequest__button_container']}>
-                    <Button type="submit" background="white" onClick={handleSubmit} text="Wykonaj" />
-                </div>
-            </section>
-            <Background />
-        </div>
+                </section>
+                <Background />
+            </div>
+        </motion.div>
     )
 }
 

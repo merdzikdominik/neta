@@ -158,6 +158,9 @@ const Nav: React.FC = () => {
                                     <Link to='/urlopy/wnioski-urlopowe'><i className="ion-ios-color-filter-outline"></i>Dodaj wniosek urlopowy</Link>
                                 </li>
                                 <li>
+                                    <Link to='/urlopy/plan-urlopu'><i className="ion-ios-color-filter-outline"></i>Dodaj wniosek o plan urlopowy</Link>
+                                </li>
+                                <li>
                                     <Link to='/urlopy/lista-wnioskow'><i className="ion-ios-color-filter-outline"></i>Lista wniosków</Link>
                                 </li>
                                 <li>

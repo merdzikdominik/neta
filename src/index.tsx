@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
+import { motion } from 'framer-motion';
 import store from './store/index';
 import ReactDOM from 'react-dom/client';
 import './index.css';

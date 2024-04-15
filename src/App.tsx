@@ -7,7 +7,7 @@ import Reports from './components/Reports/Reports'
 import Holiday from './components/Holiday/Holiday'
 import Login from './components/Login/Login'
 import Register from './components/Registration/Register'
-import HolidaySchedule from './components/Reports/HolidaySchedule'
+import HolidaySchedule from './components/Holiday/HolidaySchedule'
 import EmployeeFileData from './components/EmployeeFile/EmployeeFileData'
 import HolidayRequestForm from './components/Holiday/HolidayRequestForm'
 import HolidayRequestList from './components/Holiday/HolidayRequestList'
@@ -48,12 +48,12 @@ function App() {
         <Route path='/kartoteka-pracownika/zarzadzanie-kontami' element={<ProtectedRoute element={<AccountManagement />} authenticated={hasValidToken} />} />
         <Route path='/urlopy' element={<ProtectedRoute element={<Holiday />} authenticated={hasValidToken} />} />
         <Route path='/urlopy/wnioski-urlopowe' element={<ProtectedRoute element={<HolidayRequestForm />} authenticated={hasValidToken} />} />
+        <Route path='/urlopy/plan-urlopu' element={<ProtectedRoute element={<HolidaySchedule />} authenticated={hasValidToken} />} />
         <Route path='/urlopy/lista-wnioskow' element={<ProtectedRoute element={<HolidayRequestList />} authenticated={hasValidToken} />} />
         <Route path='/urlopy/roczne-plany-urlopowe' element={<ProtectedRoute element={<HolidayYearPlans />} authenticated={hasValidToken} />} />
         <Route path='/rejestracja' element={<ProtectedRoute element={<Register />} authenticated={hasValidToken} />} />
         <Route path='/raportowanie' element={<ProtectedRoute element={<Reports />} authenticated={hasValidToken} />} />
         <Route path='/raportowanie/zmiana-danych' element={<ProtectedRoute element={<UserDataChange />} authenticated={hasValidToken} />} />
-        <Route path='/raportowanie/data-urlopu' element={<ProtectedRoute element={<HolidaySchedule />} authenticated={hasValidToken} />} />
         <Route path='/kalendarz' element={<ProtectedRoute element={<CalendarHolder />} authenticated={hasValidToken} />} />
       </Routes>
     </div>

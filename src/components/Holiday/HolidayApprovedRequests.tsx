@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { IHolidayRequest, IRequestUser } from "../Admin/AdminModule";
 import CalendarHolder from "../Utils/CalendarHolder";
 import classes from './HolidayApprovedRequests.module.scss';
-import { IHolidayRequest, IRequestUser } from "../Admin/AdminModule";
 
 export interface IHoliday {
     dateFrom: string;
@@ -223,7 +223,7 @@ const HolidayApprovedRequests: React.FC = () => {
     
         return merged;
     };
-    
+
     useEffect(() => {   
         console.log(approvedDates);
     }, [approvedDates]);

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import Nav from '../Utils/Nav';
 import Background from '../Utils/Background';
 import classes from './EmployeeFileData.module.scss';
@@ -204,23 +205,25 @@ const EmployeeFileData: React.FC = () => {
     }, []);
 
     return (
-        <div className={classes['main']}>
-            <Nav />
-            <section className={classes['employeeFileData__container']}>
-                <div className={classes['employeeFileData__header']}>
-                    <h1>Kartoteka Pracownika</h1>
-                </div>
-                <div className={classes['employeeFileData__data_container']}>
-                    {Object.entries(userInfo).map(([field, content]) => (
-                        <div className={classes['employeeFileData__content']} key={field}>
-                            <span className={classes['employeeFileData__field-title']}>{fieldsMap[field as keyof IUserInfo]}: </span>
-                            <span className={classes['employeeFileData__element-content']}>{content}</span>
-                        </div>
-                    ))}
-                </div>
-            </section>
-            <Background />
-        </div>
+        <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}>
+            <div className={classes['main']}>
+                <Nav />
+                <section className={classes['employeeFileData__container']}>
+                    <div className={classes['employeeFileData__header']}>
+                        <h1>Kartoteka Pracownika</h1>
+                    </div>
+                    <div className={classes['employeeFileData__data_container']}>
+                        {Object.entries(userInfo).map(([field, content]) => (
+                            <div className={classes['employeeFileData__content']} key={field}>
+                                <span className={classes['employeeFileData__field-title']}>{fieldsMap[field as keyof IUserInfo]}: </span>
+                                <span className={classes['employeeFileData__element-content']}>{content}</span>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+                <Background />
+            </div>
+        </motion.div>
     );
 };
 

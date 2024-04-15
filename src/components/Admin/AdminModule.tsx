@@ -4,6 +4,7 @@ import { toast } from "react-toastify"
 import { INotification } from "../../store/types"
 import { IUserInfo } from "../EmployeeFile/EmployeeFileData"
 import { IUserDataChangeNotification } from "../Utils/Modal"
+import { motion } from "framer-motion"
 import * as ExcelJS from 'exceljs'
 import Nav from "../Utils/Nav"
 import Background from "../Utils/Background"
@@ -284,10 +285,6 @@ const AdminModule: React.FC = () => {
         fetchUserDataChangeRequests()
     }, [])
 
-    // useEffect(() => {
-    //     console.log(userDataChangeRequests)
-    // }, [userDataChangeRequests])
-
     const exportToExcel = async (data: IHolidayRequest[]) => {
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Wnioski_Urlopowe');
@@ -404,70 +401,72 @@ const AdminModule: React.FC = () => {
     ]
 
     return (
-        <div className={classes['main']}>
-            <Nav />
-            <section className={classes['adminModule__container']}>
-                <div className={classes['adminModule__grid-container']}>
-                    <div className={classes['adminModule__left-grid-column']}>
-                        <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsRequestModalOpen(true)}><span>Lista wniosków urlopowych</span></div>
-                        <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsUsersModalOpen(true)}><span>Lista uzytkownikow</span></div>
-                    </div>
-                    <div className={classes['adminModule__right-grid-column']}>
-                        <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsHolidayTypeModalOpen(true)}><span>Zarządzanie rodzajami urlopów</span></div>
-                        <div className={`${classes['adminModule__exmaple-blocks-notifications']} ${notifications.length > 0 ? classes['visible'] : classes['hidden'] }`} onClick={() => setIsHolidayNotificationModalOpen(true)}>
-                            <span>Powiadomienia</span>
+        <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}>
+            <div className={classes['main']}>
+                <Nav />
+                <section className={classes['adminModule__container']}>
+                    <div className={classes['adminModule__grid-container']}>
+                        <div className={classes['adminModule__left-grid-column']}>
+                            <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsRequestModalOpen(true)}><span>Lista wniosków urlopowych</span></div>
+                            <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsUsersModalOpen(true)}><span>Lista uzytkownikow</span></div>
+                        </div>
+                        <div className={classes['adminModule__right-grid-column']}>
+                            <div className={classes['adminModule__exmaple-blocks']} onClick={() => setIsHolidayTypeModalOpen(true)}><span>Zarządzanie rodzajami urlopów</span></div>
+                            <div className={`${classes['adminModule__exmaple-blocks-notifications']} ${notifications.length > 0 ? classes['visible'] : classes['hidden'] }`} onClick={() => setIsHolidayNotificationModalOpen(true)}>
+                                <span>Powiadomienia</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className={classes['adminModule__excel-button-container']}>
-                    <div className={classes['adminModule__excel-button']} onClick={() => setIsExportModalOpen(true)}><span>Eksport danych dla HR</span></div>
-                    <div className={classes['adminModule__excel-button']} onClick={() => setIsUserDataChangeNotificationModalOpen(true)}><span>Wnioski uzytkowników o zmianę danych ewidencyjnych</span></div>
-                </div>
-                <div className={classes['adminModule__charts-container']}>
-                    <div className={classes['chart-container']}>
-                        <Chart 
-                            chartType="PieChart"
-                            data={holidayRequestData}
-                            options={OPTIONS_PIE_CHART}
-                            width="100%"
-                            height="100%"
-                            loader={<Spinner />}
-                            style={{ margin: "0 auto" }}
-                        />
+                    <div className={classes['adminModule__excel-button-container']}>
+                        <div className={classes['adminModule__excel-button']} onClick={() => setIsExportModalOpen(true)}><span>Eksport danych dla HR</span></div>
+                        <div className={classes['adminModule__excel-button']} onClick={() => setIsUserDataChangeNotificationModalOpen(true)}><span>Wnioski uzytkowników o zmianę danych ewidencyjnych</span></div>
                     </div>
-                    <div className={classes['chart-container']}>
-                        <Chart
-                            chartType="BarChart"
-                            data={barChartData}
-                            options={OPTIONS_BAR_CHART}
-                            width="100%"
-                            height="100%"
-                            loader={<Spinner />}
-                            style={{ margin: "0 auto" }}
-                        />
+                    <div className={classes['adminModule__charts-container']}>
+                        <div className={classes['chart-container']}>
+                            <Chart 
+                                chartType="PieChart"
+                                data={holidayRequestData}
+                                options={OPTIONS_PIE_CHART}
+                                width="100%"
+                                height="100%"
+                                loader={<Spinner />}
+                                style={{ margin: "0 auto" }}
+                            />
+                        </div>
+                        <div className={classes['chart-container']}>
+                            <Chart
+                                chartType="BarChart"
+                                data={barChartData}
+                                options={OPTIONS_BAR_CHART}
+                                width="100%"
+                                height="100%"
+                                loader={<Spinner />}
+                                style={{ margin: "0 auto" }}
+                            />
+                        </div>
                     </div>
-                </div>
-            </section>
-            <Background />
-            {isRequestsModalOpen && (
-                <Modal modalTitle={'Lista wniosków urlopowych'} modalContent={requestsList} toggleModal={() => handleToggleModal(setIsRequestModalOpen)} />
-            )}
-            {isExportModalOpen && (
-                <Modal modalTitle={'Tryb eksportu wniosków urlopowych dla HR'} modalContent={requestsList} toggleModal={() => handleToggleModal(setIsExportModalOpen)} handleExcel={() => exportToExcel(requestsList)} />
-            )}
-            {isUsersModalOpen && (
-                <Modal modalTitle={'Lista uzytkowników w systemie'} modalContent={users} toggleModal={() => handleToggleModal(setIsUsersModalOpen)} />
-            )}
-            {isHolidayTypeModalOpen && (
-                <Modal modalTitle={'Rodzaje urlopów'} modalContent={holidayTypes} toggleModal={() => handleToggleModal(setIsHolidayTypeModalOpen)} />
-            )}
-            {isHolidayNotificationModalOpen && (
-                <Modal modalTitle={'Powiadomienia'} modalContent={notifications} toggleModal={handleHolidayNotificationsModal} />
-            )}
-            {isUserDataChangeNotificationModalOpen && (
-                <Modal modalTitle={'Wnioski uzytkowników o zmianę danych ewidencyjnych'} modalContent={userDataChangeRequests} toggleModal={handleUserDataChangeNotificationsModal} />
-            )}
-        </div>
+                </section>
+                <Background />
+                {isRequestsModalOpen && (
+                    <Modal modalTitle={'Lista wniosków urlopowych'} modalContent={requestsList} toggleModal={() => handleToggleModal(setIsRequestModalOpen)} />
+                )}
+                {isExportModalOpen && (
+                    <Modal modalTitle={'Tryb eksportu wniosków urlopowych dla HR'} modalContent={requestsList} toggleModal={() => handleToggleModal(setIsExportModalOpen)} handleExcel={() => exportToExcel(requestsList)} />
+                )}
+                {isUsersModalOpen && (
+                    <Modal modalTitle={'Lista uzytkowników w systemie'} modalContent={users} toggleModal={() => handleToggleModal(setIsUsersModalOpen)} />
+                )}
+                {isHolidayTypeModalOpen && (
+                    <Modal modalTitle={'Rodzaje urlopów'} modalContent={holidayTypes} toggleModal={() => handleToggleModal(setIsHolidayTypeModalOpen)} />
+                )}
+                {isHolidayNotificationModalOpen && (
+                    <Modal modalTitle={'Powiadomienia'} modalContent={notifications} toggleModal={handleHolidayNotificationsModal} />
+                )}
+                {isUserDataChangeNotificationModalOpen && (
+                    <Modal modalTitle={'Wnioski uzytkowników o zmianę danych ewidencyjnych'} modalContent={userDataChangeRequests} toggleModal={handleUserDataChangeNotificationsModal} />
+                )}
+            </div>
+        </motion.div>
     )
 }
 

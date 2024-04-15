@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { IDates } from '../Reports/HolidaySchedule';
-// import { IHolidayRequest } from '../Admin/AdminModule';
+import { IDates } from './HolidaySchedule';
+import { motion } from 'framer-motion';
 import Nav from "../Utils/Nav";
 import Background from '../Utils/Background';
 import CalendarHolder from '../Utils/CalendarHolder';
@@ -42,6 +42,7 @@ const HolidayYearPlans: React.FC = () => {
     }, [])
 
     return (
+      <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}>
         <div className={classes['main']}>
             <Nav />
             <section className={classes['holidayYearPlans__container']}>
@@ -49,6 +50,7 @@ const HolidayYearPlans: React.FC = () => {
             </section>
             <Background />
         </div>
+      /</motion.div>
     )
 }
 

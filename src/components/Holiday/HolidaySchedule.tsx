@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import { IHolidayRequest } from "../Utils/CalendarHolder";
 import { IHolidayRequest } from "../Admin/AdminModule";
+import { IHoliday } from "./HolidayApprovedRequests";
 import Nav from "../Utils/Nav";
 import Button from "../Utils/Button";
 import Background from "../Utils/Background";

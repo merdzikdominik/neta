@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { IUserInfo } from '../EmployeeFile/EmployeeFileData'
 import { toast } from 'react-toastify'
 import { sendNotifications } from '../../store/actions/action-creators'
+import { motion } from 'framer-motion'
 import uuid from 'react-uuid'
 import ResidenceForm from './ResidenceForm'
 import Nav from '../Utils/Nav'
@@ -438,131 +439,133 @@ const UserDataChange: React.FC = () => {
     }    
 
     return (
-        <div className={classes['main']}>
-            <Nav />
-            <section className={classes['userDataChange__container']}>
-                <div className={classes['userDataChange__content']}>
-                    <div className={classes['userDataChange__header']}>
-                        <h1>WNIOSEK ZMIANY DANYCH IDENTYFIKACYJNYCH I/LUB EWIDENCYJNYCH</h1>
-                    </div>
-                    <div className={classes['userDataChange__container-data']}>
-                        <span><b>Imię: </b>{ userInfo.first_name }</span>
-                        <span><b>Nazwisko: </b>{ userInfo.last_name }</span>
-                        <span><b>Stanowisko pracy: </b>{ userInfo.role }</span>
+        <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}>
+            <div className={classes['main']}>
+                <Nav />
+                <section className={classes['userDataChange__container']}>
+                    <div className={classes['userDataChange__content']}>
+                        <div className={classes['userDataChange__header']}>
+                            <h1>WNIOSEK ZMIANY DANYCH IDENTYFIKACYJNYCH I/LUB EWIDENCYJNYCH</h1>
+                        </div>
+                        <div className={classes['userDataChange__container-data']}>
+                            <span><b>Imię: </b>{ userInfo.first_name }</span>
+                            <span><b>Nazwisko: </b>{ userInfo.last_name }</span>
+                            <span><b>Stanowisko pracy: </b>{ userInfo.role }</span>
 
-                        <span><b>Proszę dokonać zmian następujących danych ewidencyjnych/identyfikacyjnych (wypełnić tylko pola które ulegają zmianie): </b></span> 
+                            <span><b>Proszę dokonać zmian następujących danych ewidencyjnych/identyfikacyjnych (wypełnić tylko pola które ulegają zmianie): </b></span> 
 
-                        <div className={classes['reports-data-change__form']}>
-                            <div>
-                                <label>
-                                    <b>1. Nazwisko</b>
-                                    <input type="text" placeholder="Wprowadź nazwisko" name="surname" onChange={handleOverallForm} />
-                                </label>
-                            </div>
-
-                            <div className={classes['userDataChange__checkbox']}>
-                                <div className={classes['userDataChange__checkbox-field-label']}>
-                                    <b>2. Miejsce stałego zameldowania </b><input type="checkbox" checked={isCheckedFirstResidence} name="firstResidenceChecked" 
-                                    onChange={handleCheckboxFirstResidenceChange} />
-                                </div>
-                                { isCheckedFirstResidence ? <ResidenceForm onChange={handlePermanentUserResidence} /> : null }
-                            </div>
-
-                            <div className={classes['userDataChange__checkbox']}>
-                                <div className={classes['userDataChange__checkbox-field-label']}>
-                                    <b>3. Adres zamieszkania (jeśli jest iny niż adres stałego zameldowania)</b> <input type="checkbox" checked={isCheckedSecondResidence} name="secondResidenceChecked" onChange={handleCheckboxSecondResidenceChange} />
+                            <div className={classes['reports-data-change__form']}>
+                                <div>
+                                    <label>
+                                        <b>1. Nazwisko</b>
+                                        <input type="text" placeholder="Wprowadź nazwisko" name="surname" onChange={handleOverallForm} />
+                                    </label>
                                 </div>
 
-                                { isCheckedSecondResidence ? <ResidenceForm onChange={handleSecondUserResidence} /> : null }
-                            </div>
-
-                            <b>4. Adres do korespondencji</b>
-
-                            <div>
-                                <div className={classes['checkbox-wrapper']}>
-                                    <input 
-                                        type="radio" 
-                                        value="taki, jak adres stałego zameldowania"
-                                        ref={checkboxRadioCorrespondenceRef}
-                                        name="correspondence" 
-                                        onChange={handleCheckboxRadioCorrespondenceChange} 
-                                    /> 
-                                    <label>taki, jak adres stałego zameldowania</label>
-                                    <input 
-                                        type="radio" 
-                                        value="taki, jak adres zamieszkania"
-                                        ref={checkboxRadioCorrespondenceRef}
-                                        name="correspondence" 
-                                        onChange={handleCheckboxRadioCorrespondenceChange} 
-                                    /> 
-                                    <label>taki, jak adres zamieszkania</label>
-                                    <input 
-                                        type="radio" 
-                                        value="inny (kliknij, aby wypełnić)"
-                                        ref={checkboxRadioCorrespondenceRef}
-                                        name="correspondence" 
-                                        onChange={handleCheckboxRadioCorrespondenceChange} 
-                                    /> 
-                                    <label>inny (kliknij, aby wypełnić)</label>
+                                <div className={classes['userDataChange__checkbox']}>
+                                    <div className={classes['userDataChange__checkbox-field-label']}>
+                                        <b>2. Miejsce stałego zameldowania </b><input type="checkbox" checked={isCheckedFirstResidence} name="firstResidenceChecked" 
+                                        onChange={handleCheckboxFirstResidenceChange} />
+                                    </div>
+                                    { isCheckedFirstResidence ? <ResidenceForm onChange={handlePermanentUserResidence} /> : null }
                                 </div>
-                                { isCheckedCorrespondenceAddressAnother ? <ResidenceForm onChange={handleCorrespondenceUser} /> : null }
 
-                            </div>
-                            
-                            <div className={classes['userDataChange__tax-office']}>
-                                <b>5. Urząd skarbowy (nazwa i adres)</b>
-                                <input type="text" required name="tax_office" placeholder="Wprowadź nazwę urzędu" onChange={handleOverallForm} />
-                            </div>
-                            <div>
-                                <b>6. Adres, który ma być uwzględniony w rozliczeniu rocznym to:</b>
-                                <div className={classes['checkbox-wrapper']}>
-                                    <input 
-                                        type="radio"
-                                        ref={checkboxRadioAnnualRef}
-                                        value="adres stałego zameldowania"
-                                        name="annual" 
-                                        onChange={handleCheckboxRadioAnnualChange} 
-                                    /> 
-                                    <label>adres stałego zameldowania</label>
-                                    <input 
-                                        type="radio" 
-                                        ref={checkboxRadioAnnualRef}
-                                        value="adres zamieszkania"
-                                        name="annual" 
-                                        onChange={handleCheckboxRadioAnnualChange} 
-                                    /> 
-                                    <label>adres zamieszkania</label>
-                                    <input 
-                                        type="radio" 
-                                        ref={checkboxRadioAnnualRef}
-                                        value="adres do korespondencji"
-                                        name="annual" 
-                                        onChange={handleCheckboxRadioAnnualChange}
-                                    /> 
-                                    <label>adres do korespondencji</label>
+                                <div className={classes['userDataChange__checkbox']}>
+                                    <div className={classes['userDataChange__checkbox-field-label']}>
+                                        <b>3. Adres zamieszkania (jeśli jest iny niż adres stałego zameldowania)</b> <input type="checkbox" checked={isCheckedSecondResidence} name="secondResidenceChecked" onChange={handleCheckboxSecondResidenceChange} />
+                                    </div>
+
+                                    { isCheckedSecondResidence ? <ResidenceForm onChange={handleSecondUserResidence} /> : null }
                                 </div>
-                            </div>
-                            <div className={classes['userDataChange__nfz']}>
-                                7. <b>Oddział NFZ</b>
-                                <input type="text" name="nfz_branch" placeholder="Wprowadź oddział" onChange={handleOverallForm}/>
-                            </div>
-                            <div className={classes['userDataChange__text-input-wrap']}>
-                                8. <b>Seria i numer dowodu osobistego</b>
-                                <input type="text" name="id_data" placeholder="Wprowadź serię dowodu" onChange={handleOverallForm}/>
-                                Wydany przez
-                                <input type="text" name="id_given_by" placeholder="Wprowadź organ" onChange={handleOverallForm}/>
-                                w dniu
-                                <input type="date" name="id_date" onChange={handleOverallForm} />
+
+                                <b>4. Adres do korespondencji</b>
+
+                                <div>
+                                    <div className={classes['checkbox-wrapper']}>
+                                        <input 
+                                            type="radio" 
+                                            value="taki, jak adres stałego zameldowania"
+                                            ref={checkboxRadioCorrespondenceRef}
+                                            name="correspondence" 
+                                            onChange={handleCheckboxRadioCorrespondenceChange} 
+                                        /> 
+                                        <label>taki, jak adres stałego zameldowania</label>
+                                        <input 
+                                            type="radio" 
+                                            value="taki, jak adres zamieszkania"
+                                            ref={checkboxRadioCorrespondenceRef}
+                                            name="correspondence" 
+                                            onChange={handleCheckboxRadioCorrespondenceChange} 
+                                        /> 
+                                        <label>taki, jak adres zamieszkania</label>
+                                        <input 
+                                            type="radio" 
+                                            value="inny (kliknij, aby wypełnić)"
+                                            ref={checkboxRadioCorrespondenceRef}
+                                            name="correspondence" 
+                                            onChange={handleCheckboxRadioCorrespondenceChange} 
+                                        /> 
+                                        <label>inny (kliknij, aby wypełnić)</label>
+                                    </div>
+                                    { isCheckedCorrespondenceAddressAnother ? <ResidenceForm onChange={handleCorrespondenceUser} /> : null }
+
+                                </div>
+                                
+                                <div className={classes['userDataChange__tax-office']}>
+                                    <b>5. Urząd skarbowy (nazwa i adres)</b>
+                                    <input type="text" required name="tax_office" placeholder="Wprowadź nazwę urzędu" onChange={handleOverallForm} />
+                                </div>
+                                <div>
+                                    <b>6. Adres, który ma być uwzględniony w rozliczeniu rocznym to:</b>
+                                    <div className={classes['checkbox-wrapper']}>
+                                        <input 
+                                            type="radio"
+                                            ref={checkboxRadioAnnualRef}
+                                            value="adres stałego zameldowania"
+                                            name="annual" 
+                                            onChange={handleCheckboxRadioAnnualChange} 
+                                        /> 
+                                        <label>adres stałego zameldowania</label>
+                                        <input 
+                                            type="radio" 
+                                            ref={checkboxRadioAnnualRef}
+                                            value="adres zamieszkania"
+                                            name="annual" 
+                                            onChange={handleCheckboxRadioAnnualChange} 
+                                        /> 
+                                        <label>adres zamieszkania</label>
+                                        <input 
+                                            type="radio" 
+                                            ref={checkboxRadioAnnualRef}
+                                            value="adres do korespondencji"
+                                            name="annual" 
+                                            onChange={handleCheckboxRadioAnnualChange}
+                                        /> 
+                                        <label>adres do korespondencji</label>
+                                    </div>
+                                </div>
+                                <div className={classes['userDataChange__nfz']}>
+                                    7. <b>Oddział NFZ</b>
+                                    <input type="text" name="nfz_branch" placeholder="Wprowadź oddział" onChange={handleOverallForm}/>
+                                </div>
+                                <div className={classes['userDataChange__text-input-wrap']}>
+                                    8. <b>Seria i numer dowodu osobistego</b>
+                                    <input type="text" name="id_data" placeholder="Wprowadź serię dowodu" onChange={handleOverallForm}/>
+                                    Wydany przez
+                                    <input type="text" name="id_given_by" placeholder="Wprowadź organ" onChange={handleOverallForm}/>
+                                    w dniu
+                                    <input type="date" name="id_date" onChange={handleOverallForm} />
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className={classes['userDataChange__button_container']}>
-                    <Button type="button" background="white" text="Zatwierdź zmiany" onClick={() => handleSubmit()}/>
-                </div>
-            </section>
-            <Background />
-        </div>
+                    <div className={classes['userDataChange__button_container']}>
+                        <Button type="button" background="white" text="Zatwierdź zmiany" onClick={() => handleSubmit()}/>
+                    </div>
+                </section>
+                <Background />
+            </div>
+        </motion.div>
     )
 }
 

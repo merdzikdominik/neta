@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Background from './Utils/Background';
 import classes from './MainPage.module.css';
 
@@ -37,22 +38,28 @@ const MainPage: React.FC = () => {
     
   }, []);
 
+  // initial={{ width: 0 }}
+  // animate={{ width: '100%' }}
+  // exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
+
   return (
-    <main className={classes['main-page']}>
-      <div className={classes['main-page__navigation-button']}>
-        { isAdmin ? <Link to='/modul-administracyjny'>Moduł administracyjny</Link> : ''}
-      </div>
-      <div className={classes['main-page__navigation-button']}>
-        <Link to='/raportowanie'>Raportowanie</Link>
-      </div>
-      <div className={classes['main-page__navigation-button']}>
-        <Link to='/kartoteka-pracownika'>Kartoteka Pracownika</Link>
-      </div>
-      <div className={classes['main-page__navigation-button']}>
-        <Link to='/urlopy'>Urlopy</Link>
-      </div>
-      <Background />
-    </main>
+    <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}>
+      <main className={classes['main-page']}>
+        <div className={classes['main-page__navigation-button']}>
+          { isAdmin ? <Link to='/modul-administracyjny'>Moduł administracyjny</Link> : ''}
+        </div>
+        <div className={classes['main-page__navigation-button']}>
+          <Link to='/raportowanie'>Raportowanie</Link>
+        </div>
+        <div className={classes['main-page__navigation-button']}>
+          <Link to='/kartoteka-pracownika'>Kartoteka Pracownika</Link>
+        </div>
+        <div className={classes['main-page__navigation-button']}>
+          <Link to='/urlopy'>Urlopy</Link>
+        </div>
+        <Background />
+      </main>
+    </motion.div>
   );
 };
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react"
+import { IHolidayRequest } from "../Admin/AdminModule"
+import { motion } from "framer-motion"
 import Nav from "../Utils/Nav"
 import Background from "../Utils/Background"
 import ListRow from "../Utils/HolidayRequestListRow"
 import classes from './HolidayRequestList.module.scss'
-import { IHolidayRequest } from "../Admin/AdminModule"
 
 const HolidayRequestList: React.FC = () => {
     const [holidayRequests, setHolidayRequests] = useState<IHolidayRequest[]>([])
@@ -38,28 +39,30 @@ const HolidayRequestList: React.FC = () => {
     }, [])
 
     return (
-        <div className={classes['main']}>
-            <Nav />
-            <section className={classes['holidayRequestList__container']}>
-                <div className={classes['holidayRequestList__header']}>
-                    <h1>Twoje wnioski urlopowe</h1>
-                </div>
-                <div className={classes['holidayRequestList__data_container']}>
-                    <div className={classes['holidayRequestList__content']}>
-                        {holidayRequests.length === 0 
-                        ? <div className={classes['holidayRequestList__no-requests-container']}><span>BRAK WNIOSKOW URLOPOWYCH</span></div> 
-                        : holidayRequests.map(request => (
-                            <ListRow 
-                                key={request.id}
-                                userInfo={request.user}
-                                requestInfo={request}
-                            />
-                        ))}
+        <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}>
+            <div className={classes['main']}>
+                <Nav />
+                <section className={classes['holidayRequestList__container']}>
+                    <div className={classes['holidayRequestList__header']}>
+                        <h1>Twoje wnioski urlopowe</h1>
                     </div>
-                </div>
-            </section>
-            <Background />
-        </div>
+                    <div className={classes['holidayRequestList__data_container']}>
+                        <div className={classes['holidayRequestList__content']}>
+                            {holidayRequests.length === 0 
+                            ? <div className={classes['holidayRequestList__no-requests-container']}><span>BRAK WNIOSKOW URLOPOWYCH</span></div> 
+                            : holidayRequests.map(request => (
+                                <ListRow 
+                                    key={request.id}
+                                    userInfo={request.user}
+                                    requestInfo={request}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+                <Background />
+            </div>
+        </motion.div>
     )
 }
 

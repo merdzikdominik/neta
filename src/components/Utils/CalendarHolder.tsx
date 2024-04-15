@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CalendarUserInfo from './CalendarUserInfo';
 import { IHoliday } from '../Holiday/HolidayApprovedRequests';
 import { IHolidayRequest } from '../Admin/AdminModule';
-import { IDates } from '../Reports/HolidaySchedule';
+import { IDates } from '../Holiday/HolidaySchedule';
 import { Calendar, OnArgs } from 'react-calendar';
 import { isWithinInterval, startOfDay } from 'date-fns';
 import styled from 'styled-components';

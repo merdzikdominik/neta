@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import Nav from '../Utils/Nav'
 import Background from '../Utils/Background'
 import PasswordStrengthBar from 'react-password-strength-bar'
@@ -148,6 +149,7 @@ const AccountManagement: React.FC = () => {
     };
 
     return (
+      <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}>
         <div className={classes['main']}>
             <Nav />
             <section className={classes['accountManagement__container']}>
@@ -207,6 +209,7 @@ const AccountManagement: React.FC = () => {
             </section>
             <Background />
         </div>
+      </motion.div>
     )
 }
 
