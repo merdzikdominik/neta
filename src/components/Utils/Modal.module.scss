@@ -15,6 +15,14 @@
     overflow: scroll;
 }
 
+.modalContent__notification-container {
+    border-bottom: 1px solid #c3c3c3;
+
+    &:last-child {
+        border: none;
+    }
+}
+
 .modal__content-container {
     display: flex;
     flex-direction: column;

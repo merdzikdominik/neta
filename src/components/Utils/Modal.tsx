@@ -147,7 +147,7 @@ const modalMode = (
                         {modalContent.length > 0
                             ? 
                                 (modalContent as INotification[]).map((notification: INotification) => (
-                                <div key={ notification.id }>
+                                <div key={ notification.id } className={classes['modalContent__notification-container']} >
                                     <span>{ notification.label }</span>
                                 </div>
                                 ))
@@ -166,7 +166,7 @@ const modalMode = (
                         {modalContent.length > 0
                             ?
                                 (modalContent as IUserDataChangeNotification[]).map((notification: IUserDataChangeNotification) => (
-                                    <div key={notification.id}>
+                                    <div className={classes['modalContent__notification-container']} key={notification.id}>
                                         <UserDataChangeRequestRow notification={notification} />
                                     </div>
                                 ))

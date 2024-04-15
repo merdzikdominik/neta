@@ -220,17 +220,17 @@ const UserDataChangeRequestRow: React.FC<IUserDataChangeRequestRow> = ({ notific
                     {id_data && <span>Seria dowodu osobistego: <i><b>{id_data}</b></i></span>}
                     { id_given_by && <span>Dowód wydany przez: <i><b>{ id_given_by }</b></i></span> }
                     { id_date && <span>Data wydania dowodu: <i><b>{ id_date }</b></i></span> }
+
+                    {isAdmin 
+                        ?
+                            (<div className={classes['listRow__button-container']}>
+                                <Button type='button' text='Zatwierdzony' onClick={() => handleApprove(id)} disabled={isApproved ? true : false} background='white' />
+                                <Button type='button' text='Odrzuć' onClick={() => handleReject(id)} disabled={isApproved ? false : true} background='white' />
+                            </div>)
+                        : ''
+                    }
                 </div>
             ) : '' }
-            
-            {isAdmin 
-            ?
-            (<div className={classes['listRow__button-container']}>
-                <Button type='button' text='Zatwierdzony' onClick={() => handleApprove(id)} disabled={isApproved ? true : false} background='white' />
-                <Button type='button' text='Odrzuć' onClick={() => handleReject(id)} disabled={isApproved ? false : true} background='white' />
-            </div>)
-            : ''
-            }
         </article>
     )
 }
