@@ -566,12 +566,10 @@ const AdminModule: React.FC = () => {
     }, [])
 
     useEffect(() => {
-        // Ustawienie stanu na false po pewnym czasie, aby zakończyć animację
         const timer = setTimeout(() => {
             setShouldAnimate(false);
-        }, 1000); // Ustaw czas w milisekundach
+        }, 1000);
 
-        // Wyczyszczenie timera, aby uniknąć wycieków pamięci
         return () => clearTimeout(timer);
     }, []);
 
