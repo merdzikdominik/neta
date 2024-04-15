@@ -353,7 +353,6 @@ const AdminModule: React.FC = () => {
         const holidayRequestsWorksheet = workbook.addWorksheet('Wnioski_Urlopowe');
         const usersDataWorksheet = workbook.addWorksheet('Dane uzytkowników');
         
-        // Ustaw kolumny dla arkusza wniosków urlopowych
         const holidayRequestsColumns = [
             'ID',
             'Approved',
@@ -367,7 +366,6 @@ const AdminModule: React.FC = () => {
             'User Email'
         ];
     
-        // Ustaw kolumny dla arkusza danych użytkowników
         const usersDataColumns: string[] = [
             'ID',
             'first_name',
