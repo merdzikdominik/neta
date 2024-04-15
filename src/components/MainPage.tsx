@@ -38,10 +38,6 @@ const MainPage: React.FC = () => {
     
   }, []);
 
-  // initial={{ width: 0 }}
-  // animate={{ width: '100%' }}
-  // exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
-
   return (
     <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}>
       <main className={classes['main-page']}>

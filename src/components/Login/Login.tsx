@@ -59,12 +59,12 @@ const Login: React.FC = () => {
   };
 
   return (
-    <main>
+    <main className={classes['main']}>
       <div className={classes['container']}>
         <div className={classes['left-panel']}>
           <h1 className={classes['left-panel__title']}>Logowanie</h1>
           <p className={classes['left-panel__description']}>
-            Zaloguj się do swojego profilu, aby móc zarządzać swoimi urlopami i danymi osobistymi.
+            Zaloguj się do swojego profilu, aby móc zarządzać swoimi urlopami i danymi ewidencyjnymi.
           </p>
         </div>
         <div className={classes['right-panel']}>

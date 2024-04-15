@@ -55,10 +55,11 @@
     background: #fff;
   }
   
-  main {
+  .main {
     display: flex;
     flex-direction: column;
-  
+    background-color: #00A0E2;
+
     align-items: center;
     justify-content: center;
   
@@ -103,7 +104,7 @@
     font-size: 4.9rem;
     font-weight: 700;
     line-height: 5.5rem;
-    color: white;
+    color: #fff;
     margin-top: 0.7rem;
 
     @media only screen and (max-width: $bp-small-2) {
