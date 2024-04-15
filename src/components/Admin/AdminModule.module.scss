@@ -139,7 +139,9 @@
 
 .chart-container {
     flex-grow: 1;
-    max-width: calc(50% - 20px);
+    width: 100%;
+    min-width: calc(50% - 20px)!important;
+    // max-width: calc(50% - 20px);
     height: 100%;
     z-index: -200;
 }

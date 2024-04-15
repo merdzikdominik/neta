@@ -164,6 +164,7 @@ const AdminModule: React.FC = () => {
     const [isHolidayTypeModalOpen, setIsHolidayTypeModalOpen] = useState<boolean>(false)
     const [isHolidayNotificationModalOpen, setIsHolidayNotificationModalOpen] = useState<boolean>(false)
     const [isUserDataChangeNotificationModalOpen, setIsUserDataChangeNotificationModalOpen] = useState<boolean>(false)
+    const [shouldAnimate, setShouldAnimate] = useState<boolean>(true);
 
     const fetchRequests = async () => {
         const token = localStorage.getItem('authToken')
@@ -565,6 +566,16 @@ const AdminModule: React.FC = () => {
     }, [])
 
     useEffect(() => {
+        // Ustawienie stanu na false po pewnym czasie, aby zakończyć animację
+        const timer = setTimeout(() => {
+            setShouldAnimate(false);
+        }, 1000); // Ustaw czas w milisekundach
+
+        // Wyczyszczenie timera, aby uniknąć wycieków pamięci
+        return () => clearTimeout(timer);
+    }, []);
+
+    useEffect(() => {
         const monthCounts: Record<string, number> = {};
       
         requestsList.forEach((request) => {
@@ -593,7 +604,11 @@ const AdminModule: React.FC = () => {
     ]
 
     return (
-        <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}>
+        <motion.div
+            initial={{ scale: 1 }} // Początkowa naturalna pozycja
+            animate={shouldAnimate ? { scale: [1, 1.1, 1] } : { scale: 1 }} // Animacja skalowania
+            transition={{ duration: 0.5, ease: "easeInOut" }} // Czas trwania animacji i rodzaj interpolacji
+        >
             <div className={classes['main']}>
                 <Nav />
                 <section className={classes['adminModule__container']}>
