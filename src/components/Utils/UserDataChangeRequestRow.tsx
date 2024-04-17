@@ -116,8 +116,34 @@ const UserDataChangeRequestRow: React.FC<IUserDataChangeRequestRow> = ({ notific
 
     }
 
+    const handleDeleteRequest = async (id: string) => {
+        const token = localStorage.getItem('authToken')
+
+        if (token) {
+            try {
+                const responseDelete = await fetch(`http://127.0.0.1:8000/api/data-change-requests-delete/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${token}`
+                    }
+                })
+        
+                if (!responseDelete.ok) {
+                    console.log('Nie usunieto')
+                }
+        
+                notify('accept', 'Usunięto wniosek o zmianie danych ewidencyjnych.')
+            } catch (e) {
+                console.error('Unable to delete data change request')
+            }
+        }
+    }
+
     const handleApprove = async (id: string) => {
         const token = localStorage.getItem('authToken')
+        
+        //TODO: add remove notification after approving
 
         try {
             const response = await fetch(`http://127.0.0.1:8000/api/approve_data_change_request/${id}`, {
@@ -133,7 +159,24 @@ const UserDataChangeRequestRow: React.FC<IUserDataChangeRequestRow> = ({ notific
                 console.log('Pomyslnie zatwierdzono wniosek')
 
                 notify('accept', 'Pomyslnie zatwierdzono wniosek')
+
+                handleDeleteRequest(id)
                 handleUpdateUserData()
+
+
+                // const responseDelete = await fetch(`http://127.0.0.1:8000/api/data-change-requests-delete/${id}`, {
+                //     method: 'DELETE',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //         'Authorization': `Token ${token}`
+                //     }
+                // })
+
+                // if (!responseDelete.ok) {
+                //     console.log('Nie usunieto')
+                // }
+
+                // notify('accept', 'Usunięto wniosek o zmianie danych ewidencyjnych.')
 
             } else {
                 console.error('Failed to approve holiday request');
@@ -141,6 +184,8 @@ const UserDataChangeRequestRow: React.FC<IUserDataChangeRequestRow> = ({ notific
         } catch (error) {
             console.error('Error while processing the request', error);
         }
+
+
     };
 
     const handleReject = async (id: string) => {
@@ -220,6 +265,7 @@ const UserDataChangeRequestRow: React.FC<IUserDataChangeRequestRow> = ({ notific
                     {id_data && <span>Seria dowodu osobistego: <i><b>{id_data}</b></i></span>}
                     { id_given_by && <span>Dowód wydany przez: <i><b>{ id_given_by }</b></i></span> }
                     { id_date && <span>Data wydania dowodu: <i><b>{ id_date }</b></i></span> }
+                    { approved && <span>Status wniosku: <b>{`${approved}` === 'false' ? 'Nie zatwierdzony' : 'Zatwierdzony'}</b></span> }
 
                     {isAdmin 
                         ?

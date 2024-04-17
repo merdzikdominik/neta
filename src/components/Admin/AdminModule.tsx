@@ -385,8 +385,8 @@ const AdminModule: React.FC = () => {
     }, [])
 
     useEffect(() => {
-        console.log(requestsList)
-    }, [requestsList])
+        console.log(userDataChangeRequests)
+    }, [userDataChangeRequests])
 
     const exportToExcel = async (requests: IHolidayRequest[], users: IUserData[]) => {
         const workbook = new ExcelJS.Workbook();
