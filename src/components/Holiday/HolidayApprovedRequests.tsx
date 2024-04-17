@@ -223,11 +223,6 @@ const HolidayApprovedRequests: React.FC = () => {
     
         return merged;
     };
-
-    useEffect(() => {   
-        console.log(approvedDates);
-    }, [approvedDates]);
-    
     
     return (        
         <div className={classes['main']}>

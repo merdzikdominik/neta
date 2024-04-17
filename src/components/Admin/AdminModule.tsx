@@ -152,6 +152,7 @@ const MONTHS = [
 
 const AdminModule: React.FC = () => {
     const [requestsList, setRequestsList] = useState<IHolidayRequest[] | []>([])
+    const [holidayPlansList, setHolidayPlansList] = useState<IHolidayRequest[] | []>([])
     const [users, setUsers] = useState<IUserInfo[] | []>([])
     const [holidayRequestData, setHolidayRequestData] = useState<(string | number)[][]>([])
     const [mostOccupiedMonths, setMostOccupiedMonths] = useState<[string, number, string, null][]>([])
@@ -159,6 +160,7 @@ const AdminModule: React.FC = () => {
     const [notifications, setNotifications] = useState<INotification[]>([])
     const [userDataChangeRequests, setIsUserDataChangeRequests] = useState<IUserDataChangeNotification[]>([])
     const [isRequestsModalOpen, setIsRequestModalOpen] = useState<boolean>(false)
+    const [isHolidayPlansModalOpen, setIsHolidayPlansModalOpen] = useState<boolean>(false)
     const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false)
     const [isUsersModalOpen, setIsUsersModalOpen] = useState<boolean>(false)
     const [isHolidayTypeModalOpen, setIsHolidayTypeModalOpen] = useState<boolean>(false)
@@ -195,6 +197,38 @@ const AdminModule: React.FC = () => {
                 toast.error('Błąd podczas pobierania wniosków')
                 console.error('Błąd podczas pobierania wniosków', error);
           }
+        }
+    }
+
+    const fetchHolidayPlans = async () => {
+        const token = localStorage.getItem('authToken')
+
+        if (token) {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/all_holiday_plans', {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${token}`,
+                  },
+                });
+                if (response.ok) {
+                  const data = await response.json();
+  
+                  if (data.length === 0) {
+                      toast.info('Nie ma wniosków do pobrania.')
+                      return
+                  } else {
+                    setHolidayPlansList(data)
+                  }
+                } else {
+                  toast.error('Błąd podczas pobierania wniosków')
+                  console.error('Błąd podczas pobierania wniosków');
+                }
+            } catch (error) {
+                  toast.error('Błąd podczas pobierania wniosków')
+                  console.error('Błąd podczas pobierania wniosków', error);
+            }
         }
     }
 
@@ -340,6 +374,11 @@ const AdminModule: React.FC = () => {
     const handleUserDataChangeNotificationsModal = () => {
         setIsUserDataChangeNotificationModalOpen(!isUserDataChangeNotificationModalOpen)
     }
+
+    const handleHolidayPlansModal = () => {
+        setIsHolidayPlansModalOpen(!holidayPlansList)
+    }
+
 
     useEffect(() => {
         fetchUserDataChangeRequests()
@@ -521,12 +560,12 @@ const AdminModule: React.FC = () => {
     }, [])
 
     useEffect(() => {
-        fetchUsers()
+        fetchHolidayPlans()
     }, [])
 
     useEffect(() => {
-        console.log(users)
-    }, [users])
+        fetchUsers()
+    }, [])
 
     useEffect(() => {
         fetchHolidayTypes()
@@ -624,6 +663,7 @@ const AdminModule: React.FC = () => {
                     </div>
                     <div className={classes['adminModule__excel-button-container']}>
                         <div className={classes['adminModule__excel-button']} onClick={() => setIsExportModalOpen(true)}><span>Eksport danych dla HR</span></div>
+                        <div className={classes['adminModule__excel-button']} onClick={() => setIsHolidayPlansModalOpen(true)}><span>Lista planów urlopowych</span></div>
                         <div className={classes['adminModule__excel-button']} onClick={() => setIsUserDataChangeNotificationModalOpen(true)}><span>Wnioski uzytkowników o zmianę danych ewidencyjnych</span></div>
                     </div>
                     <div className={classes['adminModule__charts-container']}>
@@ -669,6 +709,9 @@ const AdminModule: React.FC = () => {
                 )}
                 {isUserDataChangeNotificationModalOpen && (
                     <Modal modalTitle={'Wnioski uzytkowników o zmianę danych ewidencyjnych'} modalContent={userDataChangeRequests} toggleModal={handleUserDataChangeNotificationsModal} />
+                )}
+                {isHolidayPlansModalOpen && (
+                    <Modal modalTitle={'Lista planów urlopowych'} modalContent={holidayPlansList} toggleModal={handleHolidayPlansModal} />
                 )}
             </div>
         </motion.div>

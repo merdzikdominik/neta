@@ -109,8 +109,6 @@ const EmployeeFileData: React.FC = () => {
         
                 const userData = await response.json();
 
-                console.log(userData)
-
                 const permanentResidence: IResidenceData = {
                     ...userData,
                     city: userData.city_permanent_residence,
@@ -181,7 +179,7 @@ const EmployeeFileData: React.FC = () => {
                     id_given_by: userData.id_given_by,
                     date: userData.id_date,
                     is_superuser: userData.is_superuser ? 'Tak' : 'Nie',
-                    last_login: userData.last_login       
+                    last_login: new Date(userData.last_login).toLocaleString().replace(',', ' •')       
                 }));
                 
             } catch (error) {

@@ -4,6 +4,7 @@ import { IUserInfo } from "../EmployeeFile/EmployeeFileData";
 import { INotification } from "../../store/types";
 import { toast } from "react-toastify";
 import UserDataChangeRequestRow from "./UserDataChangeRequestRow";
+import HolidayRequestPlanRow from "./HolidayRequestPlanRow";
 import UserRequestRow from "./UserRequestRow";
 import RequestListRow from "./HolidayRequestListRow";
 import HolidayTypeRow from "./HolidayTypeRow";
@@ -89,6 +90,26 @@ const modalMode = (
                             : 'Brak wniosków'}
                     </>
                 );
+            } else {
+                return null;
+            }
+        
+        case 'Lista planów urlopowych':
+            if (Array.isArray(modalContent) && modalContent.length > 0 && "user" in modalContent[0]) {
+                return (
+                    <>
+                        {modalContent.length > 0
+                            ? (modalContent as IHolidayRequest[]).map((request: IHolidayRequest) => (
+                                <HolidayRequestPlanRow 
+                                    key={request.id}
+                                    userInfo={request.user}
+                                    requestInfo={request}
+                                />
+                            ))
+                            : 'Brak wyników'
+                        }
+                    </>
+                )
             } else {
                 return null;
             }
