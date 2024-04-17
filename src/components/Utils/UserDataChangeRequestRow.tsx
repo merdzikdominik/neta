@@ -93,6 +93,10 @@ const UserDataChangeRequestRow: React.FC<IUserDataChangeRequestRow> = ({ notific
         setIsApproved(approved)
     }, [approved])
 
+    useEffect(() => {
+        console.log(notification)
+    }, [notification])
+
     const handleUpdateUserData = async () => {
         const token = localStorage.getItem('authToken')
 

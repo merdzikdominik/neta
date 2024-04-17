@@ -216,7 +216,7 @@ const UserDataChange: React.FC = () => {
             annual_settlement_address: checkboxRadioAnnualRef.current?.textContent,
             city_permanent_residence: permanentResidenceData.city,
             postal_code_permanent_residence: permanentResidenceData.postalCode,
-            post_permanent_residence: permanentResidenceData.post,
+            post_permanent_residence: permanentResidenceData.post.length > 0 ? permanentResidenceData.post : '',
             municipal_commune_permanent_residence: permanentResidenceData.municipalCommune,
             voivodeship_permanent_residence: permanentResidenceData.voivodeship,
             country_permanent_residence: permanentResidenceData.county,
@@ -304,8 +304,49 @@ const UserDataChange: React.FC = () => {
         }))
     }
 
+    const formDataToSend = {
+        surname: formData.surname,
+        city_permanent_residence: permanentResidenceData.city.length > 0 ? permanentResidenceData.city : '',
+        postal_code_permanent_residence: permanentResidenceData.postalCode.length > 0 ? permanentResidenceData.postalCode : '',
+        post_permanent_residence: permanentResidenceData.post.length > 0 ? permanentResidenceData.post : '',
+        municipal_commune_permanent_residence: permanentResidenceData.municipalCommune.length > 0 ? permanentResidenceData.municipalCommune : '',
+        voivodeship_permanent_residence: permanentResidenceData.voivodeship.length > 0 ? permanentResidenceData.voivodeship : '',
+        country_permanent_residence: permanentResidenceData.county.length > 0 ? permanentResidenceData.county : '',
+        street_permanent_residence: permanentResidenceData.street.length > 0 ? permanentResidenceData.street : '',
+        house_number_permanent_residence: permanentResidenceData.houseNumber.length > 0 ? permanentResidenceData.houseNumber : '',
+        flat_number_permanent_residence: permanentResidenceData.flatNumber.length > 0 ? permanentResidenceData.flatNumber : '',
+        mobile_number_permanent_residence: permanentResidenceData.mobileNumber.length > 0 ? permanentResidenceData.mobileNumber : '',
+        city_second_residence: secondResidenceData.city.length > 0 ? secondResidenceData.city : '',
+        postal_code_second_residence: secondResidenceData.postalCode.length > 0 ? secondResidenceData.postalCode : '',
+        post_second_residence: secondResidenceData.post.length > 0 ? secondResidenceData.post : '',
+        municipal_commune_second_residence: secondResidenceData.municipalCommune.length > 0 ? secondResidenceData.municipalCommune : '',
+        voivodeship_second_residence: secondResidenceData.voivodeship.length > 0 ? secondResidenceData.voivodeship : '',
+        country_second_residence: secondResidenceData.county.length > 0 ? secondResidenceData.county : '',
+        street_second_residence: secondResidenceData.street.length > 0 ? secondResidenceData.street : '',
+        house_number_second_residence: secondResidenceData.houseNumber.length > 0 ? secondResidenceData.houseNumber : '',
+        flat_number_second_residence: secondResidenceData.flatNumber.length > 0 ? secondResidenceData.flatNumber : '',
+        mobile_number_second_residence: secondResidenceData.mobileNumber.length > 0 ? secondResidenceData.mobileNumber : '',
+        city_correspondence_residence: correspondenceAddress.city.length > 0 ? correspondenceAddress.city : '',
+        postal_code_correspondence_residence: correspondenceAddress.postalCode.length > 0 ? correspondenceAddress.postalCode : '',
+        post_correspondence_residence: correspondenceAddress.post.length > 0 ? correspondenceAddress.post : '',
+        municipal_commune_correspondence_residence: correspondenceAddress.municipalCommune.length > 0 ? correspondenceAddress.municipalCommune : '',
+        voivodeship_correspondence_residence: correspondenceAddress.voivodeship.length > 0 ? correspondenceAddress.voivodeship : '',
+        country_correspondence_residence: correspondenceAddress.county.length > 0 ? correspondenceAddress.county : '',
+        street_correspondence_residence: correspondenceAddress.street.length > 0 ? correspondenceAddress.street : '',
+        house_number_correspondence_residence: correspondenceAddress.houseNumber.length > 0 ? correspondenceAddress.houseNumber : '',
+        flat_number_correspondence_residence: correspondenceAddress.flatNumber.length > 0 ? correspondenceAddress.flatNumber : '',
+        mobile_number_correspondence_residence: correspondenceAddress.mobileNumber.length > 0 ? correspondenceAddress.mobileNumber : '',
+        correspondence_address: checkboxRadioCorrespondenceRef.current?.textContent,
+        tax_office: formData.tax_office,
+        annual_settlement_address: checkboxRadioAnnualRef.current?.textContent,
+        nfz_branch: formData.nfz_branch,
+        id_data: formData.id_data,
+        id_given_by: formData.id_given_by,
+        id_date: formData.id_date,
+    }
+
     const handleSubmit = async () => {
-        // console.log(formDataToSend)
+        console.log(formDataToSend)
         const token = localStorage.getItem('authToken')
     
         if (token) {
@@ -338,44 +379,7 @@ const UserDataChange: React.FC = () => {
                             last_name,
                             email
                         },
-                        surname: formData.surname,
-                        city_permanent_residence: formData.city_permanent_residence,
-                        postal_code_permanent_residence: formData.postal_code_permanent_residence,
-                        post_permanent_residence: formData.post_permanent_residence,
-                        municipal_commune_permanent_residence: formData.municipal_commune_permanent_residence,
-                        voivodeship_permanent_residence: formData.voivodeship_permanent_residence,
-                        country_permanent_residence: formData.country_permanent_residence,
-                        street_permanent_residence: formData.street_permanent_residence,
-                        house_number_permanent_residence: formData.house_number_permanent_residence,
-                        flat_number_permanent_residence: formData.flat_number_permanent_residence,
-                        mobile_number_permanent_residence: formData.mobile_number_permanent_residence,
-                        city_second_residence: formData.city_second_residence,
-                        postal_code_second_residence: formData.postal_code_second_residence,
-                        post_second_residence: formData.post_second_residence,
-                        municipal_commune_second_residence: formData.municipal_commune_second_residence,
-                        voivodeship_second_residence: formData.voivodeship_second_residence,
-                        country_second_residence: formData.country_second_residence,
-                        street_second_residence: formData.street_second_residence,
-                        house_number_second_residence: formData.house_number_second_residence,
-                        flat_number_second_residence: formData.flat_number_second_residence,
-                        mobile_number_second_residence: formData.mobile_number_second_residence,
-                        city_correspondence_residence: formData.city_correspondence_residence,
-                        postal_code_correspondence_residence: formData.postal_code_correspondence_residence,
-                        post_correspondence_residence: formData.post_correspondence_residence,
-                        municipal_commune_correspondence_residence: formData.municipal_commune_correspondence_residence,
-                        voivodeship_correspondence_residence: formData.voivodeship_correspondence_residence,
-                        country_correspondence_residence: formData.country_correspondence_residence,
-                        street_correspondence_residence: formData.street_correspondence_residence,
-                        house_number_correspondence_residence: formData.house_number_correspondence_residence,
-                        flat_number_correspondence_residence: formData.flat_number_correspondence_residence,
-                        mobile_number_correspondence_residence: formData.mobile_number_correspondence_residence,
-                        correspondence_address: formData.correspondence_address,
-                        tax_office: formData.tax_office,
-                        annual_settlement_address: formData.annual_settlement_address,
-                        nfz_branch: formData.nfz_branch,
-                        id_data: formData.id_data,
-                        id_given_by: formData.id_given_by,
-                        id_date: formData.id_date,
+                        ...formDataToSend
                     }),
                 });
     
@@ -458,7 +462,7 @@ const UserDataChange: React.FC = () => {
                                 <div>
                                     <label>
                                         <b>1. Nazwisko</b>
-                                        <input type="text" placeholder="Wprowadź nazwisko" name="surname" onChange={handleOverallForm} />
+                                        <input type="text" placeholder="Wprowadź nazwisko" name="surname" required onChange={handleOverallForm} />
                                     </label>
                                 </div>
 

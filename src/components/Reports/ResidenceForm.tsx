@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import classes from './ReportsDataChange.module.css'
 
 interface IUserResidenceData {
@@ -33,17 +33,21 @@ const ResidenceForm: React.FC<IUserResidenceFunction> = ({ onChange }) => {
     })
 
     const handleStoreUserData = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUserData(prev => ({
-            ...prev,
-            [event.target.name]: event?.target.value,
-        }))
-
-        onChange({
+        const updatedUserData = {
             ...userData,
-            [event.target.name]: event?.target.value,
-        })
-
+            [event.target.name]: event.target.value,
+        };
+    
+        setUserData(updatedUserData);
+    
+        // Przekazujemy aktualny stan `userData` do funkcji onChange
+        onChange(updatedUserData);
     }
+    
+
+    useEffect(() => {
+        console.log(userData)
+    }, [userData])
 
     return (
         <div className={classes['reports-data-change__second-position']}>
