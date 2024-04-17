@@ -143,8 +143,6 @@ const UserDataChangeRequestRow: React.FC<IUserDataChangeRequestRow> = ({ notific
     const handleApprove = async (id: string) => {
         const token = localStorage.getItem('authToken')
         
-        //TODO: add remove notification after approving
-
         try {
             const response = await fetch(`http://127.0.0.1:8000/api/approve_data_change_request/${id}`, {
                 method: 'PATCH',
@@ -162,21 +160,6 @@ const UserDataChangeRequestRow: React.FC<IUserDataChangeRequestRow> = ({ notific
 
                 handleDeleteRequest(id)
                 handleUpdateUserData()
-
-
-                // const responseDelete = await fetch(`http://127.0.0.1:8000/api/data-change-requests-delete/${id}`, {
-                //     method: 'DELETE',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //         'Authorization': `Token ${token}`
-                //     }
-                // })
-
-                // if (!responseDelete.ok) {
-                //     console.log('Nie usunieto')
-                // }
-
-                // notify('accept', 'Usunięto wniosek o zmianie danych ewidencyjnych.')
 
             } else {
                 console.error('Failed to approve holiday request');
