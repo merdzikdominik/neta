@@ -28,7 +28,6 @@ a {
         width: 300px;
         height: 100%;
         border-radius: 3rem;
-        background-color: #227dba;
         font-family: roboto;
         font-size: 4rem;
         font-weight: 100;
@@ -38,48 +37,49 @@ a {
         transition: 0.2s transform ease-in-out;
         will-change: transform;
         z-index: 0;
-      
-        &:after {
-          background-color: yellow;
-          color: #000;
-          border-radius: 3rem;
-          content: '';
-          display: block;
-          height: 100%;
-          width: 100%;
-          position: absolute;
-          left: 0;
-          top: 0;
-          transform: translate(-100%, 0) rotate(10deg);
-          transform-origin: top left;
-          transition: 0.2s transform ease-out;
-          will-change: transform;
-          z-index: -1;
-        }
-      
-        &:hover::after {
-          transform: translate(0, 0);
-          color: #000;
-        }
-      
-        &:hover {
-          color: #000;
-          transform: scale(1.05);
-          will-change: transform;
-        }
-    }
 
-    a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-        font-size: 20px;
-        height: 100%;
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #227dba;
+            color: #fff;
+            font-size: 20px;
+            height: 100%;
+    
+            &:hover {
+                color: #000;
+                font-size: 22px;
+            }
 
-        &:hover {
-            color: #000;
-            font-size: 22px;
+            &:after {
+                background-color: yellow;
+                color: #000;
+                border-radius: 3rem;
+                content: '';
+                display: block;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+                transform: translate(-100%, 0) rotate(10deg);
+                transform-origin: top left;
+                transition: 0.2s transform ease-out;
+                will-change: transform;
+                z-index: -1;
+            }
+            
+            &:hover::after {
+                transform: translate(0, 0);
+                color: #000;
+            }
+            
+            &:hover {
+                color: #000;
+                transform: scale(1.05);
+                will-change: transform;
+            }
         }
     }
 }
