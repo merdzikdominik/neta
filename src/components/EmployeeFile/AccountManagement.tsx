@@ -195,7 +195,7 @@ const AccountManagement: React.FC = () => {
                         <PasswordStrengthBar 
                             style={{ width: '160px' }}
                             password={newPassword}
-                            scoreWordStyle={{ color: '#fff' }}
+                            scoreWordStyle={{ color: '#000' }}
                             shortScoreWord={newPassword.length !== 0 ? 'za krótkie' : ''}
                             barColors={['#ddd', '#ef4836', '#FFAE00', '#00FBFF', '#00FF46']}
                             scoreWords={['bardzo słabe', 'słabe', 'średnie', 'mocne', 'bardzo mocne']}
